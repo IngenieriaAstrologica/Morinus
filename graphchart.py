@@ -27,6 +27,7 @@ class GraphChart:
         self.options = opts
         self.bw = bw
         self.planetaryday = planetaryday
+        # Javier changed EmptyBitmap to Bitmap
         #self.buffer = wx.EmptyBitmap(self.w, self.h)
         self.buffer = wx.Bitmap(self.w, self.h)
         self.bdc = wx.BufferedDC(None, self.buffer)
