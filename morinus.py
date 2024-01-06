@@ -20,6 +20,9 @@
 # Works under python2.7
 # Installed whl wxPython-4.0.5-cp27
 # changed from PIL import Image
+# sudo add-apt-repository ppa:linuxuprising/libpng12
+# sudo update
+# sudo apt install libpng12-0
 ####################################
 
 import os
@@ -38,9 +41,6 @@ class Morinus(wx.App):
             pass
 
         #wx.SetDefaultPyEncoding('utf-8')
-        ###### Modification by Javier ######
-        print('Default encoding:', wx.GetDefaultPyEncoding())
-        ####################################
         opts = options.Options()
         mtexts.setLang(opts.langid)
 
