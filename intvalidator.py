@@ -5,7 +5,9 @@ import mtexts
 
 class IntValidator(wx.PyValidator):
 	def __init__(self, minim=None, maxim=None):
-		wx.PyValidator.__init__(self)
+        # Javier changed because Phoenix
+		#wx.PyValidator.__init__(self)
+		wx.Validator.__init__(self)
 		self.minim = minim
 		self.maxim = maxim
 		self.Bind(wx.EVT_CHAR, self.OnChar)
