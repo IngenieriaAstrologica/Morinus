@@ -41,19 +41,19 @@ class ProfectionsMonWnd(commonwnd.CommonWnd):
 				if not self.options.transcendental[chart.Chart.TRANSPLUTO]:
 					self.COLUMN_NUM -= 1
 
-		self.CELL_WIDTH = 3*self.FONT_SIZE
-		self.BIG_CELL_WIDTH = 7*self.FONT_SIZE #Date
-		self.TITLE_HEIGHT = self.LINE_HEIGHT
-		self.TITLE_WIDTH = self.CELL_WIDTH+(self.COLUMN_NUM-1)*self.BIG_CELL_WIDTH
+		self.CELL_WIDTH = int(3*self.FONT_SIZE)
+		self.BIG_CELL_WIDTH = int(7*self.FONT_SIZE) #Date
+		self.TITLE_HEIGHT = int(self.LINE_HEIGHT)
+		self.TITLE_WIDTH = int(self.CELL_WIDTH+(self.COLUMN_NUM-1)*self.BIG_CELL_WIDTH)
 		self.SPACE_TITLEY = 0
-		self.TABLE_WIDTH = ((self.COLUMN_NUM-1)*(self.BIG_CELL_WIDTH)+self.CELL_WIDTH)
+		self.TABLE_WIDTH = int((self.COLUMN_NUM-1)*(self.BIG_CELL_WIDTH)+self.CELL_WIDTH)
 		val = 0
 		if len(self.dates) == 12:
 			val = self.LINE_HEIGHT
-		self.TABLE_HEIGHT = (self.TITLE_HEIGHT+self.SPACE_TITLEY+(self.LINE_NUM*(self.LINE_HEIGHT))+val)
+		self.TABLE_HEIGHT = int(self.TITLE_HEIGHT+self.SPACE_TITLEY+(self.LINE_NUM*(self.LINE_HEIGHT))+val)
 	
-		self.WIDTH = (commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
-		self.HEIGHT = (commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
+		self.WIDTH = int(commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
+		self.HEIGHT = int(commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
 
 		self.SetVirtualSize((self.WIDTH, self.HEIGHT))
 

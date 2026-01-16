@@ -19,19 +19,19 @@ class HoursWnd(commonwnd.CommonWnd):
 		self.mainfr = mainfr
 
 		self.FONT_SIZE = int(21*self.options.tablesize) #Change fontsize to change the size of the table!
-		self.SPACE = self.FONT_SIZE/2
+		self.SPACE = int(self.FONT_SIZE//2)
 		self.COLUMN_NUM = 2
 		self.LINE_NUM = HoursWnd.HOURSPERHALFDAY #Planets
-		self.LINE_HEIGHT = (self.SPACE+self.FONT_SIZE+self.SPACE)
-		self.SMALL_CELL_WIDTH = 2*self.FONT_SIZE
-		self.CELL_WIDTH = 8*self.FONT_SIZE
-		self.TITLE_HEIGHT = 3*self.LINE_HEIGHT
-		self.TITLE_WIDTH = (self.SMALL_CELL_WIDTH+self.COLUMN_NUM*self.CELL_WIDTH)
+		self.LINE_HEIGHT = int(self.SPACE+self.FONT_SIZE+self.SPACE)
+		self.SMALL_CELL_WIDTH = int(2*self.FONT_SIZE)
+		self.CELL_WIDTH = int(8*self.FONT_SIZE)
+		self.TITLE_HEIGHT = int(3*self.LINE_HEIGHT)
+		self.TITLE_WIDTH = int(self.SMALL_CELL_WIDTH+self.COLUMN_NUM*self.CELL_WIDTH)
 		self.SPACE_TITLEY = 0
-		self.TABLE_HEIGHT = (self.TITLE_HEIGHT+self.SPACE_TITLEY+(self.LINE_NUM)*(self.LINE_HEIGHT))
-		self.TABLE_WIDTH = (self.SMALL_CELL_WIDTH+self.COLUMN_NUM*self.CELL_WIDTH)
-		self.WIDTH = (commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
-		self.HEIGHT = (commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
+		self.TABLE_HEIGHT = int(self.TITLE_HEIGHT+self.SPACE_TITLEY+(self.LINE_NUM)*(self.LINE_HEIGHT))
+		self.TABLE_WIDTH = int(self.SMALL_CELL_WIDTH+self.COLUMN_NUM*self.CELL_WIDTH)
+		self.WIDTH = int(commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
+		self.HEIGHT = int(commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
 
 		self.SetVirtualSize((self.WIDTH, self.HEIGHT))
 

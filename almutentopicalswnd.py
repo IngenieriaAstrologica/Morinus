@@ -33,11 +33,11 @@ class AlmutenTopicalsWnd(commonwnd.CommonWnd):
 		self.DEGREEWINS_CELL_WIDTH = 7*self.FONT_SIZE
 		self.CELL_WIDTH = 7*self.FONT_SIZE
 		self.TITLE_HEIGHT = self.LINE_HEIGHT
-		self.TABLE_WIDTH = (self.LONGITUDE_CELL_WIDTH+(self.COLUMN_NUM)*(self.CELL_WIDTH)+self.DEGREEWINS_CELL_WIDTH)
-		self.TABLE_HEIGHT = (self.TITLE_HEIGHT+(self.LINE_NUM*self.LINE_HEIGHT+2*self.DLINE_HEIGHT))
+		self.TABLE_WIDTH = int(self.LONGITUDE_CELL_WIDTH+(self.COLUMN_NUM)*(self.CELL_WIDTH)+self.DEGREEWINS_CELL_WIDTH)
+		self.TABLE_HEIGHT = int(self.TITLE_HEIGHT+(self.LINE_NUM*self.LINE_HEIGHT+2*self.DLINE_HEIGHT))
 
-		self.HEIGHT = (commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
-		self.WIDTH = (commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
+		self.HEIGHT = int(commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
+		self.WIDTH = int(commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
 
 		self.SetVirtualSize((self.WIDTH, self.HEIGHT))
 

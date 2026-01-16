@@ -46,12 +46,12 @@ class AspectsWnd(commonwnd.CommonWnd):
 			if not self.options.houses:
 				self.COLUMN_NUM -= 6 
 
-		self.TABLE_HEIGHT = (self.LINE_NUM*(self.SQUARE_SIZE+self.SPACE))
+		self.TABLE_HEIGHT = int(self.LINE_NUM*(self.SQUARE_SIZE+self.SPACE))
 
-		self.TABLE_WIDTH = (self.COLUMN_NUM*(self.SQUARE_SIZE+self.SPACE))
+		self.TABLE_WIDTH = int(self.COLUMN_NUM*(self.SQUARE_SIZE+self.SPACE))
 	
-		self.WIDTH = (commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
-		self.HEIGHT = (commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
+		self.WIDTH = int(commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
+		self.HEIGHT = int(commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
 
 		self.SetVirtualSize((self.WIDTH, self.HEIGHT))
 

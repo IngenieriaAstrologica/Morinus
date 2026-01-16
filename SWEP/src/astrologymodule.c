@@ -955,10 +955,29 @@ static PyMethodDef SWEAstrologyMethods[] =
 	{"swe_cotrans_sp", (PyCFunction)astrology_swe_cotrans_sp, METH_VARARGS, "SWEPH.\n"}, 
 	{NULL, NULL, 0, NULL}
 };
-
+/*
+// --- Código de Python 2 ---
 PyMODINIT_FUNC initsweastrology(void)
 {
 	Py_InitModule("sweastrology", SWEAstrologyMethods);
+}
+*/
+
+// --- Código de Python 3 ---
+// 1. Define la estructura PyModuleDef
+static struct PyModuleDef sweastrologymodule = {
+    PyModuleDef_HEAD_INIT,
+    "sweastrology",   // Nombre del módulo
+    NULL,             // Documentación del módulo (puede ser NULL)
+    -1,               // Tamaño del estado por intérprete, o -1 si usa variables globales
+    SWEAstrologyMethods // Métodos del módulo
+};
+
+// 2. Reemplaza la función de inicialización
+PyMODINIT_FUNC PyInit_sweastrology(void)
+{
+    // 3. Usa PyModule_Create para crear el módulo
+    return PyModule_Create(&sweastrologymodule);
 }
 
 

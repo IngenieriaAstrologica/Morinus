@@ -109,7 +109,8 @@ import placidiansapd
 import placidianutppd
 import regiomontanpd
 import campanianpd
-import thread
+#import thread
+import _thread as thread
 import options
 import util
 import mtexts
@@ -2992,8 +2993,8 @@ class MFrame(wx.Frame):
 
         if self.splash:
             wx.size = self.GetClientSize()
-            x = wx.size.x/2-self.buffer.GetWidth()/2
-            y = wx.size.y/2-self.buffer.GetHeight()/2
+            x = int(wx.size.x/2-self.buffer.GetWidth()/2)
+            y = int(wx.size.y/2-self.buffer.GetHeight()/2)
 
             bkgclr = self.options.clrbackground
             if self.options.bw:
@@ -3013,29 +3014,41 @@ class MFrame(wx.Frame):
 
     def calc(self):
         for planet in self.horoscope.planets.planets:
-            print ''
-            print '%s:' % planet.name
+            #print ''
+            print("")
+            #print '%s:' % planet.name
+            print(f"{planet.name}:")
 
             (d, m, s) = decToDeg(planet.data[0])
-            print 'lon: %02d %02d\' %02d"' % (d, m, s)
+            #print 'lon: %02d %02d\' %02d"' % (d, m, s)
+            print(f"lon: {d:02d} {m:02d}' {s:02d}\"")
             (d, m, s) = decToDeg(planet.data[1])
-            print 'lat: %02d %02d\' %02d"' % (d, m, s)
+            #print 'lat: %02d %02d\' %02d"' % (d, m, s)
+            print(f"lat: {d:02d} {m:02d}' {s:02d}\"")
             (d, m, s) = decToDeg(planet.data[3])
             if planet.data[3] > 0:
-                print 'speed: %02d %02d\' %02d"' % (d, m, s)
+                #print 'speed: %02d %02d\' %02d"' % (d, m, s)
+                print(f"speed: {d:02d} {m:02d}' {s:02d}\"")
             else:
-                print 'speed: %02d %02d\' %02d"  R' % (d, m, s)
+                #print 'speed: %02d %02d\' %02d"  R' % (d, m, s)
+                print(f"speed: {d:02d} {m:02d}' {s:02d}\" R'")
 
 
-        print ''
-        print 'Houses'
+        #print ''
+        print("")
+        #print 'Houses'
+        print("Houses")
         for i in range(1, Houses.HOUSE_NUM+1):
             (d, m, s) = decToDeg(self.horoscope.houses.cusps[i])
-            print 'house[%d]: %02d %02d\' %02d"' % (i, d, m, s)
+            #print 'house[%d]: %02d %02d\' %02d"' % (i, d, m, s)
+            print(f"house[{i}]: {d:02d} {m:02d}' {s:02d}\"")
 
-        print ''
-        print 'Vars'
+        #print ''
+        print("")
+        #print 'Vars'
+        print("Vars")
         xvars = ('Asc', 'MC', 'ARMC', 'Vertex', 'Equatorial Ascendant', 'Co-Asc', 'Co-Asc2', 'Polar Asc')
         for i in range(0, 8):
             (d, m, s) = decToDeg(self.horoscope.houses.ascmc[i])
-            print '%s = %02d %02d\' %02d"' % (xvars[i], d, m, s)
+            #print '%s = %02d %02d\' %02d"' % (xvars[i], d, m, s)
+            print(f"{xvars[i]} = {d:02d} {m:02d}' {s:02d}\"")

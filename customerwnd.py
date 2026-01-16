@@ -44,11 +44,11 @@ class CustomerWnd(commonwnd.CommonWnd):
 
 		self.LINE_NUM = line_num
 
-		self.TABLE_HEIGHT = ((self.LINE_NUM)*(self.LINE_HEIGHT))
-		self.TABLE_WIDTH = ((self.COLUMN_NUM+1)*(self.CELL_WIDTH))
+		self.TABLE_HEIGHT = int((self.LINE_NUM)*(self.LINE_HEIGHT))
+		self.TABLE_WIDTH = int((self.COLUMN_NUM+1)*(self.CELL_WIDTH))
 	
-		self.WIDTH = (BOR+self.TABLE_WIDTH+BOR)
-		self.HEIGHT = (BOR+self.TABLE_HEIGHT+BOR)
+		self.WIDTH = int(BOR+self.TABLE_WIDTH+BOR)
+		self.HEIGHT = int(BOR+self.TABLE_HEIGHT+BOR)
 
 		self.SetBackgroundColour(self.options.clrbackground)
 

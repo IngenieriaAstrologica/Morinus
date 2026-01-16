@@ -56,13 +56,13 @@ class FixStarsAspectsWnd(commonwnd.CommonWnd):
 				self.COLUMN_NUM -= 6
 
 		self.TITLE_HEIGHT = self.SQUARE_SIZE
-		self.TITLE_WIDTH = (self.COLUMN_NUM*self.SQUARE_SIZE)
+		self.TITLE_WIDTH = int(self.COLUMN_NUM*self.SQUARE_SIZE)
 		self.SPACE_TITLEY = 0
 
-		self.TABLE_HEIGHT = (self.TITLE_HEIGHT+self.SPACE_TITLEY+(self.LINE_NUM)*((self.LINE_HEIGHT)+(self.SPACE)))
-		self.TABLE_WIDTH = (self.CELL_WIDTH+(self.COLUMN_NUM)*(self.SQUARE_SIZE+self.SPACE))
-		self.WIDTH = (commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
-		self.HEIGHT = (commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
+		self.TABLE_HEIGHT = int(self.TITLE_HEIGHT+self.SPACE_TITLEY+(self.LINE_NUM)*((self.LINE_HEIGHT)+(self.SPACE)))
+		self.TABLE_WIDTH = int(self.CELL_WIDTH+(self.COLUMN_NUM)*(self.SQUARE_SIZE+self.SPACE))
+		self.WIDTH = int(commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
+		self.HEIGHT = int(commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
 
 		self.SetVirtualSize((self.WIDTH, self.HEIGHT))
 

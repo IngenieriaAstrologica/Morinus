@@ -47,15 +47,18 @@ class GraphEphemDlg(wx.Dialog):
         self.syear =wx.StaticBox(self, label=mtexts.txts['Year'])
         yearsizer = wx.StaticBoxSizer(self.syear, wx.VERTICAL)
         self.year = wx.TextCtrl(self, -1, '', validator=intvalidator.IntValidator(0, rnge), size=(50,-1))
-        yearsizer.Add(self.year, 0, wx.GROW|wx.ALIGN_CENTER|wx.ALL, 5)
+        #yearsizer.Add(self.year, 0, wx.GROW|wx.ALIGN_CENTER|wx.ALL, 5)
+        yearsizer.Add(self.year, 0, wx.GROW|wx.ALL, 5)
         if checker.isExtended():
             self.year.SetHelpText(mtexts.txts['HelpYear'])
         else:
             self.year.SetHelpText(mtexts.txts['HelpYear2'])
         self.year.SetMaxLength(4)
 
-        mhsizer.Add(yearsizer, 1, wx.GROW|wx.ALIGN_CENTER|wx.ALL, 5)
-        mvsizer.Add(mhsizer, 0, wx.GROW|wx.ALIGN_CENTER|wx.ALL, 5)
+        #mhsizer.Add(yearsizer, 1, wx.GROW|wx.ALIGN_CENTER|wx.ALL, 5)
+        mhsizer.Add(yearsizer, 1, wx.GROW|wx.ALL, 5)
+        #mvsizer.Add(mhsizer, 0, wx.GROW|wx.ALIGN_CENTER|wx.ALL, 5)
+        mvsizer.Add(mhsizer, 0, wx.GROW|wx.ALL, 5)
 
         btnsizer = wx.StdDialogButtonSizer()
 
@@ -82,10 +85,3 @@ class GraphEphemDlg(wx.Dialog):
 
         now = datetime.datetime.now()
         self.year.SetValue(str(now.year))
-
-
-
-
-
-
-

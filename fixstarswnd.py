@@ -17,20 +17,20 @@ class FixStarsWnd(commonwnd.CommonWnd):
 		self.mainfr = mainfr
 
 		self.FONT_SIZE = int(21*self.options.tablesize) #Change fontsize to change the size of the table!
-		self.SPACE = self.FONT_SIZE/2
-		self.LINE_HEIGHT = (self.SPACE+self.FONT_SIZE+self.SPACE)
+		self.SPACE = int(self.FONT_SIZE//2)
+		self.LINE_HEIGHT = int(self.SPACE+self.FONT_SIZE+self.SPACE)
 		self.LINE_NUM = len(self.chart.fixstars.data)
-		self.SMALL_CELL_WIDTH = 3*self.FONT_SIZE
-		self.BIG_CELL_WIDTH = 10*self.FONT_SIZE
-		self.CELL_WIDTH = 8*self.FONT_SIZE
+		self.SMALL_CELL_WIDTH = int(3*self.FONT_SIZE)
+		self.BIG_CELL_WIDTH = int(10*self.FONT_SIZE)
+		self.CELL_WIDTH = int(8*self.FONT_SIZE)
 		self.COLUMN_NUM = 6
-		self.TITLE_HEIGHT = self.LINE_HEIGHT
-		self.TITLE_WIDTH = self.BIG_CELL_WIDTH+(self.COLUMN_NUM-1)*self.CELL_WIDTH
+		self.TITLE_HEIGHT = int(self.LINE_HEIGHT)
+		self.TITLE_WIDTH = int(self.BIG_CELL_WIDTH+(self.COLUMN_NUM-1)*self.CELL_WIDTH)
 		self.SPACE_TITLEY = 0
-		self.TABLE_HEIGHT = (self.TITLE_HEIGHT+self.SPACE_TITLEY+(self.LINE_NUM)*(self.LINE_HEIGHT))
-		self.TABLE_WIDTH = (self.SMALL_CELL_WIDTH+self.BIG_CELL_WIDTH+(self.COLUMN_NUM-1)*self.CELL_WIDTH)
-		self.WIDTH = (commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
-		self.HEIGHT = (commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
+		self.TABLE_HEIGHT = int(self.TITLE_HEIGHT+self.SPACE_TITLEY+(self.LINE_NUM)*(self.LINE_HEIGHT))
+		self.TABLE_WIDTH = int(self.SMALL_CELL_WIDTH+self.BIG_CELL_WIDTH+(self.COLUMN_NUM-1)*self.CELL_WIDTH)
+		self.WIDTH = int(commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
+		self.HEIGHT = int(commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
 
 		self.SetVirtualSize((self.WIDTH, self.HEIGHT))
 

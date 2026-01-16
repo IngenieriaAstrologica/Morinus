@@ -139,7 +139,8 @@ class DefaultLocDlg(wx.Dialog):
         self.gmtlabel = wx.StaticText(self, -1, mtexts.txts['GMT'])
         hhsizer.Add(self.gmtlabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.LEFT, 5)
         self.pluscb = wx.ComboBox(self, -1, DefaultLocDlg.PLUSCHOICES[0], size=(50, -1), choices=DefaultLocDlg.PLUSCHOICES, style=wx.CB_DROPDOWN|wx.CB_READONLY)
-        hhsizer.Add(self.pluscb, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.LEFT, 5)
+        #hhsizer.Add(self.pluscb, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.LEFT, 5)
+        hhsizer.Add(self.pluscb, 0, wx.LEFT, 5)
         zonesizer.Add(hhsizer, 0, wx.ALIGN_LEFT|wx.ALL, 5)
         # Javier changed FlexGridSizer
         #fgsizer = wx.FlexGridSizer(1, 2)

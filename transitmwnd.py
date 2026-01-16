@@ -44,12 +44,12 @@ class TransitMonthWnd(commonwnd.CommonWnd):
 		self.CELL_WIDTH = 8*self.FONT_SIZE
 		self.SMALL_CELL_WIDTH = 4*self.FONT_SIZE
 		self.TITLE_HEIGHT = 2*self.LINE_HEIGHT
-		self.TITLE_WIDTH = (self.SMALL_CELL_WIDTH+(self.COLUMN_NUM-1)*self.CELL_WIDTH)
+		self.TITLE_WIDTH = int(self.SMALL_CELL_WIDTH+(self.COLUMN_NUM-1)*self.CELL_WIDTH)
 		self.SPACE_TITLEY = 0
-		self.TABLE_HEIGHT = (self.TITLE_HEIGHT+self.SPACE_TITLEY+(self.LINE_NUM)*(self.LINE_HEIGHT))
+		self.TABLE_HEIGHT = int(self.TITLE_HEIGHT+self.SPACE_TITLEY+(self.LINE_NUM)*(self.LINE_HEIGHT))
 		self.TABLE_WIDTH = self.TITLE_WIDTH
-		self.WIDTH = (commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
-		self.HEIGHT = (commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
+		self.WIDTH = int(commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
+		self.HEIGHT = int(commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
 		self.RETRYOFFS = 2*self.FONT_SIZE/5
 
 		self.SetVirtualSize((self.WIDTH, self.HEIGHT))

@@ -790,7 +790,7 @@ class Chart:
 			isdom = self.options.dignities[pid][0][sign]
 			isexal = self.options.dignities[pid][1][sign]
 
-			oppsign = sign+Chart.SIGN_NUM/2
+			oppsign = sign+Chart.SIGN_NUM//2
 			if oppsign >= Chart.SIGN_NUM:
 				oppsign -= Chart.SIGN_NUM
 
