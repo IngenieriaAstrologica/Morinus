@@ -12,6 +12,13 @@ from PIL import Image, ImageDraw, ImageFont
 import util
 import mtexts
 
+#########################
+# Javier JIPE changed
+#########################
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
 
 class CustomerWnd(commonwnd.CommonWnd):
 	def __init__(self, parent, chrt, options, mainfr, cpt, id = -1, size = wx.DefaultSize):
@@ -19,7 +26,7 @@ class CustomerWnd(commonwnd.CommonWnd):
 
 		self.parent = parent
 		self.chart = chrt
-		self.options = options		
+		self.options = options
 		self.mainfr = mainfr
 		self.cpt = cpt
 		self.bw = self.options.bw
@@ -95,9 +102,12 @@ class CustomerWnd(commonwnd.CommonWnd):
 		else:
 			self.drawregiomontan(draw, x, y, tableclr)
 
-		wxImg = wx.EmptyImage(img.size[0], img.size[1])
-		wxImg.SetData(img.tostring())
-		self.buffer = wx.BitmapFromImage(wxImg)
+		# wxImg = wx.EmptyImage(img.size[0], img.size[1])
+		wxImg = wx.Image(img.size[0], img.size[1])
+		# wxImg.SetData(img.tostring())
+		wxImg.SetData(img.tobytes())
+		# self.buffer = wx.BitmapFromImage(wxImg)
+		self.buffer = wx.Bitmap(wxImg)
 
 
 	def drawplacidian(self, draw, x, y, clr):
@@ -115,8 +125,10 @@ class CustomerWnd(commonwnd.CommonWnd):
 			if not self.options.speculums[self.speculum][i]:
 				continue
 
-			wsp,hsp = draw.textsize(' ', self.fntText)
-			w,h = draw.textsize(txts[i], self.fntText)
+			# wsp,hsp = draw.textsize(' ', self.fntText)
+			wsp, hsp = get_size(self.fntText, ' ')
+			# w,h = draw.textsize(txts[i], self.fntText)
+			w, h = get_size(self.fntText, txts[i])
 			draw.text((x+2*wsp, y+self.LINE_HEIGHT*j+(self.LINE_HEIGHT-h)/2), txts[i], fill=clrtxt, font=self.fntText)
 
 			data = self.cpt.speculums[self.speculum][i]
@@ -132,10 +144,13 @@ class CustomerWnd(commonwnd.CommonWnd):
 
 				sign = d/chart.Chart.SIGN_DEG
 				pos = d%chart.Chart.SIGN_DEG
-				wsp,hsp = draw.textsize(' ', self.fntText)
-				wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinus)
+				# wsp,hsp = draw.textsize(' ', self.fntText)
+				wsp, hsp = get_size(self.fntText, ' ')
+				# wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinus)
+				wsg, hsg = get_size(self.fntMorinus, self.signs[sign])
 				txt = (str(pos)).rjust(2)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				offs = (self.CELL_WIDTH-w-wsp-wsg)/2
 				draw.text((x+self.CELL_WIDTH+offs, y+self.LINE_HEIGHT*j+(self.LINE_HEIGHT-h)/2), txt, fill=clrtxt, font=self.fntText)
 				draw.text((x+self.CELL_WIDTH+offs+w+wsp, y+self.LINE_HEIGHT*j+(self.LINE_HEIGHT-hsg)/2), self.signs[sign], fill=clrtxt, font=self.fntMorinus)
@@ -144,7 +159,8 @@ class CustomerWnd(commonwnd.CommonWnd):
 				if data < 0.0:
 					sign = '-'
 				txt = sign+(str(d)).rjust(2)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)				
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				offs = (self.CELL_WIDTH-w)/2
 				draw.text((x+self.CELL_WIDTH+offs, y+self.LINE_HEIGHT*j+(self.LINE_HEIGHT-h)/2), txt, fill=clrtxt, font=self.fntText)
 			elif i == customerpd.CustomerPD.RA or i == customerpd.CustomerPD.PMP or i == customerpd.CustomerPD.ADPH or i == customerpd.CustomerPD.POH:
@@ -155,7 +171,8 @@ class CustomerWnd(commonwnd.CommonWnd):
 						txt = (str(d)).rjust(2)+':'+(str(m)).zfill(2)+":"+(str(s)).zfill(2)
 					else:
 						txt = (str(d)).rjust(3)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)				
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				offs = (self.CELL_WIDTH-w)/2
 				draw.text((x+self.CELL_WIDTH+offs, y+self.LINE_HEIGHT*j+(self.LINE_HEIGHT-h)/2), txt, fill=clrtxt, font=self.fntText)
 			elif i == customerpd.CustomerPD.SA or i == customerpd.CustomerPD.MD or i == customerpd.CustomerPD.HD or i == customerpd.CustomerPD.TH or i == customerpd.CustomerPD.HOD or i == customerpd.CustomerPD.AODO:
@@ -177,7 +194,8 @@ class CustomerWnd(commonwnd.CommonWnd):
 					if data < 0.0:
 						sign = 'D'
 				txt = sign+(str(d)).rjust(3)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				offs = (self.CELL_WIDTH-w)/2
 				draw.text((x+self.CELL_WIDTH+offs, y+self.LINE_HEIGHT*j+(self.LINE_HEIGHT-h)/2), txt, fill=clrtxt, font=self.fntText)
 
@@ -210,8 +228,10 @@ class CustomerWnd(commonwnd.CommonWnd):
 			if not self.options.speculums[self.speculum][i]:
 				continue
 
-			wsp,hsp = draw.textsize(' ', self.fntText)
-			w,h = draw.textsize(txts[i], self.fntText)
+			# wsp,hsp = draw.textsize(' ', self.fntText)
+			wsp, hsp = get_size(self.fntText, ' ')
+			# w,h = draw.textsize(txts[i], self.fntText)
+			w, h = get_size(self.fntText, txts[i])
 			draw.text((x+2*wsp, y+self.LINE_HEIGHT*j+(self.LINE_HEIGHT-h)/2), txts[i], fill=clrtxt, font=self.fntText)
 
 			data = self.cpt.speculums[self.speculum][i]
@@ -227,10 +247,13 @@ class CustomerWnd(commonwnd.CommonWnd):
 
 				sign = d/chart.Chart.SIGN_DEG
 				pos = d%chart.Chart.SIGN_DEG
-				wsp,hsp = draw.textsize(' ', self.fntText)
-				wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinus)
+				# wsp,hsp = draw.textsize(' ', self.fntText)
+				wsp, hsp = get_size(self.fntText, ' ')
+				# wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinus)
+				wsg, hsg = get_size(self.fntMorinus, self.signs[sign])
 				txt = (str(pos)).rjust(2)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				offs = (self.CELL_WIDTH-w-wsp-wsg)/2
 				draw.text((x+self.CELL_WIDTH+offs, y+self.LINE_HEIGHT*j+(self.LINE_HEIGHT-h)/2), txt, fill=clrtxt, font=self.fntText)
 				draw.text((x+self.CELL_WIDTH+offs+w+wsp, y+self.LINE_HEIGHT*j+(self.LINE_HEIGHT-hsg)/2), self.signs[sign], fill=clrtxt, font=self.fntMorinus)
@@ -242,7 +265,8 @@ class CustomerWnd(commonwnd.CommonWnd):
 				if data < 0.0:
 					sign = '-'
 				txt = sign+(str(d)).rjust(2)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)				
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				offs = (self.CELL_WIDTH-w)/2
 				draw.text((x+self.CELL_WIDTH+offs, y+self.LINE_HEIGHT*j+(self.LINE_HEIGHT-h)/2), txt, fill=clrtxt, font=self.fntText)
 			elif i == customerpd.CustomerPD.RA or i == customerpd.CustomerPD.ZD or i == customerpd.CustomerPD.POLE or i == customerpd.CustomerPD.W or i == customerpd.CustomerPD.CMP or i == customerpd.CustomerPD.RMP or i == customerpd.CustomerPD.AZM or i == customerpd.CustomerPD.ELV:
@@ -262,7 +286,8 @@ class CustomerWnd(commonwnd.CommonWnd):
 						txt = (str(d)).rjust(2)+':'+(str(m)).zfill(2)+":"+(str(s)).zfill(2)
 					else:
 						txt = (str(d)).rjust(3)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)				
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				offs = (self.CELL_WIDTH-w)/2
 				draw.text((x+self.CELL_WIDTH+offs, y+self.LINE_HEIGHT*j+(self.LINE_HEIGHT-h)/2), txt, fill=clrtxt, font=self.fntText)
 			elif i == customerpd.CustomerPD.RMD or i == customerpd.CustomerPD.RHD:
@@ -277,7 +302,8 @@ class CustomerWnd(commonwnd.CommonWnd):
 						sign = 'D'
 
 				txt = sign+(str(d)).rjust(3)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				offs = (self.CELL_WIDTH-w)/2
 				draw.text((x+self.CELL_WIDTH+offs, y+self.LINE_HEIGHT*j+(self.LINE_HEIGHT-h)/2), txt, fill=clrtxt, font=self.fntText)
 

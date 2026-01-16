@@ -96,6 +96,3 @@ class TransitWnd(wx.Window):
 
     def onSize(self, event):
         self.drawBkg()
-
-
-

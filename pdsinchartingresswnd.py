@@ -85,6 +85,3 @@ class PDsInChartIngressWnd(wx.Window):
 
     def onSize(self, event):
         self.drawBkg()
-
-
-

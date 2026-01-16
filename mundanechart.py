@@ -11,6 +11,11 @@ import common
 import util
 import mtexts
 
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
+
 
 class MundaneChart:
 
@@ -557,8 +562,10 @@ class MundaneChart:
 #                   d = d%chart.Chart.SIGN_DEG
 #                   d, m = util.roundDeg(d%chart.Chart.SIGN_DEG, m, s)
                 
-                    wdeg, hdeg = self.draw.textsize(str(d), self.fntText)
-                    wmin, hmin = self.draw.textsize((str(m).zfill(2)), self.fntSmallText)
+                    # wdeg, hdeg = self.draw.textsize(str(d), self.fntText)
+                    w, h = get_size(self.fntText, str(d))
+                    # wmin, hmin = self.draw.textsize((str(m).zfill(2)), self.fntSmallText)
+                    w, h = get_size(self.fntSmallText, (str(m).zfill(2)))
                     x = cx+math.cos(math.pi+math.radians(-xmp-pshift[i]))*self.rPos
                     y = cy+math.sin(math.pi+math.radians(-xmp-pshift[i]))*self.rPos 
                     xdeg = x-wdeg/2

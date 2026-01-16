@@ -9,6 +9,11 @@ import common
 import util
 import mtexts
 
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
+
 
 class GraphChart2:
 
@@ -692,7 +697,8 @@ class GraphChart2:
             d, m = util.roundDeg(d%chart.Chart.SIGN_DEG, m, s)
 
             degtxt = str(d)+self.deg_symbol
-            wdeg, hdeg = self.draw.textsize(degtxt, self.fntText)
+            # wdeg, hdeg = self.draw.textsize(degtxt, self.fntText)
+            w, h = get_size(self.fntText, degtxt)
             x = cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-self.chart.houses.ascmc[i]))*self.rPosHouses
             y = cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-self.chart.houses.ascmc[i]))*self.rPosHouses
             xdeg = x-wdeg/2
@@ -700,7 +706,8 @@ class GraphChart2:
             self.draw.text((xdeg, ydeg), degtxt, fill=clrpos, font=self.fntText)
 
             mintxt = str(m)+"'"
-            wdeg, hdeg = self.draw.textsize(mintxt, self.fntSmallText2)
+            # wdeg, hdeg = self.draw.textsize(mintxt, self.fntSmallText2)
+            w, h = get_size(self.fntSmallText2, mintxt)
             x = cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-self.chart.houses.ascmc[i]))*self.rPosHousesMin
             y = cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-self.chart.houses.ascmc[i]))*self.rPosHousesMin
             xdeg = x-wdeg/2
@@ -737,7 +744,8 @@ class GraphChart2:
             d, m = util.roundDeg(d%chart.Chart.SIGN_DEG, m, s)
 
             degtxt = str(d)+self.deg_symbol
-            wdeg, hdeg = self.draw.textsize(degtxt, self.fntText)
+            # wdeg, hdeg = self.draw.textsize(degtxt, self.fntText)
+            w, h = get_size(self.fntText, degtxt)
             x = cx+math.cos(math.pi+math.radians(asc-self.chart.houses.cusps[i]))*self.rPosHouses
             y = cy+math.sin(math.pi+math.radians(asc-self.chart.houses.cusps[i]))*self.rPosHouses
             xdeg = x-wdeg/2
@@ -745,7 +753,8 @@ class GraphChart2:
             self.draw.text((xdeg, ydeg), degtxt, fill=clrpos, font=self.fntText)
 
             mintxt = str(m)+"'"
-            wdeg, hdeg = self.draw.textsize(mintxt, self.fntSmallText2)
+            # wdeg, hdeg = self.draw.textsize(mintxt, self.fntSmallText2)
+            w, h = get_size(self.fntSmallText2, mintxt)
             x = cx+math.cos(math.pi+math.radians(asc-self.chart.houses.cusps[i]))*self.rPosHousesMin
             y = cy+math.sin(math.pi+math.radians(asc-self.chart.houses.cusps[i]))*self.rPosHousesMin
             xdeg = x-wdeg/2
@@ -839,7 +848,8 @@ class GraphChart2:
                 d, m = util.roundDeg(d%chart.Chart.SIGN_DEG, m, s)
 
                 degtxt = str(d)+self.deg_symbol
-                wdeg, hdeg = self.draw.textsize(degtxt, self.fntText)
+                # wdeg, hdeg = self.draw.textsize(degtxt, self.fntText)
+                w, h = get_size(self.fntText, degtxt)
                 x = cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-lon-pshift[i]))*self.rPosDeg
                 y = cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-lon-pshift[i]))*self.rPosDeg
                 xdeg = x-wdeg/2
@@ -847,7 +857,8 @@ class GraphChart2:
                 self.draw.text((xdeg, ydeg), degtxt, fill=clrpos, font=self.fntText)
 
                 mintxt = str(m)+"'"
-                wdeg, hdeg = self.draw.textsize(mintxt, self.fntSmallText2)
+                # wdeg, hdeg = self.draw.textsize(mintxt, self.fntSmallText2)
+                w, h = get_size(self.fntSmallText2, mintxt)
                 x = cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-lon-pshift[i]))*self.rPosMin
                 y = cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-lon-pshift[i]))*self.rPosMin
                 xdeg = x-wdeg/2
@@ -864,7 +875,8 @@ class GraphChart2:
                             rfnt = self.fntRetr
 #                           t = 'R'
 
-                        wdeg, hdeg = self.draw.textsize(t, rfnt)
+                        # wdeg, hdeg = self.draw.textsize(t, rfnt)
+                        w, h = get_size(rfnt, t)
                         x = cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-chrt.planets.planets[i].data[planets.Planet.LONG]-pshift[i]))*rRetr
                         y = cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-chrt.planets.planets[i].data[planets.Planet.LONG]-pshift[i]))*rRetr
                         xdeg = x-wdeg/2

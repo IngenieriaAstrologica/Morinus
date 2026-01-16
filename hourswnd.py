@@ -9,6 +9,14 @@ import hours
 import util
 import mtexts
 
+#########################
+# Javier JIPE changed
+#########################
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
+
 
 class HoursWnd(commonwnd.CommonWnd):
 	HOURSPERHALFDAY = 12
@@ -78,7 +86,8 @@ class HoursWnd(commonwnd.CommonWnd):
 		hh, mm, ss = util.decToDeg(jh)
 
 		txt = mtexts.txts['LocalBirthTime']+': '+str(hh)+':'+str(mm).zfill(2)+':'+str(ss).zfill(2)
-		w,h = draw.textsize(txt, self.fntText)
+		# w,h = draw.textsize(txt, self.fntText)
+		w, h = get_size(self.fntText, txt)
 		draw.text((BOR+(self.TITLE_WIDTH-w)/2, BOR+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 
 		if self.chart.time.ph != None:
@@ -91,9 +100,11 @@ class HoursWnd(commonwnd.CommonWnd):
 				txt2 = mtexts.txts['RiseTime']+': '+str(rh)+':'+str(rm).zfill(2)+':'+str(rs).zfill(2)
 				txt1 = mtexts.txts['SetTime']+': '+str(sh)+':'+str(sm).zfill(2)+':'+str(ss).zfill(2)
 
-			w,h = draw.textsize(txt1, self.fntText)
+			# w,h = draw.textsize(txt1, self.fntText)
+			w, h = get_size(self.fntText, txt1)
 			draw.text((BOR+(self.TITLE_WIDTH-w)/2, BOR+self.LINE_HEIGHT+(self.LINE_HEIGHT-h)/2), txt1, fill=txtclr, font=self.fntText)
-			w,h = draw.textsize(txt2, self.fntText)
+			# w,h = draw.textsize(txt2, self.fntText)
+			w, h = get_size(self.fntText, txt2)
 			draw.text((BOR+(self.TITLE_WIDTH-w)/2, BOR+2*self.LINE_HEIGHT+(self.LINE_HEIGHT-h)/2), txt2, fill=txtclr, font=self.fntText)
 
 			x = BOR
@@ -108,9 +119,12 @@ class HoursWnd(commonwnd.CommonWnd):
 			for i in range(int(HoursWnd.HOURSPERHALFDAY)):
 				self.drawline(draw, x, y+i*self.LINE_HEIGHT, tableclr, i)
 
-		wxImg = wx.EmptyImage(img.size[0], img.size[1])
-		wxImg.SetData(img.tostring())
-		self.buffer = wx.BitmapFromImage(wxImg)
+		# wxImg = wx.EmptyImage(img.size[0], img.size[1])
+		wxImg = wx.Image(img.size[0], img.size[1])
+		# wxImg.SetData(img.tostring())
+		wxImg.SetData(img.tobytes())
+		# self.buffer = wx.BitmapFromImage(wxImg)
+		self.buffer = wx.Bitmap(wxImg)
 
 
 	def drawline(self, draw, x, y, clr, idx):
@@ -150,7 +164,8 @@ class HoursWnd(commonwnd.CommonWnd):
 						tclr = self.clrs[dign]
 
 				txtpl = common.common.Planets[planetaryhour] 
-				w,h = draw.textsize(txtpl, self.fntMorinus)
+				# w,h = draw.textsize(txtpl, self.fntMorinus)
+				w, h = get_size(self.fntMorinus, txtpl)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), txtpl, fill=tclr, font=self.fntMorinus)
 			elif i > 1:
 				h, m, s = 0, 0, 0
@@ -160,7 +175,8 @@ class HoursWnd(commonwnd.CommonWnd):
 					h, m, s = self.chart.time.ph.revTime(endtime)
 
 				txt = str(h)+':'+str(m).zfill(2)+':'+str(s).zfill(2)
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 
 				self.begtime = endtime

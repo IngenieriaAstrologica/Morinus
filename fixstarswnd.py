@@ -8,6 +8,14 @@ import fixstars
 import util
 import mtexts
 
+#########################
+# Javier JIPE changed
+#########################
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
+
 
 class FixStarsWnd(commonwnd.CommonWnd):
 
@@ -76,7 +84,8 @@ class FixStarsWnd(commonwnd.CommonWnd):
 		summa = 0
 		offs = (self.BIG_CELL_WIDTH, self.CELL_WIDTH, self.CELL_WIDTH, self.CELL_WIDTH, self.CELL_WIDTH, self.CELL_WIDTH)
 		for i in range(len(txt)):
-			w,h = draw.textsize(txt[i], self.fntText)
+			# w,h = draw.textsize(txt[i], self.fntText)
+			w, h = get_size(self.fntText, txt[i])
 			draw.text((BOR+self.SMALL_CELL_WIDTH+summa+(offs[i]-w)/2, BOR+(self.TITLE_HEIGHT-h)/2), txt[i], fill=txtclr, font=self.fntText)
 			summa += offs[i]
 
@@ -87,9 +96,12 @@ class FixStarsWnd(commonwnd.CommonWnd):
 		for i in range(len(self.chart.fixstars.data)):
 			self.drawline(draw, x, y+i*self.LINE_HEIGHT, tableclr, i)
 
-		wxImg = wx.EmptyImage(img.size[0], img.size[1])
-		wxImg.SetData(img.tostring())
-		self.buffer = wx.BitmapFromImage(wxImg)
+		# wxImg = wx.EmptyImage(img.size[0], img.size[1])
+		wxImg = wx.Image(img.size[0], img.size[1])
+		# wxImg.SetData(img.tostring())
+		wxImg.SetData(img.tobytes())
+		# self.buffer = wx.BitmapFromImage(wxImg)
+		self.buffer = wx.Bitmap(wxImg)
 
 
 	def drawline(self, draw, x, y, clr, idx):
@@ -114,24 +126,29 @@ class FixStarsWnd(commonwnd.CommonWnd):
 
 			if i == 1:
 				txt = str(idx+1)+'.'
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 			elif i == fixstars.FixStars.NAME+OFFS or i == fixstars.FixStars.NOMNAME+OFFS:
 				txt = self.chart.fixstars.data[idx][i-OFFS]
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 			elif i == fixstars.FixStars.LON+OFFS:
 				if self.options.ayanamsha != 0:
 					lona = self.chart.fixstars.data[idx][i-OFFS]-self.chart.ayanamsha
 					lona = util.normalize(lona)
 					d,m,s = util.decToDeg(lona)
-				sign = d/chart.Chart.SIGN_DEG
+				sign = int(d//chart.Chart.SIGN_DEG)
 				pos = d%chart.Chart.SIGN_DEG
-				wsp,hsp = draw.textsize(' ', self.fntText)
+				# wsp,hsp = draw.textsize(' ', self.fntText)
+				wsp, hsp = get_size(self.fntText, ' ')
 				txtsign = self.signs[sign]
-				wsg,hsg = draw.textsize(txtsign, self.fntMorinus)
+				# wsg,hsg = draw.textsize(txtsign, self.fntMorinus)
+				wsg, hsg = get_size(self.fntMorinus, txtsign)
 				txt = (str(pos)).rjust(2)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				offset = (offs[i]-(w+wsp+wsg))/2
 				draw.text((x+summa+offset, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 				draw.text((x+summa+offset+w+wsp, y+(self.LINE_HEIGHT-h)/2), txtsign, fill=txtclr, font=self.fntMorinus)
@@ -140,14 +157,16 @@ class FixStarsWnd(commonwnd.CommonWnd):
 				if self.chart.fixstars.data[idx][i-2] < 0.0:
 					sign = '-'
 				txt = sign+(str(d)).rjust(2)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 			elif i == fixstars.FixStars.RA+OFFS:
 				txt = str(d)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
 				if self.options.intime:
 					d,m,s = util.decToDeg( self.chart.fixstars.data[idx][i-2]/15.0)
 					txt = (str(d)).rjust(2)+':'+(str(m)).zfill(2)+":"+(str(s)).zfill(2)
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 
 			summa += offs[i]

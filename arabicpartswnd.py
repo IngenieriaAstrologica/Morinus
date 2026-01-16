@@ -10,6 +10,11 @@ from PIL import Image, ImageDraw, ImageFont
 import util
 import mtexts
 
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
+
 
 class ArabicPartsWnd(commonwnd.CommonWnd):
 
@@ -79,7 +84,8 @@ class ArabicPartsWnd(commonwnd.CommonWnd):
 		draw.rectangle(((BOR, BOR),(BOR+self.TITLE_WIDTH, BOR+self.TITLE_HEIGHT)), outline=(tableclr), fill=(self.bkgclr))
 		txts = (mtexts.txts['Name'], mtexts.txts['Formula'], mtexts.txts['Longitude'], mtexts.txts['Almuten'])
 		for i in range(len(txts)):
-			w,h = draw.textsize(txts[i], self.fntText)
+			# w,h = draw.textsize(txts[i], self.fntText)
+			w, h = get_size(self.fntText, txts[i])
 			draw.text((BOR+(self.CELL_WIDTH)*i+(self.CELL_WIDTH-w)/2, BOR+(self.TITLE_HEIGHT-h)/2), txts[i], fill=txtclr, font=self.fntText)
 
 		#Parts
@@ -94,9 +100,12 @@ class ArabicPartsWnd(commonwnd.CommonWnd):
 				y = BOR+self.TITLE_HEIGHT+self.SPACE_TITLEY+(self.LINE_HEIGHT)*(i+1)
 				self.drawline(draw, x, y, self.chart.parts.parts, tableclr, i)
 
-		wxImg = wx.EmptyImage(img.size[0], img.size[1])
-		wxImg.SetData(img.tostring())
-		self.buffer = wx.BitmapFromImage(wxImg)
+		# wxImg = wx.EmptyImage(img.size[0], img.size[1])
+		wxImg = wx.Image(img.size[0], img.size[1])
+		# wxImg.SetData(img.tostring())
+		wxImg.SetData(img.tobytes())
+		# self.buffer = wx.BitmapFromImage(wxImg)
+		self.buffer = wx.Bitmap(wxImg)
 
 
 	def drawlinelof(self, draw, x, y, name, data, clr):
@@ -116,7 +125,8 @@ class ArabicPartsWnd(commonwnd.CommonWnd):
 			draw.line((x+summa+offs[i], y, x+summa+offs[i], y+self.LINE_HEIGHT), fill=clr)
 
 			if i == 1:
-				w,h = draw.textsize(name, self.fntText)
+				# w,h = draw.textsize(name, self.fntText)
+				w, h = get_size(self.fntText, name)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), name, fill=txtclr, font=self.fntText)
 			elif i == 2:
 				formula = u''
@@ -143,7 +153,8 @@ class ArabicPartsWnd(commonwnd.CommonWnd):
 						B = tmp
 					formula = A+u' + '+B+u' - '+C
 
-				w,h = draw.textsize(formula, self.fntText)
+				# w,h = draw.textsize(formula, self.fntText)
+				w, h = get_size(self.fntText, formula)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), formula, fill=txtclr, font=self.fntText)
 			elif i == 3:
 				lon = data[i-3]
@@ -152,13 +163,16 @@ class ArabicPartsWnd(commonwnd.CommonWnd):
 					lon = util.normalize(lon)
 				d,m,s = util.decToDeg(lon)
 
-				sign = d/chart.Chart.SIGN_DEG
+				sign = int(d//chart.Chart.SIGN_DEG)
 				pos = d%chart.Chart.SIGN_DEG
-				wsp,hsp = draw.textsize(' ', self.fntText)
+				# wsp,hsp = draw.textsize(' ', self.fntText)
+				wsp, hsp = get_size(self.fntText, ' ')
 				txtsign = self.signs[sign]
-				wsg,hsg = draw.textsize(txtsign, self.fntMorinus)
+				# wsg,hsg = draw.textsize(txtsign, self.fntMorinus)
+				wsg, hsg = get_size(self.fntMorinus, txtsign)
 				txt = (str(pos)).rjust(2)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				offset = (offs[i]-(w+wsp+wsg))/2
 				draw.text((x+summa+offset, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 				draw.text((x+summa+offset+w+wsp, y+(self.LINE_HEIGHT-h)/2), txtsign, fill=txtclr, font=self.fntMorinus)
@@ -186,7 +200,8 @@ class ArabicPartsWnd(commonwnd.CommonWnd):
 
 			if i == arabicparts.ArabicParts.NAME:
 				name = data[idx][i]
-				w,h = draw.textsize(name, self.fntText)
+				# w,h = draw.textsize(name, self.fntText)
+				w, h = get_size(self.fntText, name)
 				draw.text((x+summa+(offs[i+1]-w)/2, y+(self.LINE_HEIGHT-h)/2), data[idx][i], fill=txtclr, font=self.fntText)
 			elif i == arabicparts.ArabicParts.FORMULA:
 				A = mtexts.partstxts[data[idx][1][0]]
@@ -200,7 +215,8 @@ class ArabicPartsWnd(commonwnd.CommonWnd):
 
 				formula = A+u' + '+B+u' - '+C
 
-				w,h = draw.textsize(formula, self.fntText)
+				# w,h = draw.textsize(formula, self.fntText)
+				w, h = get_size(self.fntText, formula)
 				draw.text((x+summa+self.CELL_WIDTH+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), formula, fill=txtclr, font=self.fntText)
 			elif i == arabicparts.ArabicParts.LONG:
 				lon = data[idx][i]
@@ -211,11 +227,14 @@ class ArabicPartsWnd(commonwnd.CommonWnd):
 
 				sign = d/chart.Chart.SIGN_DEG
 				pos = d%chart.Chart.SIGN_DEG
-				wsp,hsp = draw.textsize(' ', self.fntText)
+				# wsp,hsp = draw.textsize(' ', self.fntText)
+				wsp, hsp = get_size(self.fntText, ' ')
 				txtsign = self.signs[sign]
-				wsg,hsg = draw.textsize(txtsign, self.fntMorinus)
+				# wsg,hsg = draw.textsize(txtsign, self.fntMorinus)
+				wsg, hsg = get_size(self.fntMorinus, txtsign)
 				txt = (str(pos)).rjust(2)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				offset = (offs[i]-(w+wsp+wsg))/2
 				draw.text((x+summa+offset, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 				draw.text((x+summa+offset+w+wsp, y+(self.LINE_HEIGHT-h)/2), txtsign, fill=txtclr, font=self.fntMorinus)
@@ -233,11 +252,14 @@ class ArabicPartsWnd(commonwnd.CommonWnd):
 			pid = degwinner[i][j][0]
 			if pid != -1:
 				ptxt = common.common.Planets[pid]
-				wpl,hpl = draw.textsize(ptxt, self.fntMorinus)
+				# wpl,hpl = draw.textsize(ptxt, self.fntMorinus)
+				wpl, hpl = get_size(self.fntMorinus, ptxt)
 				sco = degwinner[i][0][1]
 				txt = '('+str(sco)+')'
-				w,h = draw.textsize(txt, self.fntText)
-				wsp,hsp = draw.textsize(' ', self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
+				# wsp,hsp = draw.textsize(' ', self.fntText)
+				wsp, hsp = get_size(self.fntText, ' ')
 				aux[j][0] = pid
 				aux[j][1] = sco
 				aux[j][2] = wpl+wsp+w
@@ -257,10 +279,13 @@ class ArabicPartsWnd(commonwnd.CommonWnd):
 						dign = self.chart.dignity(aux[j][0])
 						clr = self.clrs[dign]
 				pltxt = common.common.Planets[aux[j][0]]
-				wpl,hpl = draw.textsize(pltxt, self.fntMorinus)
+				# wpl,hpl = draw.textsize(pltxt, self.fntMorinus)
+				wpl, hpl = get_size(self.fntMorinus, pltxt)
 				txt = '('+str(aux[j][1])+')'
-				wsp,hsp = draw.textsize(' ', self.fntText)
-				w,h = draw.textsize(txt, self.fntText)
+				# wsp,hsp = draw.textsize(' ', self.fntText)
+				wsp, hsp = get_size(self.fntText, ' ')
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				prev = 0
 				for p in range(j):
 					prev += aux[j][2]+wsp
@@ -280,11 +305,14 @@ class ArabicPartsWnd(commonwnd.CommonWnd):
 			pid = degwinner[j][0]
 			if pid != -1:
 				ptxt = common.common.Planets[pid]
-				wpl,hpl = draw.textsize(ptxt, self.fntMorinus)
+				# wpl,hpl = draw.textsize(ptxt, self.fntMorinus)
+				wpl, hpl = get_size(self.fntMorinus, ptxt)
 				sco = degwinner[0][1]
 				txt = '('+str(sco)+')'
-				w,h = draw.textsize(txt, self.fntText)
-				wsp,hsp = draw.textsize(' ', self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
+				# wsp,hsp = draw.textsize(' ', self.fntText)
+				wsp, hsp = get_size(self.fntText, ' ')
 				aux[j][0] = pid
 				aux[j][1] = sco
 				aux[j][2] = wpl+wsp+w
@@ -304,10 +332,13 @@ class ArabicPartsWnd(commonwnd.CommonWnd):
 						dign = self.chart.dignity(aux[j][0])
 						clr = self.clrs[dign]
 				pltxt = common.common.Planets[aux[j][0]]
-				wpl,hpl = draw.textsize(pltxt, self.fntMorinus)
+				# wpl,hpl = draw.textsize(pltxt, self.fntMorinus)
+				wpl, hpl = get_size(self.fntMorinus, pltxt)
 				txt = '('+str(aux[j][1])+')'
-				wsp,hsp = draw.textsize(' ', self.fntText)
-				w,h = draw.textsize(txt, self.fntText)
+				# wsp,hsp = draw.textsize(' ', self.fntText)
+				wsp, hsp = get_size(self.fntText, ' ')
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				prev = 0
 				for p in range(j):
 					prev += aux[j][2]+wsp

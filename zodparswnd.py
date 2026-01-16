@@ -10,6 +10,14 @@ from PIL import Image, ImageDraw, ImageFont
 import util
 import mtexts
 
+#########################
+# Javier JIPE changed
+#########################
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
+
 
 class ZodParsWnd(commonwnd.CommonWnd):
 
@@ -92,12 +100,14 @@ class ZodParsWnd(commonwnd.CommonWnd):
 		draw.rectangle(((BOR+self.SMALL_CELL_WIDTH, BOR),(BOR+self.SMALL_CELL_WIDTH+self.TITLE_WIDTH, BOR+self.TITLE_HEIGHT)), outline=(tableclr), fill=(self.bkgclr))
 
 		txt = mtexts.txts['ZodPars']
-		w,h = draw.textsize(txt, self.fntText)
+		# w,h = draw.textsize(txt, self.fntText)
+		w, h = get_size(self.fntText, txt)
 		draw.text((BOR+self.SMALL_CELL_WIDTH+self.CELL_WIDTH/2+self.CELL_WIDTH+(self.CELL_WIDTH-w)/2, BOR+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 
 		txt = (mtexts.txts['Parallel'], mtexts.txts['ContraParallel'])
 		for i in range(len(txt)):
-			w,h = draw.textsize(txt[i], self.fntText)
+			# w,h = draw.textsize(txt[i], self.fntText)
+			w, h = get_size(self.fntText, txt[i])
 			offs = self.CELL_WIDTH/2
 			if i != 0:
 				offs += self.CELL_WIDTH
@@ -116,9 +126,12 @@ class ZodParsWnd(commonwnd.CommonWnd):
 			self.drawline(draw, x, y+ii*self.LINE_HEIGHT, i, txts, self.pars[i].pts, tableclr)
 			ii += 1
 
-		wxImg = wx.EmptyImage(img.size[0], img.size[1])
-		wxImg.SetData(img.tostring())
-		self.buffer = wx.BitmapFromImage(wxImg)
+		# wxImg = wx.EmptyImage(img.size[0], img.size[1])
+		wxImg = wx.Image(img.size[0], img.size[1])
+		# wxImg.SetData(img.tostring())
+		wxImg.SetData(img.tobytes())
+		# self.buffer = wx.BitmapFromImage(wxImg)
+		self.buffer = wx.Bitmap(wxImg)
 
 
 	def drawline(self, draw, x, y, idx, txt, data, clr):
@@ -142,7 +155,8 @@ class ZodParsWnd(commonwnd.CommonWnd):
 				dign = self.chart.dignity(idx)
 				clr = self.clrs[dign]
 
-		w,h = draw.textsize(txt[idx], self.fntMorinus)
+		# w,h = draw.textsize(txt[idx], self.fntMorinus)
+		w, h = get_size(self.fntMorinus, txt[idx])
 		offset = (self.SMALL_CELL_WIDTH-w)/2
 		draw.text((x+offset, y+(self.LINE_HEIGHT-h)/2), txt[idx], fill=clr, font=self.fntMorinus)
 
@@ -184,18 +198,17 @@ class ZodParsWnd(commonwnd.CommonWnd):
 				lona = util.normalize(lona)
 				d,m,s = util.decToDeg(lona)
 
-			sign = d/chart.Chart.SIGN_DEG
+			sign = int(d//chart.Chart.SIGN_DEG)
 			pos = d%chart.Chart.SIGN_DEG
-			wsp,hsp = draw.textsize(' ', self.fntText)
-			wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinus)
+			# wsp,hsp = draw.textsize(' ', self.fntText)
+			wsp, hsp = get_size(self.fntText, ' ')
+			# wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinus)
+			wsg, hsg = get_size(self.fntMorinus, self.signs[sign])
 			txt = (str(pos)).rjust(2)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-			w,h = draw.textsize(txt, self.fntText)
+			# w,h = draw.textsize(txt, self.fntText)
+			w, h = get_size(self.fntText, txt)
 			offset = (offs[i]-(w+wsp+wsg))/2
 			draw.text((x+self.SMALL_CELL_WIDTH+summa+offset, y+(self.LINE_HEIGHT-h)/2), txt, fill=clr, font=self.fntText)
 			draw.text((x+self.SMALL_CELL_WIDTH+summa+offset+w+wsp, y+(self.LINE_HEIGHT-hsg)/2), self.signs[sign], fill=clr, font=self.fntMorinus)
 
 			summa += offs[i]
-
-
-
-

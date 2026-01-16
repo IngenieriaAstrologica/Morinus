@@ -11,6 +11,11 @@ from PIL import Image, ImageDraw, ImageFont
 import util
 import mtexts
 
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
+
 
 class SquareChart:
     SMALL_SIZE = 400
@@ -188,11 +193,14 @@ class SquareChart:
         ar = (1, 4, 2, 5, 3, 6, 0)
         if self.chart.time.ph != None:
             draw.text((x,y+7*self.LINE_HEIGHT), common.common.Planets[ar[self.chart.time.ph.weekday]], fill=txtclr, font=self.fntMorinus)
-            wsym,hsym = draw.textsize(common.common.Planets[ar[self.chart.time.ph.weekday]], self.fntMorinus)
-            wsp,hsp = draw.textsize(' ', self.fntText)
+            # wsym,hsym = draw.textsize(common.common.Planets[ar[self.chart.time.ph.weekday]], self.fntMorinus)
+            w, h = get_size(self.fntMorinus, common.common.Planets[ar[self.chart.time.ph.weekday]])
+            # wsp,hsp = draw.textsize(' ', self.fntText)
+            w, h = get_size(self.fntText, ' ')
             draw.text((x+wsym+wsp,y+7*self.LINE_HEIGHT), mtexts.txts['Day'], fill=txtclr, font=self.fntText)
             draw.text((x,y+8*self.LINE_HEIGHT), common.common.Planets[self.chart.time.ph.planetaryhour], fill=txtclr, font=self.fntMorinus)
-            wsym,hsym = draw.textsize(common.common.Planets[self.chart.time.ph.planetaryhour], self.fntMorinus)
+            # wsym,hsym = draw.textsize(common.common.Planets[self.chart.time.ph.planetaryhour], self.fntMorinus)
+            w, h = get_size(self.fntMorinus, common.common.Planets[self.chart.time.ph.planetaryhour])
             draw.text((x+wsym+wsp,y+8*self.LINE_HEIGHT), mtexts.txts['Hour'], fill=txtclr, font=self.fntText)
 
         ar = (((cx-3*radius/4-3*self.fontSize/2, cy-radius/3+self.fontSize), (cx-3*radius/4-self.fontSize/2, cy-radius/3), (cx-3*radius/4+self.fontSize/2, cy-radius/3-self.fontSize/2)), ((cx-3*radius/4-self.fontSize, cy+radius/3-3*self.fontSize), (cx-3*radius/4, cy+radius/3-2*self.fontSize-self.fontSize/4), (cx-3*radius/4+self.fontSize, cy+radius/3-self.fontSize)), ((cx-3*radius/4-5*self.fontSize/2, cy+3*radius/4+4*self.fontSize/5), (cx-3*radius/4-3*self.fontSize/2, cy+3*radius/4-self.fontSize/5), (cx-3*radius/4-self.fontSize/2, cy+3*radius/4-4*self.fontSize/5)), ((cx-radius/4-2*self.fontSize, cy+3*radius/4-self.fontSize), (cx-radius/4-self.fontSize, cy+3*radius/4-self.fontSize/4), (cx-radius/4, cy+3*radius/4+self.fontSize)), ((cx+radius/4-5*self.fontSize/2, cy+3*radius/4+4*self.fontSize/5), (cx+radius/4-3*self.fontSize/2, cy+3*radius/4-self.fontSize/5), (cx+radius/4-self.fontSize/2, cy+3*radius/4-4*self.fontSize/5)), ((cx+3*radius/4-2*self.fontSize, cy+3*radius/4-self.fontSize), (cx+3*radius/4-self.fontSize, cy+3*radius/4-self.fontSize/4), (cx+3*radius/4, cy+3*radius/4+self.fontSize)), ((cx+3*radius/4-3*self.fontSize/4, cy+radius/3-self.fontSize/2), (cx+3*radius/4+self.fontSize/4, cy+radius/3-3*self.fontSize/2), (cx+3*radius/4+5*self.fontSize/4, cy+radius/3-9*self.fontSize/4)), ((cx+3*radius/4-3*self.fontSize/2, cy-radius/3+self.fontSize), (cx+3*radius/4-self.fontSize/4, cy-radius/3+7*self.fontSize/4), (cx+3*radius/4+3*self.fontSize/4, cy-radius/3+11*self.fontSize/4)), ((cx+3*radius/4-self.fontSize, cy-3*radius/4+self.fontSize), (cx+3*radius/4, cy-3*radius/4), (cx+3*radius/4+self.fontSize, cy-3*radius/4-3*self.fontSize/4)), ((cx+radius/4-self.fontSize/4, cy-3*radius/4-self.fontSize), (cx+radius/4+3*self.fontSize/4, cy-3*radius/4-self.fontSize/4), (cx+radius/4+7*self.fontSize/4, cy-3*radius/4+self.fontSize)), ((cx-radius/4-self.fontSize, cy-3*radius/4+self.fontSize), (cx-radius/4, cy-3*radius/4), (cx-radius/4+self.fontSize, cy-3*radius/4-3*self.fontSize/4)), ((cx-3*radius/4, cy-3*radius/4-self.fontSize), (cx-3*radius/4+self.fontSize, cy-3*radius/4), (cx-3*radius/4+2*self.fontSize, cy-3*radius/4+5*self.fontSize/4)))
@@ -247,8 +255,10 @@ class SquareChart:
                     pl = common.common.Planets[idxpl]
                 else:
                     pl = common.common.fortune
-                wpl,hpl = draw.textsize('F', self.fntMorinusSmall)
-                wpl2,hpl2 = draw.textsize(pl, self.fntMorinusSmall)
+                # wpl,hpl = draw.textsize('F', self.fntMorinusSmall)
+                w, h = get_size(self.fntMorinusSmall, 'F')
+                # wpl2,hpl2 = draw.textsize(pl, self.fntMorinusSmall)
+                w, h = get_size(self.fntMorinusSmall, pl)
 
                 clrpl = (0,0,0)
                 if not self.bw:
@@ -268,8 +278,10 @@ class SquareChart:
 
                 draw.text((x, y+lhoffs[i]), pl, fill=clrpl, font=self.fntMorinusSmall)
 
-                wr,hr = draw.textsize('R', self.fntTextSmaller)
-                wsp,hsp = draw.textsize(' ', self.fntTextSmall)
+                # wr,hr = draw.textsize('R', self.fntTextSmaller)
+                w, h = get_size(self.fntTextSmaller, 'R')
+                # wsp,hsp = draw.textsize(' ', self.fntTextSmall)
+                w, h = get_size(self.fntTextSmall, ' ')
                 if idxpl < planets.Planets.PLANETS_NUM:
                     speed = self.chart.planets.planets[idxpl].data[planets.Planet.SPLON]
                     if speed <= 0.0:
@@ -283,9 +295,12 @@ class SquareChart:
 
                 txtdeg = (str(pos)).zfill(2)+self.deg_symbol
                 txtmin = (str(m)).zfill(2)+"'"
-                wdeg,hdeg = draw.textsize(txtdeg, self.fntTextSmall)
-                wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinusSmall)
-                wmin,hmin = draw.textsize(txtmin, self.fntTextSmaller)
+                # wdeg,hdeg = draw.textsize(txtdeg, self.fntTextSmall)
+                w, h = get_size(self.fntTextSmall, txtdeg)
+                # wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinusSmall)
+                w, h = get_size(self.fntMorinusSmall, self.signs[sign])
+                # wmin,hmin = draw.textsize(txtmin, self.fntTextSmaller)
+                w, h = get_size(self.fntTextSmaller, txtmin)
                 draw.text((x+wpl+wr+wsp, y+lhoffs[i]), txtdeg, fill=clrpl, font=self.fntTextSmall)
                 draw.text((x+wpl+wr+wsp+wdeg, y+lhoffs[i]), self.signs[sign], fill=clrpl, font=self.fntMorinusSmall)
                 draw.text((x+wpl+wr+wsp+wdeg+wsp+wsg, y+lhoffs[i]), txtmin, fill=clrpl, font=self.fntTextSmaller)

@@ -7,6 +7,11 @@ import Image, ImageDraw, ImageFont
 import util
 import mtexts
 
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
+
 
 class AsteroidsWnd(commonwnd.CommonWnd):
 
@@ -71,7 +76,8 @@ class AsteroidsWnd(commonwnd.CommonWnd):
 		txt = (mtexts.txts['Longitude'], mtexts.txts['Latitude'], mtexts.txts['Rectascension'], mtexts.txts['Declination'])
 
 		for i in range(len(txt)):
-			w,h = draw.textsize(txt[i], self.fntText)
+			# w,h = draw.textsize(txt[i], self.fntText)
+			w, h = get_size(self.fntText, txt[i])
 			draw.text((BOR+self.CELL_WIDTH*(i+1)+(self.CELL_WIDTH-w)/2, BOR+(self.TITLE_HEIGHT-h)/2), txt[i], fill=txtclr, font=self.fntText)
 
 		x = BOR
@@ -81,9 +87,12 @@ class AsteroidsWnd(commonwnd.CommonWnd):
 		for i in range(len(self.chart.asteroids.asteroids)):
 			self.drawline(draw, x, y+i*self.LINE_HEIGHT, self.chart.asteroids.asteroids[i].name, self.chart.asteroids.asteroids[i].data, tableclr, i)
 
-		wxImg = wx.EmptyImage(img.size[0], img.size[1])
-		wxImg.SetData(img.tostring())
-		self.buffer = wx.BitmapFromImage(wxImg)
+		# wxImg = wx.EmptyImage(img.size[0], img.size[1])
+		wxImg = wx.Image(img.size[0], img.size[1])
+		# wxImg.SetData(img.tostring())
+		wxImg.SetData(img.tobytes())
+		# self.buffer = wx.BitmapFromImage(wxImg)
+		self.buffer = wx.Bitmap(wxImg)
 
 
 	def drawline(self, draw, x, y, name, data, clr, idx):
@@ -106,7 +115,8 @@ class AsteroidsWnd(commonwnd.CommonWnd):
 				d,m,s = util.decToDeg(data[i-2])
 
 			if i == 1:
-				w,h = draw.textsize(name, self.fntText)
+				# w,h = draw.textsize(name, self.fntText)
+				w, h = get_size(self.fntText, name)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), name, fill=txtclr, font=self.fntText)
 			elif i == 2:
 				if self.options.ayanamsha != 0:
@@ -116,11 +126,14 @@ class AsteroidsWnd(commonwnd.CommonWnd):
 
 				sign = d/chart.Chart.SIGN_DEG
 				pos = d%chart.Chart.SIGN_DEG
-				wsp,hsp = draw.textsize(' ', self.fntText)
+				# wsp,hsp = draw.textsize(' ', self.fntText)
+				wsp, hsp = get_size(self.fntText, ' ')
 				txtsign = self.signs[sign]
-				wsg,hsg = draw.textsize(txtsign, self.fntMorinus)
+				# wsg,hsg = draw.textsize(txtsign, self.fntMorinus)
+				wsg, hsg = get_size(self.fntMorinus, txtsign)
 				txt = (str(pos)).rjust(2)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				offset = (offs[i]-(w+wsp+wsg))/2
 				draw.text((x+summa+offset, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 				draw.text((x+summa+offset+w+wsp, y+(self.LINE_HEIGHT-h)/2), txtsign, fill=txtclr, font=self.fntMorinus)
@@ -129,14 +142,16 @@ class AsteroidsWnd(commonwnd.CommonWnd):
 				if data[i-2] < 0.0:
 					sign = '-'
 				txt = sign+(str(d)).rjust(2)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 			elif i == 4:
 				txt = str(d)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
 				if self.options.intime:
 					d,m,s = util.decToDeg(data[i-2]/15.0)
 					txt = (str(d)).rjust(2)+':'+(str(m)).zfill(2)+":"+(str(s)).zfill(2)
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 
 			summa += offs[i]
