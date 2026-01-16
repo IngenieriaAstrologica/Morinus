@@ -14,6 +14,14 @@ from PIL import Image, ImageDraw, ImageFont
 import util
 import mtexts
 
+#########################
+# Javier JIPE changed
+#########################
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
+
 
 class ProfectionsWnd(commonwnd.CommonWnd):
 	AGE, DATE, ASC, MC, SUN, MOON, FORTUNE, MERCURY, VENUS, MARS, JUPITER, SATURN, URANUS, NEPTUNE, PLUTO = range(0, 15)
@@ -120,7 +128,8 @@ class ProfectionsWnd(commonwnd.CommonWnd):
 		#LeftClick
 		txt = mtexts.txts['LeftClick']
 		fnt = self.fntText
-		w,h = draw.textsize(txt, fnt)
+		# w,h = draw.textsize(txt, fnt)
+		w, h = get_size(fnt, txt)
 		draw.text((BOR, BOR+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=fnt)
 
 		#Title
@@ -143,7 +152,8 @@ class ProfectionsWnd(commonwnd.CommonWnd):
 					if i > 3:
 						tclr = self.options.clrperegrin
 
-			w,h = draw.textsize(txt[i], fnt)
+			# w,h = draw.textsize(txt[i], fnt)
+			w, h = get_size(fnt, txt[i])
 			clr = txtclr
 			if i > 3:
 				clr = tclr
@@ -157,9 +167,12 @@ class ProfectionsWnd(commonwnd.CommonWnd):
 		for i in range(self.LINE_NUM):
 			self.drawline(draw, x, y+i*self.LINE_HEIGHT, tableclr, self.pcharts[i], self.age, i)
 
-		wxImg = wx.EmptyImage(img.size[0], img.size[1])
-		wxImg.SetData(img.tostring())
-		self.buffer = wx.BitmapFromImage(wxImg)
+		# wxImg = wx.EmptyImage(img.size[0], img.size[1])
+		wxImg = wx.Image(img.size[0], img.size[1])
+		# wxImg.SetData(img.tostring())
+		wxImg.SetData(img.tobytes())
+		# self.buffer = wx.BitmapFromImage(wxImg)
+		self.buffer = wx.Bitmap(wxImg)
 
 
 	def drawline(self, draw, x, y, clr, pcharts, age, idx):
@@ -181,11 +194,13 @@ class ProfectionsWnd(commonwnd.CommonWnd):
 
 			if i == ProfectionsWnd.AGE:
 				txt = str(age+idx)
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=tclr, font=self.fntText)
 			elif i == ProfectionsWnd.DATE:
 				txt = str(pcharts[1])+'.'+str(pcharts[2]).zfill(2)+'.'+str(pcharts[3]).zfill(2)+'.'
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=tclr, font=self.fntText)
 			else:
 				if i == ProfectionsWnd.ASC:
@@ -206,17 +221,15 @@ class ProfectionsWnd(commonwnd.CommonWnd):
 				d,m,s = util.decToDeg(lon)
 				sign = d/chart.Chart.SIGN_DEG
 				pos = d%chart.Chart.SIGN_DEG
-				wsp,hsp = draw.textsize(' ', self.fntText)
-				wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinus)
+				# wsp,hsp = draw.textsize(' ', self.fntText)
+				wsp, hsp = get_size(self.fntText, ' ')
+				# wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinus)
+				wsg, hsg = get_size(self.fntMorinus, self.signs[sign])
 				txt = (str(pos)).rjust(2)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				offset = (offs[i]-(w+wsp+wsg))/2
 				draw.text((x+summa+offset, y+(self.LINE_HEIGHT-h)/2), txt, fill=tclr, font=self.fntText)
 				draw.text((x+summa+offset+w+wsp, y+(self.LINE_HEIGHT-hsg)/2), self.signs[sign], fill=tclr, font=self.fntMorinus)
 
 			summa += offs[i]
-
-
-
-
-

@@ -10,6 +10,12 @@ from PIL import Image, ImageDraw, ImageFont
 import util
 import mtexts
 
+#########################
+# Javier JIPE changed
+#########################
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
 
 class DodecatemoriaWnd(commonwnd.CommonWnd):
 
@@ -96,7 +102,8 @@ class DodecatemoriaWnd(commonwnd.CommonWnd):
 			txtclr = self.options.clrtexts
 		txt = (mtexts.txts['Dodecatemorion'], "")
 		for i in range(len(txt)):
-			w,h = draw.textsize(txt[i], self.fntText)
+			# w,h = draw.textsize(txt[i], self.fntText)
+			w, h = get_size(self.fntText, txt[i])
 			offs = 0
 			if i == 1:
 				offs = self.CELL_WIDTH
@@ -104,7 +111,8 @@ class DodecatemoriaWnd(commonwnd.CommonWnd):
 
 		txt = (mtexts.txts['Longitude'], mtexts.txts['Latitude'])
 		for i in range(len(txt)):
-			w,h = draw.textsize(txt[i], self.fntText)
+			# w,h = draw.textsize(txt[i], self.fntText)
+			w, h = get_size(self.fntText, txt[i])
 			draw.text((BOR+self.SMALL_CELL_WIDTH+self.CELL_WIDTH*i+(self.CELL_WIDTH-w)/2, BOR+self.LINE_HEIGHT+(self.LINE_HEIGHT-h)/2), txt[i], fill=txtclr, font=self.fntText)
 
 		x = BOR
@@ -124,9 +132,12 @@ class DodecatemoriaWnd(commonwnd.CommonWnd):
 			self.drawline(draw, x, y+i*self.LINE_HEIGHT, txts[j], tableclr, data[j], j, ascmc)
 			i += 1
 
-		wxImg = wx.EmptyImage(img.size[0], img.size[1])
-		wxImg.SetData(img.tostring())
-		self.buffer = wx.BitmapFromImage(wxImg)
+		# wxImg = wx.EmptyImage(img.size[0], img.size[1])
+		wxImg = wx.Image(img.size[0], img.size[1])
+		# wxImg.SetData(img.tostring())
+		wxImg.SetData(img.tobytes())
+		# self.buffer = wx.BitmapFromImage(wxImg)
+		self.buffer = wx.Bitmap(wxImg)
 
 
 	def drawline(self, draw, x, y, txt, clr, data, idx, AscMC):
@@ -160,7 +171,8 @@ class DodecatemoriaWnd(commonwnd.CommonWnd):
 		fnt = self.fntMorinus
 		if AscMC:
 			fnt = self.fntSymbol
-		w,h = draw.textsize(txt, fnt)
+		# w,h = draw.textsize(txt, fnt)
+		w, h = get_size(fnt, txt)
 		offset = (self.SMALL_CELL_WIDTH-w)/2
 		draw.text((x+offset, y+(self.LINE_HEIGHT-h)/2), txt, fill=clr, font=fnt)
 
@@ -176,12 +188,15 @@ class DodecatemoriaWnd(commonwnd.CommonWnd):
 					lona = util.normalize(lona)
 					d,m,s = util.decToDeg(lona)
 
-				sign = d/chart.Chart.SIGN_DEG
+				sign = int(d//chart.Chart.SIGN_DEG)
 				pos = d%chart.Chart.SIGN_DEG
-				wsp,hsp = draw.textsize(' ', self.fntText)
-				wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinus)
+				# wsp,hsp = draw.textsize(' ', self.fntText)
+				wsp, hsp = get_size(self.fntText, ' ')
+				# wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinus)
+				wsg, hsg = get_size(self.fntMorinus, self.signs[sign])
 				txt = (str(pos)).rjust(2)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				offset = (offs[i]-(w+wsp+wsg))/2
 				draw.text((x+self.SMALL_CELL_WIDTH+summa+offset, y+(self.LINE_HEIGHT-h)/2), txt, fill=clr, font=self.fntText)
 				draw.text((x+self.SMALL_CELL_WIDTH+summa+offset+w+wsp, y+(self.LINE_HEIGHT-hsg)/2), self.signs[sign], fill=clr, font=self.fntMorinus)
@@ -190,12 +205,9 @@ class DodecatemoriaWnd(commonwnd.CommonWnd):
 				if data[i] < 0.0:
 					sign = '-'
 				txt = sign+(str(d)).rjust(2)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)				
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				offset = (offs[i]-w)/2
 				draw.text((x+self.SMALL_CELL_WIDTH+summa+offset, y+(self.LINE_HEIGHT-h)/2), txt, fill=clr, font=self.fntText)
 
 			summa += offs[i]
-
-
-
-

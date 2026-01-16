@@ -12,6 +12,11 @@ from PIL import Image, ImageDraw, ImageFont
 import util
 import mtexts
 
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
+
 
 class AlmutenTopicalsWnd(commonwnd.CommonWnd):
 
@@ -106,11 +111,13 @@ class AlmutenTopicalsWnd(commonwnd.CommonWnd):
 					dign = self.chart.dignity(i)
 					clr = self.clrs[dign]
 			txt = common.common.Planets[i]
-			w,h = draw.textsize(txt, self.fntMorinus)
+			# w,h = draw.textsize(txt, self.fntMorinus)
+			w, h = get_size(self.fntMorinus, txt)
 			draw.text((x+i*self.CELL_WIDTH+(self.CELL_WIDTH-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=clr, font=self.fntMorinus)
 
 		txt = mtexts.txts['DegreeWins']
-		w,h = draw.textsize(txt, self.fntText)
+		# w,h = draw.textsize(txt, self.fntText)
+		w, h = get_size(self.fntText, txt)
 		draw.text((x+7*self.CELL_WIDTH+(self.DEGREEWINS_CELL_WIDTH-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 
 		x = BOR
@@ -121,24 +128,29 @@ class AlmutenTopicalsWnd(commonwnd.CommonWnd):
 
 			for j in range(astrology.SE_SATURN+1):
 				txt = self.chart.almutens.topicals.data[self.idx][j][i][0]
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				draw.text((x+self.LONGITUDE_CELL_WIDTH+j*self.CELL_WIDTH+(self.CELL_WIDTH-w)/2, y+i*self.LINE_HEIGHT+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 
 		x = BOR
 		y = BOR+self.TITLE_HEIGHT+self.LINE_NUM*self.LINE_HEIGHT
 		txt = mtexts.txts['TotalShares1']
-		w,h = draw.textsize(txt, self.fntText)
+		# w,h = draw.textsize(txt, self.fntText)
+		w, h = get_size(self.fntText, txt)
 		draw.text((x+(self.LONGITUDE_CELL_WIDTH-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 		txt = mtexts.txts['TotalShares2']
-		w,h = draw.textsize(txt, self.fntText)
+		# w,h = draw.textsize(txt, self.fntText)
+		w, h = get_size(self.fntText, txt)
 		draw.text((x+(self.LONGITUDE_CELL_WIDTH-w)/2, y+self.LINE_HEIGHT+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 
 		y += self.DLINE_HEIGHT
 		txt = mtexts.txts['TotalScores1']
-		w,h = draw.textsize(txt, self.fntText)
+		# w,h = draw.textsize(txt, self.fntText)
+		w, h = get_size(self.fntText, txt)
 		draw.text((x+(self.LONGITUDE_CELL_WIDTH-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 		txt = mtexts.txts['TotalScores2']
-		w,h = draw.textsize(txt, self.fntText)
+		# w,h = draw.textsize(txt, self.fntText)
+		w, h = get_size(self.fntText, txt)
 		draw.text((x+(self.LONGITUDE_CELL_WIDTH-w)/2, y+self.LINE_HEIGHT+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 
 		x = BOR+self.LONGITUDE_CELL_WIDTH
@@ -148,7 +160,8 @@ class AlmutenTopicalsWnd(commonwnd.CommonWnd):
 			if self.chart.almutens.topicals.maxshare[self.idx][0] != -1 and self.chart.almutens.topicals.maxshare[self.idx][0] == i and (not self.chart.almutens.topicals.maxshare[self.idx][2]):
 				fnt = self.fntBigText
 			txt = str(self.chart.almutens.topicals.shares[self.idx][i])
-			w,h = draw.textsize(txt, fnt)
+			# w,h = draw.textsize(txt, fnt)
+			w, h = get_size(fnt, txt)
 			draw.text((x+i*self.CELL_WIDTH+(self.CELL_WIDTH-w)/2, y+(self.DLINE_HEIGHT-h)/2), txt, fill=txtclr, font=fnt)
 
 		y += self.DLINE_HEIGHT
@@ -157,7 +170,8 @@ class AlmutenTopicalsWnd(commonwnd.CommonWnd):
 			if self.chart.almutens.topicals.maxscore[self.idx][0] != -1 and self.chart.almutens.topicals.maxscore[self.idx][0] == i and (not self.chart.almutens.topicals.maxscore[self.idx][2]):
 				fnt = self.fntBigText
 			txt = str(self.chart.almutens.topicals.scores[self.idx][i])
-			w,h = draw.textsize(txt, fnt)
+			# w,h = draw.textsize(txt, fnt)
+			w, h = get_size(fnt, txt)
 			draw.text((x+i*self.CELL_WIDTH+(self.CELL_WIDTH-w)/2, y+(self.DLINE_HEIGHT-h)/2), txt, fill=txtclr, font=fnt)
 
 		#degree winner
@@ -172,11 +186,14 @@ class AlmutenTopicalsWnd(commonwnd.CommonWnd):
 				pid = self.chart.almutens.topicals.degwinner[self.idx][i][j][0]
 				if pid != -1:
 					ptxt = common.common.Planets[pid]
-					wpl,hpl = draw.textsize(ptxt, self.fntMorinus)
+					# wpl,hpl = draw.textsize(ptxt, self.fntMorinus)
+					wpl, hpl = get_size(self.fntMorinus, ptxt)
 					sco = self.chart.almutens.topicals.degwinner[self.idx][i][0][1]
 					txt = '('+str(sco)+')'
-					w,h = draw.textsize(txt, self.fntText)
-					wsp,hsp = draw.textsize(' ', self.fntText)
+					# w,h = draw.textsize(txt, self.fntText)
+					w, h = get_size(self.fntText, txt)
+					# wsp,hsp = draw.textsize(' ', self.fntText)
+					wsp, hsp = get_size(self.fntText, ' ')
 					aux[j][0] = pid
 					aux[j][1] = sco
 					aux[j][2] = wpl+wsp+w
@@ -196,10 +213,13 @@ class AlmutenTopicalsWnd(commonwnd.CommonWnd):
 							dign = self.chart.dignity(aux[j][0])
 							clr = self.clrs[dign]
 					pltxt = common.common.Planets[aux[j][0]]
-					wpl,hpl = draw.textsize(pltxt, self.fntMorinus)
+					# wpl,hpl = draw.textsize(pltxt, self.fntMorinus)
+					wpl, hpl = get_size(self.fntMorinus, pltxt)
 					txt = '('+str(aux[j][1])+')'
-					wsp,hsp = draw.textsize(' ', self.fntText)
-					w,h = draw.textsize(txt, self.fntText)
+					# wsp,hsp = draw.textsize(' ', self.fntText)
+					wsp, hsp = get_size(self.fntText, ' ')
+					# w,h = draw.textsize(txt, self.fntText)
+					w, h = get_size(self.fntText, txt)
 					prev = 0
 					for p in range(j):
 						prev += aux[j][2]+wsp
@@ -207,9 +227,12 @@ class AlmutenTopicalsWnd(commonwnd.CommonWnd):
 					draw.text((x+(self.DEGREEWINS_CELL_WIDTH-(mwidth))/2+prev, y+i*self.LINE_HEIGHT+(self.LINE_HEIGHT-h)/2), pltxt, fill=clr, font=self.fntMorinus)
 					draw.text((x+(self.DEGREEWINS_CELL_WIDTH-(mwidth))/2+prev+wpl+wsp, y+i*self.LINE_HEIGHT+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 
-		wxImg = wx.EmptyImage(img.size[0], img.size[1])
-		wxImg.SetData(img.tostring())
-		self.buffer = wx.BitmapFromImage(wxImg)
+		# wxImg = wx.EmptyImage(img.size[0], img.size[1])
+		wxImg = wx.Image(img.size[0], img.size[1])
+		# wxImg.SetData(img.tostring())
+		wxImg.SetData(img.tobytes())
+		# self.buffer = wx.BitmapFromImage(wxImg)
+		self.buffer = wx.Bitmap(wxImg)
 
 
 	def drawLong(self, draw, x, y, lon, clr):
@@ -221,10 +244,13 @@ class AlmutenTopicalsWnd(commonwnd.CommonWnd):
 
 		sign = d/chart.Chart.SIGN_DEG
 		pos = d%chart.Chart.SIGN_DEG
-		wsp,hsp = draw.textsize(' ', self.fntText)
-		wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinus)
+		# wsp,hsp = draw.textsize(' ', self.fntText)
+		wsp, hsp = get_size(self.fntText, ' ')
+		# wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinus)
+		wsg, hsg = get_size(self.fntMorinus, self.signs[sign])
 		txt = (str(pos)).rjust(2)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-		w,h = draw.textsize(txt, self.fntText)
+		# w,h = draw.textsize(txt, self.fntText)
+		w, h = get_size(self.fntText, txt)
 		offset = (self.LONGITUDE_CELL_WIDTH-(w+wsp+wsg))/2
 		draw.text((x+offset, y+(self.LINE_HEIGHT-h)/2), txt, fill=clr, font=self.fntText)
 		draw.text((x+offset+w+wsp, y+(self.LINE_HEIGHT-hsg)/2), self.signs[sign], fill=clr, font=self.fntMorinus)

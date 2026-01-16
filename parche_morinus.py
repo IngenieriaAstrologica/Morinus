@@ -4,7 +4,6 @@
 import os
 import re
 
-# Definición de la función que se insertará al principio de los archivos
 GET_SIZE_DEF = """
 def get_size(font, text):
     b = font.getbbox(str(text))
@@ -12,6 +11,11 @@ def get_size(font, text):
 """
 
 def patch_files():
+    # Expresión regular mejorada:
+    # Captura CUALQUIER variable (wpl, hpl, etc.) antes del '='
+    # Captura el texto (arg1) y la fuente (arg2) dentro de textsize
+    regex_textsize = r'(\s*)([\w\s,]+)\s*=\s*draw\.textsize\s*\(\s*([^,]+)\s*,\s*([^)]+)\s*\)'
+
     for root, dirs, files in os.walk("."):
         for file in files:
             if file.endswith(".py") and file != "parche_morinus.py":
@@ -22,48 +26,41 @@ def patch_files():
 
                 modified = False
                 new_lines = []
-                # Verificamos si ya tiene la función para no duplicarla
                 has_get_size = any("def get_size(font, text):" in line for line in lines)
 
                 for line in lines:
-                    indent = re.match(r'\s*', line).group(0)
                     stripped = line.strip()
+                    # Buscamos la coincidencia con la regex
+                    match = re.search(regex_textsize, line)
                     
-                    # 1. Caso: draw.textsize(txt, font)
-                    if "draw.textsize(" in stripped and not stripped.startswith("#"):
-                        match = re.search(r'draw\.textsize\s*\(\s*([^,]+)\s*,\s*([^)]+)\s*\)', stripped)
-                        if match:
-                            texto, fuente = match.group(1).strip(), match.group(2).strip()
-                            new_lines.append(f"{indent}# {stripped}\n")
-                            new_lines.append(f"{indent}w, h = get_size({fuente}, {texto})\n")
-                            modified = True
-                            continue
-
-                    # 2. Caso: wx.EmptyImage
-                    if "wx.EmptyImage(" in stripped and not stripped.startswith("#"):
+                    if match and not stripped.startswith("#"):
+                        indent = match.group(1)      # Sangría
+                        variables = match.group(2).strip() # Ej: "wpl, hpl"
+                        texto = match.group(3).strip()     # Ej: "txt"
+                        fuente = match.group(4).strip()    # Ej: "self.fntText"
+                        
+                        # Comentamos la línea original tal cual estaba
                         new_lines.append(f"{indent}# {stripped}\n")
+                        # Creamos la nueva línea respetando las variables originales
+                        new_lines.append(f"{indent}{variables} = get_size({fuente}, {texto})\n")
+                        modified = True
+                    
+                    # --- Aquí mantenemos los otros parches de wx que ya funcionaban ---
+                    elif "wx.EmptyImage(" in stripped and not stripped.startswith("#"):
+                        new_lines.append(f"{re.match(r'\s*', line).group(0)}# {stripped}\n")
                         new_lines.append(line.replace("wx.EmptyImage", "wx.Image"))
                         modified = True
-                        continue
-
-                    # 3. Caso: tostring()
-                    if ".tostring()" in stripped and not stripped.startswith("#"):
-                        new_lines.append(f"{indent}# {stripped}\n")
+                    elif ".tostring()" in stripped and not stripped.startswith("#"):
+                        new_lines.append(f"{re.match(r'\s*', line).group(0)}# {stripped}\n")
                         new_lines.append(line.replace(".tostring()", ".tobytes()"))
                         modified = True
-                        continue
-
-                    # 4. Caso: wx.BitmapFromImage
-                    if "wx.BitmapFromImage(" in stripped and not stripped.startswith("#"):
-                        new_lines.append(f"{indent}# {stripped}\n")
+                    elif "wx.BitmapFromImage(" in stripped and not stripped.startswith("#"):
+                        new_lines.append(f"{re.match(r'\s*', line).group(0)}# {stripped}\n")
                         new_lines.append(line.replace("wx.BitmapFromImage", "wx.Bitmap"))
                         modified = True
-                        continue
+                    else:
+                        new_lines.append(line)
 
-                    # Si no coincide con nada, mantenemos la línea igual
-                    new_lines.append(line)
-
-                # Si el archivo fue modificado y no tenía get_size, lo insertamos arriba
                 if modified:
                     if not has_get_size and any("get_size" in l for l in new_lines):
                         insert_idx = 0
@@ -74,8 +71,8 @@ def patch_files():
 
                     with open(path, 'w', encoding='utf-8') as f:
                         f.writelines(new_lines)
-                    print(f"Procesado: {path}")
+                    print(f"Corregido con variables dinámicas: {path}")
 
 if __name__ == "__main__":
     patch_files()
-    print("\n¡Todo listo! Se han comentado las líneas antiguas y añadido las nuevas.")
+    print("\n¡Hecho! Ahora se respetan los nombres de las variables (wpl, wsp, etc.).")

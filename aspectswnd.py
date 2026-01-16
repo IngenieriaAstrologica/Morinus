@@ -11,6 +11,11 @@ from PIL import Image, ImageDraw, ImageFont
 import mtexts
 import util
 
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
+
 
 class AspectsWnd(commonwnd.CommonWnd):
 
@@ -109,7 +114,8 @@ class AspectsWnd(commonwnd.CommonWnd):
 				else:
 					dign = self.chart.dignity(i)
 					clr = self.clrs[dign]
-			w,h = draw.textsize(common.common.Planets[i], self.fntMorinus)
+			# w,h = draw.textsize(common.common.Planets[i], self.fntMorinus)
+			w, h = get_size(self.fntMorinus, common.common.Planets[i])
 			draw.text((x+(self.SQUARE_SIZE-w)/2, y+(self.SQUARE_SIZE-h)/2), common.common.Planets[i], fill=clr, font=self.fntMorinus)
 			j += 1
 
@@ -119,7 +125,8 @@ class AspectsWnd(commonwnd.CommonWnd):
 		for i in range(len(txt)):		
 			x = BOR+(self.SQUARE_SIZE+self.SPACE)*(i+1)
 			self.drawSquare(draw, x, y, tableclr)
-			w,h = draw.textsize(txt[i], self.fntSymbol)
+			# w,h = draw.textsize(txt[i], self.fntSymbol)
+			w, h = get_size(self.fntSymbol, txt[i])
 			draw.text((x+(self.SQUARE_SIZE-w)/2, y+(self.SQUARE_SIZE-h)/2), txt[i], fill=txtclr, font=self.fntSymbol)
 
 		arAscMC = (self.chart.houses.ascmc[houses.Houses.ASC], self.chart.houses.ascmc[houses.Houses.MC])
@@ -154,7 +161,8 @@ class AspectsWnd(commonwnd.CommonWnd):
 					txt = 'X'
 					if self.chart.aspmatrixAscMC[i][j].parallel == chart.Chart.CONTRAPARALLEL:
 						txt = 'Y'
-					w,h = draw.textsize(txt, self.fntAspects)
+					# w,h = draw.textsize(txt, self.fntAspects)
+					w, h = get_size(self.fntAspects, txt)
 					draw.text((BOR+(i+1)*(self.SPACE+self.SQUARE_SIZE)+self.SQUARE_SIZE-w-self.SPACE, BOR+(self.SQUARE_SIZE+self.SPACE)*(k+1)+self.YOFFSET, self.SQUARE_SIZE), txt, fill=pclr, font=self.fntAspects)
 
 				txt = str(self.chart.aspmatrixAscMC[i][j].dif)
@@ -171,7 +179,8 @@ class AspectsWnd(commonwnd.CommonWnd):
 				else:
 					if not self.bw:
 						clr = txtclr
-				w,h = draw.textsize(txt, fnt)
+				# w,h = draw.textsize(txt, fnt)
+				w, h = get_size(fnt, txt)
 				draw.text((BOR+(i+1)*(self.SPACE+self.SQUARE_SIZE)+(self.SQUARE_SIZE-w)/2, BOR+(self.SQUARE_SIZE+self.SPACE)*(k+1)+self.SQUARE_SIZE-h-self.YOFFSET, self.SQUARE_SIZE), txt, fill=clr, font=fnt)
 				k += 1
 
@@ -190,7 +199,8 @@ class AspectsWnd(commonwnd.CommonWnd):
 				else:
 					dign = self.chart.dignity(i)
 					clr = self.clrs[dign]
-			w,h = draw.textsize(common.common.Planets[i], self.fntMorinus)
+			# w,h = draw.textsize(common.common.Planets[i], self.fntMorinus)
+			w, h = get_size(self.fntMorinus, common.common.Planets[i])
 			draw.text((x+(self.SQUARE_SIZE+self.SPACE)*k+(self.SQUARE_SIZE-w)/2, BOR+(self.SQUARE_SIZE+self.SPACE)*(k+1)+(self.SQUARE_SIZE-h)/2), common.common.Planets[i], fill=clr, font=self.fntMorinus)
 			k += 1
 
@@ -230,7 +240,8 @@ class AspectsWnd(commonwnd.CommonWnd):
 						txt = 'X'
 						if self.chart.aspmatrix[j][i].parallel == chart.Chart.CONTRAPARALLEL:
 							txt = 'Y'
-						w,h = draw.textsize(txt, self.fntAspects)
+						# w,h = draw.textsize(txt, self.fntAspects)
+						w, h = get_size(self.fntAspects, txt)
 						draw.text((x+(self.SQUARE_SIZE+self.SPACE)*ii+self.SQUARE_SIZE-w-self.SPACE, y+(self.SQUARE_SIZE+self.SPACE)*jj+self.YOFFSET), txt, fill=pclr, font=self.fntAspects)
 
 					txt = str(self.chart.aspmatrix[j][i].dif)
@@ -247,7 +258,8 @@ class AspectsWnd(commonwnd.CommonWnd):
 					else:
 						if not self.bw:
 							clr = txtclr
-					w,h = draw.textsize(txt, fnt)
+					# w,h = draw.textsize(txt, fnt)
+					w, h = get_size(fnt, txt)
 					draw.text((x+(self.SQUARE_SIZE+self.SPACE)*ii+(self.SQUARE_SIZE-w)/2, y+(self.SQUARE_SIZE+self.SPACE)*jj+self.SQUARE_SIZE-h-self.YOFFSET), txt, fill=clr, font=fnt)
 				jj += 1
 			ii += 1
@@ -258,7 +270,8 @@ class AspectsWnd(commonwnd.CommonWnd):
 			x = BOR+self.HOUSESOFFS*self.SQUARE_SIZE+self.HOUSESOFFS*self.SPACE
 			for i in range(len(hidx)):		
 				self.drawSquare(draw, x+(self.SQUARE_SIZE+self.SPACE)*i, BOR, tableclr)
-				w,h = draw.textsize(common.common.Housenames2[hidx[i]-1], self.fntText)
+				# w,h = draw.textsize(common.common.Housenames2[hidx[i]-1], self.fntText)
+				w, h = get_size(self.fntText, common.common.Housenames2[hidx[i]-1])
 				draw.text((x+(self.SQUARE_SIZE+self.SPACE)*i+(self.SQUARE_SIZE-w)/2, BOR+(self.SQUARE_SIZE-h)/2), common.common.Housenames2[hidx[i]-1], fill=(0,0,0), font=self.fntText)
 
 			x = BOR+self.HOUSESOFFS*(self.SQUARE_SIZE+self.SPACE)
@@ -293,7 +306,8 @@ class AspectsWnd(commonwnd.CommonWnd):
 						txt = 'X'
 						if self.chart.aspmatrixH[i][j].parallel == chart.Chart.CONTRAPARALLEL:
 							txt = 'Y'
-						w,h = draw.textsize(txt, self.fntAspects)
+						# w,h = draw.textsize(txt, self.fntAspects)
+						w, h = get_size(self.fntAspects, txt)
 						draw.text((x+(self.SQUARE_SIZE+self.SPACE)*i+self.SQUARE_SIZE-w-self.SPACE, y+(self.SQUARE_SIZE+self.SPACE)*kk+self.YOFFSET), txt, fill=pclr, font=self.fntAspects)
 
 					txt = str(self.chart.aspmatrixH[i][j].dif)
@@ -311,13 +325,17 @@ class AspectsWnd(commonwnd.CommonWnd):
 						if not self.bw:
 							clr = txtclr
 
-					w,h = draw.textsize(txt, fnt)
+					# w,h = draw.textsize(txt, fnt)
+					w, h = get_size(fnt, txt)
 					draw.text((x+(self.SQUARE_SIZE+self.SPACE)*i+(self.SQUARE_SIZE-w)/2, y+(self.SQUARE_SIZE+self.SPACE)*kk+self.SQUARE_SIZE-h-self.YOFFSET), txt, fill=clr, font=fnt)
 					kk += 1
 
-		wxImg = wx.EmptyImage(img.size[0], img.size[1])
-		wxImg.SetData(img.tostring())
-		self.buffer = wx.BitmapFromImage(wxImg)
+		# wxImg = wx.EmptyImage(img.size[0], img.size[1])
+		wxImg = wx.Image(img.size[0], img.size[1])
+		# wxImg.SetData(img.tostring())
+		wxImg.SetData(img.tobytes())
+		# self.buffer = wx.BitmapFromImage(wxImg)
+		self.buffer = wx.Bitmap(wxImg)
 
 
 	def drawSquare(self, draw, x, y, tableclr):
@@ -382,6 +400,3 @@ class AspectsWnd(commonwnd.CommonWnd):
 				res = True
 
 		return res
-
-
-

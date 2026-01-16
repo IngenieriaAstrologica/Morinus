@@ -10,6 +10,14 @@ from PIL import Image, ImageDraw, ImageFont
 import util
 import mtexts
 
+#########################
+# Javier JIPE changed
+#########################
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
+
 
 class RiseSetWnd(commonwnd.CommonWnd):
 
@@ -86,7 +94,8 @@ class RiseSetWnd(commonwnd.CommonWnd):
 		txt = (mtexts.txts['Rise'], mtexts.txts['MC'], mtexts.txts['Set'], mtexts.txts['IC'])
 
 		for i in range(len(txt)):
-			w,h = draw.textsize(txt[i], self.fntText)
+			# w,h = draw.textsize(txt[i], self.fntText)
+			w, h = get_size(self.fntText, txt[i])
 			draw.text((BOR+self.SMALL_CELL_WIDTH+self.CELL_WIDTH*i+(self.CELL_WIDTH-w)/2, BOR+(self.TITLE_HEIGHT-h)/2), txt[i], fill=txtclr, font=self.fntText)
 
 		x = BOR
@@ -101,9 +110,12 @@ class RiseSetWnd(commonwnd.CommonWnd):
 			self.drawline(draw, x, y+realnum*self.LINE_HEIGHT, tableclr, i)
 			realnum += 1
 
-		wxImg = wx.EmptyImage(img.size[0], img.size[1])
-		wxImg.SetData(img.tostring())
-		self.buffer = wx.BitmapFromImage(wxImg)
+		# wxImg = wx.EmptyImage(img.size[0], img.size[1])
+		wxImg = wx.Image(img.size[0], img.size[1])
+		# wxImg.SetData(img.tostring())
+		wxImg.SetData(img.tobytes())
+		# self.buffer = wx.BitmapFromImage(wxImg)
+		self.buffer = wx.Bitmap(wxImg)
 
 
 	def drawline(self, draw, x, y, clr, idx):
@@ -128,17 +140,14 @@ class RiseSetWnd(commonwnd.CommonWnd):
 
 			if i == 1:
 				txt = common.common.Planets[idx]
-				w,h = draw.textsize(txt, self.fntMorinus)
+				# w,h = draw.textsize(txt, self.fntMorinus)
+				w, h = get_size(self.fntMorinus, txt)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=tclr, font=self.fntMorinus)
 			elif i != 0:
 				h,m,s = util.decToDeg(self.chart.riseset.times[idx][i-2])
 				txt = (str(h)).zfill(2)+':'+(str(m)).zfill(2)+':'+(str(s)).zfill(2)
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=tclr, font=self.fntText)
 
 			summa += offs[i]
-
-
-
-
-

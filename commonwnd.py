@@ -75,7 +75,3 @@ class CommonWnd(wx.ScrolledWindow):
 
     def OnPaint(self, event):
         dc = wx.BufferedPaintDC(self, self.buffer, wx.BUFFER_VIRTUAL_AREA)
-
-
-
-

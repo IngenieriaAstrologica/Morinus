@@ -10,6 +10,14 @@ import transits
 import mtexts
 import util
 
+#########################
+# Javier JIPE changed
+#########################
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
+
 
 class TransitMonthWnd(commonwnd.CommonWnd):
 
@@ -100,14 +108,16 @@ class TransitMonthWnd(commonwnd.CommonWnd):
 		#Title
 		draw.rectangle(((BOR, BOR),(BOR+self.TITLE_WIDTH, BOR+self.TITLE_HEIGHT)), outline=(tableclr), fill=(self.bkgclr))
 		mtxt = mtexts.txts['Transits']+' '+str(self.year)+'.'+common.common.months[self.month-1]
-		w,h = draw.textsize(mtxt, self.fntText)
+		# w,h = draw.textsize(mtxt, self.fntText)
+		w, h = get_size(self.fntText, mtxt)
 		draw.text((BOR+(self.TITLE_WIDTH-w)/2, BOR+(self.LINE_HEIGHT-h)/2), mtxt, fill=txtclr, font=self.fntText)
 
 		txt = (mtexts.txts['Day'], mtexts.txts['Time']+' ('+mtexts.txts['GMT']+')', (mtexts.txts['Transit']).capitalize(), mtexts.txts['House'])
 		offs = (self.SMALL_CELL_WIDTH, self.CELL_WIDTH, self.CELL_WIDTH, self.CELL_WIDTH)
 		summa = 0
 		for i in range(len(txt)):
-			w,h = draw.textsize(txt[i], self.fntText)
+			# w,h = draw.textsize(txt[i], self.fntText)
+			w, h = get_size(self.fntText, txt[i])
 			draw.text((BOR+summa+(offs[i]-w)/2, BOR+self.TITLE_HEIGHT/2+(self.TITLE_HEIGHT/2-h)/2), txt[i], fill=txtclr, font=self.fntText)
 			summa += offs[i]
 
@@ -127,9 +137,12 @@ class TransitMonthWnd(commonwnd.CommonWnd):
 			self.drawline(draw, x, y+j*self.LINE_HEIGHT, tableclr, i)
 			j += 1
 
-		wxImg = wx.EmptyImage(img.size[0], img.size[1])
-		wxImg.SetData(img.tostring())
-		self.buffer = wx.BitmapFromImage(wxImg)
+		# wxImg = wx.EmptyImage(img.size[0], img.size[1])
+		wxImg = wx.Image(img.size[0], img.size[1])
+		# wxImg.SetData(img.tostring())
+		wxImg.SetData(img.tobytes())
+		# self.buffer = wx.BitmapFromImage(wxImg)
+		self.buffer = wx.Bitmap(wxImg)
 
 
 	def drawline(self, draw, x, y, clr, idx):
@@ -149,24 +162,30 @@ class TransitMonthWnd(commonwnd.CommonWnd):
 
 			if i == 1:
 				txt = str(self.trans[idx].day)
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 			elif i == 2:
 				d,m,s = util.decToDeg(self.trans[idx].time)
 				txt = (str(d)).rjust(2)+':'+(str(m)).zfill(2)+":"+(str(s)).zfill(2)
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 			elif i == 3:
 				txtpt = common.common.Planets[self.trans[idx].plt]
 				clrp1 = (0,0,0)
 				if not self.bw:
 					clrp1 = self.options.clrperegrin
-				wpt,hpt = draw.textsize(txtpt, self.fntMorinus)
-				wsp,hsp = draw.textsize(self.txtsp, self.fntText)
+				# wpt,hpt = draw.textsize(txtpt, self.fntMorinus)
+				wpt, hpt = get_size(self.fntMorinus, txtpt)
+				# wsp,hsp = draw.textsize(self.txtsp, self.fntText)
+				wsp, hsp = get_size(self.fntText, self.txtsp)
 				if self.trans[idx].objtype == transits.Transit.ASCMC:
 					txtasp = common.common.Aspects[self.trans[idx].aspect]
-					wasp,hasp = draw.textsize(txtasp, self.fntAspects)
-					wascmc,hascmc = draw.textsize(self.txtascmc[self.trans[idx].obj], self.fntText)
+					# wasp,hasp = draw.textsize(txtasp, self.fntAspects)
+					wasp, hasp = get_size(self.fntAspects, txtasp)
+					# wascmc,hascmc = draw.textsize(self.txtascmc[self.trans[idx].obj], self.fntText)
+					wascmc, hascmc = get_size(self.fntText, self.txtascmc[self.trans[idx].obj])
 
 					offset = (offs[i]-(wpt+wsp+wasp+wsp+wascmc))/2
 					draw.text((x+summa+offset, y+(self.LINE_HEIGHT-hpt)/2), txtpt, fill=clrp1, font=self.fntMorinus)
@@ -182,11 +201,14 @@ class TransitMonthWnd(commonwnd.CommonWnd):
 					if s2 > 0:
 						s1 = s2-1
 					txts1 = self.signs[s1]
-					ws1,hs1 = draw.textsize(txts1, self.fntSigns)
+					# ws1,hs1 = draw.textsize(txts1, self.fntSigns)
+					ws1, hs1 = get_size(self.fntSigns, txts1)
 					txtsepa = '|'
-					wse,hse = draw.textsize(txtsepa, self.fntText)
+					# wse,hse = draw.textsize(txtsepa, self.fntText)
+					wse, hse = get_size(self.fntText, txtsepa)
 					txts2 = self.signs[s2]
-					ws2,hs2 = draw.textsize(txts2, self.fntSigns)
+					# ws2,hs2 = draw.textsize(txts2, self.fntSigns)
+					ws2, hs2 = get_size(self.fntSigns, txts2)
 					offset = (offs[i]-(wpt+wsp+ws1+wse+ws2))/2
 					draw.text((x+summa+offset, y+(self.LINE_HEIGHT-hpt)/2), txtpt, fill=clrp1, font=self.fntMorinus)
 					draw.text((x+summa+offset+wpt+wsp, y+(self.LINE_HEIGHT-hs1)/2), txts1, fill=txtclr, font=self.fntSigns)
@@ -194,12 +216,15 @@ class TransitMonthWnd(commonwnd.CommonWnd):
 					draw.text((x+summa+offset+wpt+wsp+ws1+wse, y+(self.LINE_HEIGHT-hs2)/2), txts2, fill=txtclr, font=self.fntSigns)
 				elif self.trans[idx].objtype == transits.Transit.PLANET:
 					txtasp = common.common.Aspects[self.trans[idx].aspect]
-					wasp,hasp = draw.textsize(txtasp, self.fntSigns)
+					# wasp,hasp = draw.textsize(txtasp, self.fntSigns)
+					wasp, hasp = get_size(self.fntSigns, txtasp)
 					txtpr = common.common.Planets[self.trans[idx].obj]
-					wpr,hpr = draw.textsize(txtpr, self.fntMorinus)
+					# wpr,hpr = draw.textsize(txtpr, self.fntMorinus)
+					wpr, hpr = get_size(self.fntMorinus, txtpr)
 					wrr,hrr = 0,0
 					if self.trans[idx].objretr != transits.Transits.NONE: 
-						wrr,hrr = draw.textsize(self.txtrs[self.trans[idx].objretr], self.fntRText)
+						# wrr,hrr = draw.textsize(self.txtrs[self.trans[idx].objretr], self.fntRText)
+						wrr, hrr = get_size(self.fntRText, self.txtrs[self.trans[idx].objretr])
 					offset = (self.CELL_WIDTH-(wpt+wsp+wasp+wsp+wpr+wrr))/2
 					draw.text((x+summa+offset, y+(self.LINE_HEIGHT-hpt)/2), txtpt, fill=clrp1, font=self.fntMorinus)
 
@@ -224,18 +249,22 @@ class TransitMonthWnd(commonwnd.CommonWnd):
 						draw.text((x+summa+offset+wpt+wsp+wasp+wsp+wpr, y+(self.LINE_HEIGHT-hrr)/2+self.RETRYOFFS), self.txtrs[self.trans[idx].objretr], fill=clrp2, font=self.fntRText)
 				elif self.trans[idx].objtype == transits.Transit.ANTISCION or self.trans[idx].objtype == transits.Transit.CONTRAANTISCION:
 					txtpr = common.common.Planets[self.trans[idx].obj]
-					wpr,hpr = draw.textsize(txtpr, self.fntMorinus)
+					# wpr,hpr = draw.textsize(txtpr, self.fntMorinus)
+					wpr, hpr = get_size(self.fntMorinus, txtpr)
 					wrr,hrr = 0,0
 					if self.trans[idx].objretr != transits.Transits.NONE: 
-						wrr,hrr = draw.textsize(self.txtrs[self.trans[idx].objretr], self.fntRText)
+						# wrr,hrr = draw.textsize(self.txtrs[self.trans[idx].objretr], self.fntRText)
+						wrr, hrr = get_size(self.fntRText, self.txtrs[self.trans[idx].objretr])
 
 					txtasp = common.common.Aspects[self.trans[idx].aspect]
-					wasp,hasp = draw.textsize(txtasp, self.fntSigns)
+					# wasp,hasp = draw.textsize(txtasp, self.fntSigns)
+					wasp, hasp = get_size(self.fntSigns, txtasp)
 
 					ii = 0
 					if self.trans[idx].objtype == transits.Transit.CONTRAANTISCION:
 						ii = 1
-					want,hant = draw.textsize(self.txtant[ii], self.fntText)
+					# want,hant = draw.textsize(self.txtant[ii], self.fntText)
+					want, hant = get_size(self.fntText, self.txtant[ii])
 					offset = (self.CELL_WIDTH-(wpt+wsp+wasp+wsp+want+wpr+wrr))/2
 					draw.text((x+summa+offset, y+(self.LINE_HEIGHT-hpt)/2), txtpt, fill=clrp1, font=self.fntMorinus)
 
@@ -262,9 +291,11 @@ class TransitMonthWnd(commonwnd.CommonWnd):
 						draw.text((x+summa+offset+wpt+wsp+wasp+wsp+want+wpr, y+(self.LINE_HEIGHT-hrr)/2+self.RETRYOFFS), self.txtrs[self.trans[idx].objretr], fill=clrp2, font=self.fntRText)
 				elif self.trans[idx].objtype == transits.Transit.LOF:
 					txtasp = common.common.Aspects[self.trans[idx].aspect]
-					wasp,hasp = draw.textsize(txtasp, self.fntSigns)
+					# wasp,hasp = draw.textsize(txtasp, self.fntSigns)
+					wasp, hasp = get_size(self.fntSigns, txtasp)
 					txtpr = common.common.fortune
-					wpr,hpr = draw.textsize(txtpr, self.fntMorinus)
+					# wpr,hpr = draw.textsize(txtpr, self.fntMorinus)
+					wpr, hpr = get_size(self.fntMorinus, txtpr)
 					offset = (self.CELL_WIDTH-(wpt+wsp+wasp+wsp+wpr))/2
 					draw.text((x+summa+offset, y+(self.LINE_HEIGHT-hpt)/2), txtpt, fill=clrp1, font=self.fntMorinus)
 
@@ -283,15 +314,8 @@ class TransitMonthWnd(commonwnd.CommonWnd):
 					draw.text((x+summa+offset+wpt+wsp+wasp+wsp, y+(self.LINE_HEIGHT-hpr)/2), txtpr, fill=clrp2, font=self.fntMorinus)
 			elif i == 4:
 				txt = common.common.Housenames[self.trans[idx].house]
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				draw.text((x+summa+(offs[i]-w)/2, y+(self.LINE_HEIGHT-h)/2), txt, fill=txtclr, font=self.fntText)
 
 			summa += offs[i]
-
-
-
-
-
-
-
-

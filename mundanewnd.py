@@ -88,6 +88,3 @@ class MundaneWnd(wx.Window):
 
     def onSize(self, event):
         self.drawBkg()
-
-
-

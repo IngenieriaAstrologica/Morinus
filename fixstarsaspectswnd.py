@@ -13,6 +13,14 @@ from PIL import Image, ImageDraw, ImageFont
 import mtexts
 import util
 
+#########################
+# Javier JIPE changed
+#########################
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
+
 
 class FixStarsAspectsWnd(commonwnd.CommonWnd):
 
@@ -172,7 +180,8 @@ class FixStarsAspectsWnd(commonwnd.CommonWnd):
 			name = self.chart.fixstars.data[i][fixstars.FixStars.NAME]
 			if name == '':
 				name = self.chart.fixstars.data[i][fixstars.FixStars.NOMNAME]
-			w,h = draw.textsize(name, self.fntText)
+			# w,h = draw.textsize(name, self.fntText)
+			w, h = get_size(self.fntText, name)
 			draw.text((x+(self.CELL_WIDTH-w)/2, y+i*(self.LINE_HEIGHT+self.SPACE)+(self.LINE_HEIGHT-h)/2), name, fill=txtclr, font=self.fntText)
 
 		#AscMC
@@ -181,7 +190,8 @@ class FixStarsAspectsWnd(commonwnd.CommonWnd):
 		txts = ('0', '3', '1', '2')
 		for i in range(len(txts)):
 			self.drawSquare(draw, x, y, tableclr)
-			w,h = draw.textsize(txts[i], self.fntSymbol)
+			# w,h = draw.textsize(txts[i], self.fntSymbol)
+			w, h = get_size(self.fntSymbol, txts[i])
 			draw.text((x+(self.SQUARE_SIZE-w)/2, y+(self.SQUARE_SIZE-h)/2), txts[i], fill=txtclr, font=self.fntSymbol)
 			x += self.SQUARE_SIZE+self.SPACE
 
@@ -222,7 +232,8 @@ class FixStarsAspectsWnd(commonwnd.CommonWnd):
 					# Only show selected aspects in Options.
 					if AspType and self.options.aspect[numasp]:
 						txt = common.common.Aspects[numasp]
-						w,h = draw.textsize(txt, self.fntAspects)
+						# w,h = draw.textsize(txt, self.fntAspects)
+						w, h = get_size(self.fntAspects, txt)
 						clr = self.options.clraspect[numasp]
 						if self.bw:
 							clr = (0,0,0)
@@ -233,7 +244,8 @@ class FixStarsAspectsWnd(commonwnd.CommonWnd):
 						
 						# Print Orb
 						OrbDegree = "%0.1f" % (self.getOrb(degree, lon1, lon2, orb))
-						w,h = draw.textsize(OrbDegree, self.fntTextOrb)
+						# w,h = draw.textsize(OrbDegree, self.fntTextOrb)
+						w, h = get_size(self.fntTextOrb, OrbDegree)
 						xx = BOR+self.CELL_WIDTH+self.SPACE+j*(self.SQUARE_SIZE+self.SPACE)
 						yy = BOR+self.TITLE_HEIGHT+self.SPACE+((self.SQUARE_SIZE-h)/1.7)+i*(self.SQUARE_SIZE+self.SPACE)
 						draw.text((xx+(self.SQUARE_SIZE-w)/2, yy+(self.SQUARE_SIZE-h)/2), OrbDegree, fill=clr, font=self.fntTextOrb)
@@ -258,7 +270,8 @@ class FixStarsAspectsWnd(commonwnd.CommonWnd):
 				else:
 					dign = self.chart.dignity(i)
 					clr = self.clrs[dign]
-			w,h = draw.textsize(common.common.Planets[i], self.fntMorinus)
+			# w,h = draw.textsize(common.common.Planets[i], self.fntMorinus)
+			w, h = get_size(self.fntMorinus, common.common.Planets[i])
 			draw.text((x+(self.SQUARE_SIZE-w)/2, y+(self.SQUARE_SIZE-h)/2), common.common.Planets[i], fill=clr, font=self.fntMorinus)
 			x += (self.SQUARE_SIZE+self.SPACE)
 			j += 1
@@ -286,7 +299,8 @@ class FixStarsAspectsWnd(commonwnd.CommonWnd):
 					# Only show selected aspects in Options.
 					if AspType and self.options.aspect[numasp]:
 						txt = common.common.Aspects[numasp]
-						w,h = draw.textsize(txt, self.fntAspects)
+						# w,h = draw.textsize(txt, self.fntAspects)
+						w, h = get_size(self.fntAspects, txt)
 						clr = self.options.clraspect[numasp]
 						if self.bw:
 							clr = (0,0,0)
@@ -297,7 +311,8 @@ class FixStarsAspectsWnd(commonwnd.CommonWnd):
 						
 						# Print Orb
 						OrbDegree = "%0.1f" % (self.getOrb(degree, lon1, lon2, orb))
-						w,h = draw.textsize(OrbDegree, self.fntTextOrb)
+						# w,h = draw.textsize(OrbDegree, self.fntTextOrb)
+						w, h = get_size(self.fntTextOrb, OrbDegree)
 						xx = BOR+self.CELL_WIDTH+self.SPACE+self.PLANETSOFFS*(self.SQUARE_SIZE+self.SPACE)+(j-skipped)*(self.SQUARE_SIZE+self.SPACE)
 						yy = BOR+self.TITLE_HEIGHT+self.SPACE+((self.SQUARE_SIZE-h)/1.7)+i*(self.SQUARE_SIZE+self.SPACE)
 						draw.text((xx+(self.SQUARE_SIZE-w)/2, yy+(self.SQUARE_SIZE-h)/2), OrbDegree, fill=clr, font=self.fntTextOrb)	
@@ -306,7 +321,8 @@ class FixStarsAspectsWnd(commonwnd.CommonWnd):
 		#LoF
 		if not self.options.intables or (self.options.intables and self.options.showlof):
 			self.drawSquare(draw, x, y, tableclr)
-			w,h = draw.textsize(common.common.fortune, self.fntMorinus)
+			# w,h = draw.textsize(common.common.fortune, self.fntMorinus)
+			w, h = get_size(self.fntMorinus, common.common.fortune)
 			clr = (0,0,0)
 			if not self.bw:
 				if self.options.useplanetcolors:
@@ -332,7 +348,8 @@ class FixStarsAspectsWnd(commonwnd.CommonWnd):
 					# Only show selected aspects in Options.
 					if AspType and self.options.aspect[numasp]:
 						txt = common.common.Aspects[numasp]
-						w,h = draw.textsize(txt, self.fntAspects)
+						# w,h = draw.textsize(txt, self.fntAspects)
+						w, h = get_size(self.fntAspects, txt)
 						clr = self.options.clraspect[numasp]
 						if self.bw:
 							clr = (0,0,0)
@@ -344,7 +361,8 @@ class FixStarsAspectsWnd(commonwnd.CommonWnd):
 						
 						# Print Orb
 						OrbDegree = "%0.1f" % (self.getOrb(degree, lon1, lon2, orb))
-						w,h = draw.textsize(OrbDegree, self.fntTextOrb)
+						# w,h = draw.textsize(OrbDegree, self.fntTextOrb)
+						w, h = get_size(self.fntTextOrb, OrbDegree)
 						xx = BOR+self.CELL_WIDTH+self.SPACE+self.LOFOFFS*(self.SQUARE_SIZE+self.SPACE)
 						yy = BOR+self.TITLE_HEIGHT+self.SPACE+((self.SQUARE_SIZE-h)/1.7)+i*(self.SQUARE_SIZE+self.SPACE)
 						draw.text((xx+(self.SQUARE_SIZE-w)/2, yy+(self.SQUARE_SIZE-h)/2), OrbDegree, fill=clr, font=self.fntTextOrb)	
@@ -354,7 +372,8 @@ class FixStarsAspectsWnd(commonwnd.CommonWnd):
 		if not self.options.intables or (self.options.intables and self.options.houses):
 			for i in range(len(self.hidx)):
 				self.drawSquare(draw, x+(self.SQUARE_SIZE+self.SPACE)*i, y, tableclr)
-				w,h = draw.textsize(common.common.Housenames2[self.hidx[i]-1], self.fntText)
+				# w,h = draw.textsize(common.common.Housenames2[self.hidx[i]-1], self.fntText)
+				w, h = get_size(self.fntText, common.common.Housenames2[self.hidx[i]-1])
 				draw.text((x+(self.SQUARE_SIZE+self.SPACE)*i+(self.SQUARE_SIZE-w)/2, y+(self.SQUARE_SIZE-h)/2), common.common.Housenames2[self.hidx[i]-1], fill=(0,0,0), font=self.fntText)
 	
 			aroffs = (0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5)
@@ -397,7 +416,8 @@ class FixStarsAspectsWnd(commonwnd.CommonWnd):
 						# Only show selected aspects in Options.
 						if AspType and self.options.aspect[numasp]:
 							txt = common.common.Aspects[numasp]
-							w,h = draw.textsize(txt, self.fntAspects)
+							# w,h = draw.textsize(txt, self.fntAspects)
+							w, h = get_size(self.fntAspects, txt)
 							clr = self.options.clraspect[numasp]
 							if self.bw:
 								clr = (0,0,0)
@@ -409,15 +429,19 @@ class FixStarsAspectsWnd(commonwnd.CommonWnd):
 						
 							# Print Orb
 							OrbDegree = "%0.1f" % (self.getOrb(degree, lon1, lon2, orb))
-							w,h = draw.textsize(OrbDegree, self.fntTextOrb)
+							# w,h = draw.textsize(OrbDegree, self.fntTextOrb)
+							w, h = get_size(self.fntTextOrb, OrbDegree)
 							xx = BOR+self.CELL_WIDTH+self.SPACE+self.HOUSESOFFS*(self.SQUARE_SIZE+self.SPACE)+aroffs[j]*(self.SQUARE_SIZE+self.SPACE)
 							yy = BOR+self.TITLE_HEIGHT+self.SPACE+((self.SQUARE_SIZE-h)/1.7)+i*(self.SQUARE_SIZE+self.SPACE)
 							draw.text((xx+(self.SQUARE_SIZE-w)/2, yy+(self.SQUARE_SIZE-h)/2), OrbDegree, fill=clr, font=self.fntTextOrb)	
 # ###################################
 
-		wxImg = wx.EmptyImage(img.size[0], img.size[1])
-		wxImg.SetData(img.tostring())
-		self.buffer = wx.BitmapFromImage(wxImg)
+		# wxImg = wx.EmptyImage(img.size[0], img.size[1])
+		wxImg = wx.Image(img.size[0], img.size[1])
+		# wxImg.SetData(img.tostring())
+		wxImg.SetData(img.tobytes())
+		# self.buffer = wx.BitmapFromImage(wxImg)
+		self.buffer = wx.Bitmap(wxImg)
 
 
 	def drawSquare(self, draw, x, y, tableclr):
@@ -452,8 +476,8 @@ class FixStarsAspectsWnd(commonwnd.CommonWnd):
 							lona1 = util.normalize(lona1)
 							lona2 -= self.chart.ayanamsha
 							lona2 = util.normalize(lona2)
-						sign1 = int(lona1/chart.Chart.SIGN_DEG)
-						sign2 = int(lona2/chart.Chart.SIGN_DEG)
+						sign1 = int(lona1//chart.Chart.SIGN_DEG)
+						sign2 = int(lona2//chart.Chart.SIGN_DEG)
 						signdiff = math.fabs(sign1-sign2)
 						#check pisces-aries transition
 						if signdiff > chart.Chart.SIGN_NUM/2:
@@ -490,6 +514,3 @@ class FixStarsAspectsWnd(commonwnd.CommonWnd):
 				res = True
 
 		return res
-
-
-

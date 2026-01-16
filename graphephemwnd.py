@@ -7,6 +7,13 @@ from PIL import Image, ImageDraw, ImageFont
 import util
 import mtexts
 
+#########################
+# Javier JIPE changed
+#########################
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
 
 class GraphEphemWnd(wx.Window):
 
@@ -279,12 +286,14 @@ class GraphEphemWnd(wx.Window):
         x = 2*self.BORDER
         y = self.h-4*self.BORDER-self.signSize
         for i in range(chart.Chart.SIGN_NUM):
-            wsym,hsym = draw.textsize(self.signs[i], self.fntSigns)
+            # wsym,hsym = draw.textsize(self.signs[i], self.fntSigns)
+            wsym, hsym = get_size(self.fntSigns, self.signs[i])
             draw.text((x,y-self.signSize/2-hsym/2-i*self.signSize), self.signs[i], fill=signsclr, font=self.fntSigns)
 
         #year
         txt = str(self.year)
-        wtxt,htxt = draw.textsize(txt, self.fntTxt)
+        # wtxt,htxt = draw.textsize(txt, self.fntTxt)
+        wtxt, htxt = get_size(self.fntTxt, txt)
         x = 2*self.BORDER+self.signSymbolSize+self.spaceSize
         y = self.h-4*self.BORDER+self.spaceSize
         offs = (self.monthSize-wtxt)/2
@@ -296,7 +305,8 @@ class GraphEphemWnd(wx.Window):
         mnum = len(common.common.monthabbr)
         for i in range(mnum):
             txt = common.common.monthabbr[i]
-            wtxt,htxt = draw.textsize(txt, self.fntTxt)
+            # wtxt,htxt = draw.textsize(txt, self.fntTxt)
+            wtxt, htxt = get_size(self.fntTxt, txt)
             offs = (self.monthSize-wtxt)/2
             draw.text((x+i*self.monthSize+offs,y), txt, fill=tableclr, font=self.fntTxt)
 
@@ -309,7 +319,8 @@ class GraphEphemWnd(wx.Window):
 
                 if not self.bw:
                     plsclr = self.options.clrindividual[pl]
-                wsym,hsym = draw.textsize(common.common.Planets[pl], self.fntPlanets)
+                # wsym,hsym = draw.textsize(common.common.Planets[pl], self.fntPlanets)
+                wsym, hsym = get_size(self.fntPlanets, common.common.Planets[pl])
                 xoffs = 2*self.spaceSize+wsym
                 draw.text((x-xoffs,y-hsym/2+bshift[j]), common.common.Planets[pl], fill=plsclr, font=self.fntPlanets)
 
@@ -324,7 +335,8 @@ class GraphEphemWnd(wx.Window):
 
                 if not self.bw:
                     plsclr = self.options.clrindividual[plstopids[pl]]
-                wsym,hsym = draw.textsize(plstop[pl], self.fntPlanets)
+                # wsym,hsym = draw.textsize(plstop[pl], self.fntPlanets)
+                wsym, hsym = get_size(self.fntPlanets, plstop[pl])
                 yoffs = 2*self.spaceSize+hsym
 
                 if len(plstop) > 1:
@@ -341,7 +353,8 @@ class GraphEphemWnd(wx.Window):
 
                 if not self.bw:
                     plsclr = self.options.clrindividual[plsbottomids[pl]]
-                wsym,hsym = draw.textsize(plsbottom[pl], self.fntPlanets)
+                # wsym,hsym = draw.textsize(plsbottom[pl], self.fntPlanets)
+                wsym, hsym = get_size(self.fntPlanets, plsbottom[pl])
                 yoffs = 2*self.spaceSize
 
                 if len(plsbottom) > 1:
@@ -514,4 +527,3 @@ class GraphEphemWnd(wx.Window):
 
     def overlap(self, x1, w1, x2, w2):
         return (x1 <= x2 and x2 <= x1+w1+self.spaceSize) or (x2 <= x1 and x1 <= x2+w2+self.spaceSize)
-

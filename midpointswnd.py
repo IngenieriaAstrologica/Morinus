@@ -9,6 +9,14 @@ from PIL import Image, ImageDraw, ImageFont
 import util
 import mtexts
 
+#########################
+# Javier JIPE changed
+#########################
+def get_size(font, text):
+    b = font.getbbox(str(text))
+    return (b[2] - b[0], b[3] - b[1])
+
+
 
 class MidPointsWnd(commonwnd.CommonWnd):
 
@@ -95,7 +103,8 @@ class MidPointsWnd(commonwnd.CommonWnd):
 		draw = ImageDraw.Draw(img)
 
 		txt = mtexts.txts['Longitude']
-		w,h = draw.textsize(txt, self.fntText)
+		# w,h = draw.textsize(txt, self.fntText)
+		w, h = get_size(self.fntText, txt)
 		num = len(self.ar)
 		if self.options.intables:
 			if not self.options.transcendental[chart.Chart.TRANSURANUS]:
@@ -128,11 +137,14 @@ class MidPointsWnd(commonwnd.CommonWnd):
 			for j in range(arln[i], arln[i+1]):		
 				if self.options.intables and ((self.chart.midpoints.mids[j].p2 == astrology.SE_URANUS and not self.options.transcendental[chart.Chart.TRANSURANUS]) or (self.chart.midpoints.mids[j].p2 == astrology.SE_NEPTUNE and not self.options.transcendental[chart.Chart.TRANSNEPTUNE]) or (self.chart.midpoints.mids[j].p2 == astrology.SE_PLUTO and not self.options.transcendental[chart.Chart.TRANSPLUTO]) or (self.chart.midpoints.mids[j].p2 == astrology.SE_MEAN_NODE and not self.options.shownodes) or (self.chart.midpoints.mids[j].p2 == astrology.SE_TRUE_NODE and not self.options.shownodes)):
 					continue
-				wsp,hsp = draw.textsize(' - ', self.fntText)
+				# wsp,hsp = draw.textsize(' - ', self.fntText)
+				wsp, hsp = get_size(self.fntText, ' - ')
 				p1 = common.common.Planets[self.chart.midpoints.mids[j].p1]
 				p2 = common.common.Planets[self.chart.midpoints.mids[j].p2]
-				wpl1,hpl1 = draw.textsize(p1, self.fntMorinus)
-				wpl2,hpl2 = draw.textsize(p2, self.fntMorinus)
+				# wpl1,hpl1 = draw.textsize(p1, self.fntMorinus)
+				wpl1, hpl1 = get_size(self.fntMorinus, p1)
+				# wpl2,hpl2 = draw.textsize(p2, self.fntMorinus)
+				wpl2, hpl2 = get_size(self.fntMorinus, p2)
 				clr1 = (0,0,0)
 				clr2 = (0,0,0)
 				if not self.bw:
@@ -162,10 +174,13 @@ class MidPointsWnd(commonwnd.CommonWnd):
 				d,m,s = util.decToDeg(lon)
 				sign = int(lon/chart.Chart.SIGN_DEG)
 				pos = int(lon%chart.Chart.SIGN_DEG)
-				wsp,hsp = draw.textsize(' ', self.fntText)
-				wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinus)
+				# wsp,hsp = draw.textsize(' ', self.fntText)
+				wsp, hsp = get_size(self.fntText, ' ')
+				# wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinus)
+				wsg, hsg = get_size(self.fntMorinus, self.signs[sign])
 				txt = (str(pos)).rjust(2)+self.deg_symbol+(str(m)).zfill(2)+"'"+(str(s)).zfill(2)+'"'
-				w,h = draw.textsize(txt, self.fntText)
+				# w,h = draw.textsize(txt, self.fntText)
+				w, h = get_size(self.fntText, txt)
 				offs = (self.CELL_WIDTH-(w+wsp+wsg))/2
 				draw.text((self.ar[i][0]+self.SMALL_CELL_WIDTH+offs, self.ar[i][1]+self.LINE_HEIGHT*ln+(self.LINE_HEIGHT-hsp)/2), txt, fill=txtclr, font=self.fntText)
 				draw.text((self.ar[i][0]+self.SMALL_CELL_WIDTH+offs+w, self.ar[i][1]+self.LINE_HEIGHT*ln+(self.LINE_HEIGHT-hsp)/2), ' ', fill=txtclr, font=self.fntText)
@@ -180,11 +195,9 @@ class MidPointsWnd(commonwnd.CommonWnd):
 
 				ln += 1
 
-		wxImg = wx.EmptyImage(img.size[0], img.size[1])
-		wxImg.SetData(img.tostring())
-		self.buffer = wx.BitmapFromImage(wxImg)
-
-
-
-
-
+		# wxImg = wx.EmptyImage(img.size[0], img.size[1])
+		wxImg = wx.Image(img.size[0], img.size[1])
+		# wxImg.SetData(img.tostring())
+		wxImg.SetData(img.tobytes())
+		# self.buffer = wx.BitmapFromImage(wxImg)
+		self.buffer = wx.Bitmap(wxImg)

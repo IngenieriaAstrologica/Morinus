@@ -8,6 +8,9 @@ from PIL import Image, ImageDraw, ImageFont
 import util
 import mtexts
 
+#########################
+# Javier JIPE changed
+#########################
 def get_size(font, text):
     b = font.getbbox(str(text))
     return (b[2] - b[0], b[3] - b[1])
@@ -194,10 +197,3 @@ class MiscWnd(commonwnd.CommonWnd):
         wxImg.SetData(img.tobytes())
         #self.buffer = wx.BitmapFromImage(wxImg)
         self.buffer = wx.Bitmap(wxImg)
-
-
-
-
-
-
-
