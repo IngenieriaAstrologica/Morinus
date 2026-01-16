@@ -1,4 +1,5 @@
-from distutils.core import setup, Extension
+#from distutils.core import setup, Extension
+from setuptools import setup, Extension
 
 module1 = Extension('sweastrology', sources = ['astrologymodule.c', 'swecl.c', 'swedate.c', 'swehel.c', 'swehouse.c', 'swejpl.c', 'swemmoon.c', 'swemplan.c', 'swepcalc.c', 'swepdate.c', 'sweph.c', 'swephlib.c'])
 

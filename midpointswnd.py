@@ -22,15 +22,15 @@ class MidPointsWnd(commonwnd.CommonWnd):
 		self.LINE_HEIGHT = (self.SPACE+self.FONT_SIZE+self.SPACE)
 
 		self.YOFFSET = self.LINE_HEIGHT
-		self.TABLE_HEIGHT = (30*(self.LINE_HEIGHT)+4*self.YOFFSET)
+		self.TABLE_HEIGHT = int(30*(self.LINE_HEIGHT)+4*self.YOFFSET)
 
 		self.SMALL_CELL_WIDTH = 5*self.FONT_SIZE
 		self.CELL_WIDTH = 8*self.FONT_SIZE
 		self.XOFFSET = self.SMALL_CELL_WIDTH
-		self.TABLE_WIDTH = (3*(self.SMALL_CELL_WIDTH+self.CELL_WIDTH)+3*self.XOFFSET)
+		self.TABLE_WIDTH = int(3*(self.SMALL_CELL_WIDTH+self.CELL_WIDTH)+3*self.XOFFSET)
 	
-		self.WIDTH = (commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
-		self.HEIGHT = (commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
+		self.WIDTH = int(commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
+		self.HEIGHT = int(commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
 
 		self.SetVirtualSize((self.WIDTH, self.HEIGHT))
 

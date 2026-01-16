@@ -241,7 +241,7 @@ class PersonalDataDlg(wx.Dialog):
         hsubsizer.Add(vvsubsizer, 0, wx.ALIGN_LEFT|wx.ALL, 0)
 
         #Zone
-        self.szone =wx.StaticBox(self, label='')
+        self.szone = wx.StaticBox(self, label='')
         zonesizer = wx.StaticBoxSizer(self.szone, wx.VERTICAL)
         self.calcb = wx.ComboBox(self, -1, mtexts.calList[0], size=(80, -1), choices=mtexts.calList, style=wx.CB_DROPDOWN|wx.CB_READONLY)
         zonesizer.Add(self.calcb, 0, wx.GROW|wx.ALIGN_LEFT|wx.ALL, 5)
@@ -252,7 +252,8 @@ class PersonalDataDlg(wx.Dialog):
         self.gmtlabel = wx.StaticText(self, -1, mtexts.txts['GMT'])
         hhsizer.Add(self.gmtlabel, 0, wx.ALIGN_CENTER_VERTICAL|wx.LEFT, 5)
         self.pluscb = wx.ComboBox(self, -1, PersonalDataDlg.PLUSCHOICES[0], size=(50, -1), choices=PersonalDataDlg.PLUSCHOICES, style=wx.CB_DROPDOWN|wx.CB_READONLY)
-        hhsizer.Add(self.pluscb, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.LEFT, 5)
+        #hhsizer.Add(self.pluscb, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.LEFT, 5)
+        hhsizer.Add(self.pluscb, 0, wx.LEFT, 5)
         zonesizer.Add(hhsizer, 0, wx.ALIGN_LEFT|wx.ALL, 5)
         # Javier changed wx.FlexGridSizer
         #fgsizer = wx.FlexGridSizer(1, 2)

@@ -36,7 +36,7 @@ class FirdariaWnd(commonwnd.CommonWnd):
 		self.BIG_CELL_WIDTH = 20*self.FONT_SIZE
 
 		self.TITLE_HEIGHT = self.LINE_HEIGHT
-		self.TITLE_WIDTH = (self.SMALL_CELL_WIDTH+self.BIG_CELL_WIDTH)
+		self.TITLE_WIDTH = int(self.SMALL_CELL_WIDTH+self.BIG_CELL_WIDTH)
 		self.SPACE_TITLEY = 0
 
 		self.EXTRA_PERIODS = 3 #Three more planetary periods after year 75
@@ -44,11 +44,11 @@ class FirdariaWnd(commonwnd.CommonWnd):
 # Roberto V 7.3.0		
 		self.LINE_NUM = (planets.Planets.PLANETS_NUM + self.EXTRA_PERIODS)*6 #(planets.Planets.PLANETS_NUM+1)+2 #+2 is the number of the Nodes of the Moon
 # ##################################
-		self.TABLE_HEIGHT = (self.TITLE_HEIGHT+self.SPACE_TITLEY+self.LINE_NUM*(self.LINE_HEIGHT))
-		self.TABLE_WIDTH = (self.SMALL_CELL_WIDTH+self.BIG_CELL_WIDTH)
+		self.TABLE_HEIGHT = int(self.TITLE_HEIGHT+self.SPACE_TITLEY+self.LINE_NUM*(self.LINE_HEIGHT))
+		self.TABLE_WIDTH = int(self.SMALL_CELL_WIDTH+self.BIG_CELL_WIDTH)
 	
-		self.WIDTH = (commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
-		self.HEIGHT = (commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
+		self.WIDTH = int(commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH+commonwnd.CommonWnd.BORDER)
+		self.HEIGHT = int(commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
 
 		self.SetVirtualSize((self.WIDTH, self.HEIGHT))
 # ##################################

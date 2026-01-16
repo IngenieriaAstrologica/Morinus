@@ -42,16 +42,16 @@ class MunPosWnd(commonwnd.CommonWnd):
 		self.TITLE_WIDTH = self.COLUMN_NUM*self.CELL_WIDTH
 		self.TITLE_WIDTH_ARABIAN = (self.COLUMN_NUM_ARABIAN+1)*self.CELL_WIDTH
 		self.SPACE_TITLEY = 0
-		self.TABLE_WIDTH = (self.SMALL_CELL_WIDTH+self.COLUMN_NUM*(self.CELL_WIDTH))
+		self.TABLE_WIDTH = int(self.SMALL_CELL_WIDTH+self.COLUMN_NUM*(self.CELL_WIDTH))
 		self.TABLE_WIDTH_ARABIAN = self.TABLE_WIDTH
 		self.TABLE_HEIGHT_ARABIAN = 0
 		if not self.options.intables or (self.options.intables and self.options.showlof):
 			self.TABLE_WIDTH_ARABIAN = (self.CELL_WIDTH+self.COLUMN_NUM_ARABIAN*(self.CELL_WIDTH))
 			self.TABLE_HEIGHT_ARABIAN = (self.SPACE_ARABIANY+self.LINE_NUM_ARABIAN*self.LINE_HEIGHT)
-		self.TABLE_HEIGHT = (self.TITLE_HEIGHT+self.SPACE_TITLEY+(self.LINE_NUM)*(self.LINE_HEIGHT)+self.TABLE_HEIGHT_ARABIAN)
+		self.TABLE_HEIGHT = int(self.TITLE_HEIGHT+self.SPACE_TITLEY+(self.LINE_NUM)*(self.LINE_HEIGHT)+self.TABLE_HEIGHT_ARABIAN)
 	
-		self.WIDTH = (commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH_ARABIAN+commonwnd.CommonWnd.BORDER)
-		self.HEIGHT = (commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
+		self.WIDTH = int(commonwnd.CommonWnd.BORDER+self.TABLE_WIDTH_ARABIAN+commonwnd.CommonWnd.BORDER)
+		self.HEIGHT = int(commonwnd.CommonWnd.BORDER+self.TABLE_HEIGHT+commonwnd.CommonWnd.BORDER)
 
 		self.SetVirtualSize((self.WIDTH, self.HEIGHT))
 

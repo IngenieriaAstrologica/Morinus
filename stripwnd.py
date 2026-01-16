@@ -36,11 +36,11 @@ class StripWnd(commonwnd.CommonWnd):
 		self.DEG_OFFS = self.FONT_SIZE/5
 
 		self.YOFFS = self.FONT_SIZE+self.YPLANETS_OFFS+self.LINE_LENGTH
-		self.TABLE_HEIGHT = (self.LONGTIC+self.DEG_OFFS+self.FONT_SIZE+self.YOFFS)
+		self.TABLE_HEIGHT = int(self.LONGTIC+self.DEG_OFFS+self.FONT_SIZE+self.YOFFS)
 		self.TABLE_WIDTH = chart.Chart.SIGN_DEG*self.TICSTEP
 	
-		self.WIDTH = (BOR+self.TABLE_WIDTH+BOR)
-		self.HEIGHT = (BOR+self.TABLE_HEIGHT+BOR)
+		self.WIDTH = int(BOR+self.TABLE_WIDTH+BOR)
+		self.HEIGHT = int(BOR+self.TABLE_HEIGHT+BOR)
 
 		self.SetVirtualSize((self.WIDTH, self.HEIGHT))
 

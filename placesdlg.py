@@ -297,7 +297,8 @@ class PlacesDlg(wx.Dialog):
         hhsizer.Add(label, 0, wx.ALIGN_CENTER_VERTICAL|wx.LEFT, 5)
         self.pluscb = wx.ComboBox(self, -1, PlacesDlg.PLUSCHOICES[0], size=(50, -1), choices=PlacesDlg.PLUSCHOICES, style=wx.CB_DROPDOWN|wx.CB_READONLY)
         self.pluscb.SetStringSelection(PlacesDlg.PLUSCHOICES[0])
-        hhsizer.Add(self.pluscb, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.LEFT, 5)
+        #hhsizer.Add(self.pluscb, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.LEFT, 5)
+        hhsizer.Add(self.pluscb, 0, wx.LEFT, 5)
         zonesizer.Add(hhsizer, 0, wx.ALIGN_LEFT|wx.ALL, 5)
         # Javier changed FlexGridSizer
         #fgsizer = wx.FlexGridSizer(1, 2)
@@ -336,7 +337,8 @@ class PlacesDlg(wx.Dialog):
         hhhsubsizer.Add(self.alt, 0, wx.ALIGN_CENTER|wx.ALL, 5)
         label = wx.StaticText(self, -1, 'm')
         hhhsubsizer.Add(label, 0, wx.ALIGN_CENTER|wx.TOP, 2)
-        altsizer.Add(hhhsubsizer, 0, wx.GROW|wx.ALIGN_CENTER|wx.TOP, 20)
+        #altsizer.Add(hhhsubsizer, 0, wx.GROW|wx.ALIGN_CENTER|wx.TOP, 20)
+        altsizer.Add(hhhsubsizer, 0, wx.GROW|wx.TOP, 20)
 
         hhsubsizer.Add(altsizer, 0, wx.GROW|wx.ALIGN_LEFT|wx.RIGHT, 5)
         vsubsizer.Add(hhsubsizer, 0, wx.GROW|wx.ALIGN_LEFT)
