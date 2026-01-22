@@ -45,10 +45,11 @@ class TransitMonthDlg(wx.Dialog):
         checker = rangechecker.RangeChecker()
         if checker.isExtended():
             rnge = 5000
-        self.stime =wx.StaticBox(self, label='')
+        self.stime = wx.StaticBox(self, label='')
         timesizer = wx.StaticBoxSizer(self.stime, wx.VERTICAL)
         vsizer = wx.BoxSizer(wx.VERTICAL)
-        fgsizer = wx.FlexGridSizer(1, 2)
+        #fgsizer = wx.FlexGridSizer(1, 2)
+        fgsizer = wx.FlexGridSizer(rows=1, cols=2, vgap=0, hgap=0)
         label = wx.StaticText(self, -1, mtexts.txts['Year']+':')
         vsizer.Add(label, 0, wx.ALIGN_CENTER_HORIZONTAL|wx.LEFT, 0)
         self.year = wx.TextCtrl(self, -1, '', validator=intvalidator.IntValidator(0, rnge), size=(50,-1))

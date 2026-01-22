@@ -219,7 +219,7 @@ class ProfectionsWnd(commonwnd.CommonWnd):
 					lon -= self.chart.ayanamsha
 					lon = util.normalize(lon)
 				d,m,s = util.decToDeg(lon)
-				sign = d/chart.Chart.SIGN_DEG
+				sign = int(d//chart.Chart.SIGN_DEG)
 				pos = d%chart.Chart.SIGN_DEG
 				# wsp,hsp = draw.textsize(' ', self.fntText)
 				wsp, hsp = get_size(self.fntText, ' ')
