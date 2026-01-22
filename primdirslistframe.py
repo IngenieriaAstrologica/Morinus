@@ -47,19 +47,24 @@ class PrimDirsListFrame(wx.Frame):
         self.tb.SetToolBitmapSize(tsize)
       
         self.ID_Start = 10
-        self.tb.AddLabelTool(10, "Start", tostart_bmp, shortHelp=mtexts.txts["Start"], longHelp=mtexts.txts["ToFirstPage"])
+        #self.tb.AddLabelTool(10, "Start", tostart_bmp, shortHelp=mtexts.txts["Start"], longHelp=mtexts.txts["ToFirstPage"])
+        #self.tb.AddTool(10, "Start", tostart_bmp, shortHelpString=mtexts.txts["Start"], longHelp=mtexts.txts["ToFirstPage"])
+        self.tb.AddTool(10, "Start", tostart_bmp, mtexts.txts["Start"])
         self.Bind(wx.EVT_TOOL, self.OnStart, id=self.ID_Start)
 
         self.ID_Back = 20
-        self.tb.AddLabelTool(20, "Back", back_bmp, shortHelp=mtexts.txts["Back"], longHelp=mtexts.txts["ToBackPage"])
+        #self.tb.AddLabelTool(20, "Back", back_bmp, shortHelp=mtexts.txts["Back"], longHelp=mtexts.txts["ToBackPage"])
+        self.tb.AddTool(20, "Back", back_bmp, mtexts.txts["Back"])
         self.Bind(wx.EVT_TOOL, self.OnBack, id=self.ID_Back)
 
         self.ID_Forward = 30
-        self.tb.AddLabelTool(30, "Forward", forward_bmp, shortHelp=mtexts.txts["Forward"], longHelp=mtexts.txts["ToForwardPage"])
+        #self.tb.AddLabelTool(30, "Forward", forward_bmp, shortHelp=mtexts.txts["Forward"], longHelp=mtexts.txts["ToForwardPage"])
+        self.tb.AddTool(30, "Forward", forward_bmp, mtexts.txts["Forward"])
         self.Bind(wx.EVT_TOOL, self.OnForward, id=self.ID_Forward)
 
         self.ID_End = 40
-        self.tb.AddLabelTool(40, "End", toend_bmp, shortHelp=mtexts.txts["End"], longHelp=mtexts.txts["ToLastPage"])
+        #self.tb.AddLabelTool(40, "End", toend_bmp, shortHelp=mtexts.txts["End"], longHelp=mtexts.txts["ToLastPage"])
+        self.tb.AddTool(40, "End", toend_bmp, mtexts.txts["End"])
         self.Bind(wx.EVT_TOOL, self.OnEnd, id=self.ID_End)
 
         self.tb.AddSeparator()

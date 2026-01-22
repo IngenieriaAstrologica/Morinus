@@ -32,16 +32,17 @@ class SquareChart:
         self.bdc = wx.BufferedDC(None, self.buffer)
         self.chartsize = min(self.w, self.h)
         self.maxradius = self.chartsize/2
-        self.center = wx.Point(self.w/2, self.h/2)
+        #self.center = wx.Point(self.w/2, self.h/2)
+        self.center = wx.Point(int(self.w//2), int(self.h//2))
 
         self.symbolSize = self.maxradius/16
         self.smallSize = self.maxradius/18
         self.fontSize = self.symbolSize
-        self.fntMorinus = ImageFont.truetype(common.common.symbols, self.symbolSize)
-        self.fntMorinusSmall = ImageFont.truetype(common.common.symbols, self.smallSize)
-        self.fntText = ImageFont.truetype(common.common.abc, self.fontSize)
-        self.fntTextSmall = ImageFont.truetype(common.common.abc, 3*self.fontSize/4)
-        self.fntTextSmaller = ImageFont.truetype(common.common.abc, self.fontSize/2)
+        self.fntMorinus = ImageFont.truetype(common.common.symbols, max(1, self.symbolSize))
+        self.fntMorinusSmall = ImageFont.truetype(common.common.symbols, max(1, self.smallSize))
+        self.fntText = ImageFont.truetype(common.common.abc, max(1, self.fontSize))
+        self.fntTextSmall = ImageFont.truetype(common.common.abc, max(1, 3*self.fontSize/4))
+        self.fntTextSmaller = ImageFont.truetype(common.common.abc, max(1, self.fontSize/2))
         self.signs = common.common.Signs1
         if not self.options.signs:
             self.signs = common.common.Signs2
@@ -83,9 +84,9 @@ class SquareChart:
         pen = wx.Pen(frameclr, w)
         self.bdc.SetPen(pen)
         radius = self.maxradius*0.90
-        x = cx-radius
-        y = cy-radius
-        w = h = 2*radius+w
+        x = int(cx-radius)
+        y = int(cy-radius)
+        w = h = int(2*radius+w)
         self.bdc.DrawRectangle(x, y, w, h)
 
         w = 3
@@ -96,51 +97,51 @@ class SquareChart:
         pen = wx.Pen(frameclr, w)
         self.bdc.SetPen(pen)
 
-        x1 = cx
-        y1 = cy-radius
-        x2 = cx-radius
-        y2 = cy
+        x1 = int(cx)
+        y1 = int(cy-radius)
+        x2 = int(cx-radius)
+        y2 = int(cy)
         self.bdc.DrawLine(x1, y1, x2, y2)
-        x1 = cx-radius
-        y1 = cy
-        x2 = cx
-        y2 = cy+radius
+        x1 = int(cx-radius)
+        y1 = int(cy)
+        x2 = int(cx)
+        y2 = int(cy+radius)
         self.bdc.DrawLine(x1, y1, x2, y2)
-        x1 = cx
-        y1 = cy+radius
-        x2 = cx+radius
-        y2 = cy
+        x1 = int(cx)
+        y1 = int(cy+radius)
+        x2 = int(cx+radius)
+        y2 = int(cy)
         self.bdc.DrawLine(x1, y1, x2, y2)
-        x1 = cx+radius
-        y1 = cy
-        x2 = cx
-        y2 = cy-radius
+        x1 = int(cx+radius)
+        y1 = int(cy)
+        x2 = int(cx)
+        y2 = int(cy-radius)
         self.bdc.DrawLine(x1, y1, x2, y2)
 
-        x1 = cx-radius
-        y1 = cy-radius
-        x2 = cx-radius/2
-        y2 = cy-radius/2
+        x1 = int(cx-radius)
+        y1 = int(cy-radius)
+        x2 = int(cx-radius/2)
+        y2 = int(cy-radius/2)
         self.bdc.DrawLine(x1, y1, x2, y2)
-        x1 = cx-radius
-        y1 = cy+radius
-        x2 = cx-radius/2
-        y2 = cy+radius/2
+        x1 = int(cx-radius)
+        y1 = int(cy+radius)
+        x2 = int(cx-radius/2)
+        y2 = int(cy+radius/2)
         self.bdc.DrawLine(x1, y1, x2, y2)
-        x1 = cx+radius
-        y1 = cy+radius
-        x2 = cx+radius/2
-        y2 = cy+radius/2
+        x1 = int(cx+radius)
+        y1 = int(cy+radius)
+        x2 = int(cx+radius/2)
+        y2 = int(cy+radius/2)
         self.bdc.DrawLine(x1, y1, x2, y2)
-        x1 = cx+radius
-        y1 = cy-radius
-        x2 = cx+radius/2
-        y2 = cy-radius/2
+        x1 = int(cx+radius)
+        y1 = int(cy-radius)
+        x2 = int(cx+radius/2)
+        y2 = int(cy-radius/2)
         self.bdc.DrawLine(x1, y1, x2, y2)
         
-        x = cx-radius/2
-        y = cy-radius/2
-        w = h = radius+1
+        x = int(cx-radius/2)
+        y = int(cy-radius/2)
+        w = h = int(radius+1)
         self.bdc.DrawRectangle(x, y, w, h)
 
         # Javier commented EndDrawing because wxPhoenix
@@ -194,13 +195,13 @@ class SquareChart:
         if self.chart.time.ph != None:
             draw.text((x,y+7*self.LINE_HEIGHT), common.common.Planets[ar[self.chart.time.ph.weekday]], fill=txtclr, font=self.fntMorinus)
             # wsym,hsym = draw.textsize(common.common.Planets[ar[self.chart.time.ph.weekday]], self.fntMorinus)
-            w, h = get_size(self.fntMorinus, common.common.Planets[ar[self.chart.time.ph.weekday]])
+            wsym, hsym = get_size(self.fntMorinus, common.common.Planets[ar[self.chart.time.ph.weekday]])
             # wsp,hsp = draw.textsize(' ', self.fntText)
-            w, h = get_size(self.fntText, ' ')
+            wsp, hsp = get_size(self.fntText, ' ')
             draw.text((x+wsym+wsp,y+7*self.LINE_HEIGHT), mtexts.txts['Day'], fill=txtclr, font=self.fntText)
             draw.text((x,y+8*self.LINE_HEIGHT), common.common.Planets[self.chart.time.ph.planetaryhour], fill=txtclr, font=self.fntMorinus)
             # wsym,hsym = draw.textsize(common.common.Planets[self.chart.time.ph.planetaryhour], self.fntMorinus)
-            w, h = get_size(self.fntMorinus, common.common.Planets[self.chart.time.ph.planetaryhour])
+            wsym, hsym = get_size(self.fntMorinus, common.common.Planets[self.chart.time.ph.planetaryhour])
             draw.text((x+wsym+wsp,y+8*self.LINE_HEIGHT), mtexts.txts['Hour'], fill=txtclr, font=self.fntText)
 
         ar = (((cx-3*radius/4-3*self.fontSize/2, cy-radius/3+self.fontSize), (cx-3*radius/4-self.fontSize/2, cy-radius/3), (cx-3*radius/4+self.fontSize/2, cy-radius/3-self.fontSize/2)), ((cx-3*radius/4-self.fontSize, cy+radius/3-3*self.fontSize), (cx-3*radius/4, cy+radius/3-2*self.fontSize-self.fontSize/4), (cx-3*radius/4+self.fontSize, cy+radius/3-self.fontSize)), ((cx-3*radius/4-5*self.fontSize/2, cy+3*radius/4+4*self.fontSize/5), (cx-3*radius/4-3*self.fontSize/2, cy+3*radius/4-self.fontSize/5), (cx-3*radius/4-self.fontSize/2, cy+3*radius/4-4*self.fontSize/5)), ((cx-radius/4-2*self.fontSize, cy+3*radius/4-self.fontSize), (cx-radius/4-self.fontSize, cy+3*radius/4-self.fontSize/4), (cx-radius/4, cy+3*radius/4+self.fontSize)), ((cx+radius/4-5*self.fontSize/2, cy+3*radius/4+4*self.fontSize/5), (cx+radius/4-3*self.fontSize/2, cy+3*radius/4-self.fontSize/5), (cx+radius/4-self.fontSize/2, cy+3*radius/4-4*self.fontSize/5)), ((cx+3*radius/4-2*self.fontSize, cy+3*radius/4-self.fontSize), (cx+3*radius/4-self.fontSize, cy+3*radius/4-self.fontSize/4), (cx+3*radius/4, cy+3*radius/4+self.fontSize)), ((cx+3*radius/4-3*self.fontSize/4, cy+radius/3-self.fontSize/2), (cx+3*radius/4+self.fontSize/4, cy+radius/3-3*self.fontSize/2), (cx+3*radius/4+5*self.fontSize/4, cy+radius/3-9*self.fontSize/4)), ((cx+3*radius/4-3*self.fontSize/2, cy-radius/3+self.fontSize), (cx+3*radius/4-self.fontSize/4, cy-radius/3+7*self.fontSize/4), (cx+3*radius/4+3*self.fontSize/4, cy-radius/3+11*self.fontSize/4)), ((cx+3*radius/4-self.fontSize, cy-3*radius/4+self.fontSize), (cx+3*radius/4, cy-3*radius/4), (cx+3*radius/4+self.fontSize, cy-3*radius/4-3*self.fontSize/4)), ((cx+radius/4-self.fontSize/4, cy-3*radius/4-self.fontSize), (cx+radius/4+3*self.fontSize/4, cy-3*radius/4-self.fontSize/4), (cx+radius/4+7*self.fontSize/4, cy-3*radius/4+self.fontSize)), ((cx-radius/4-self.fontSize, cy-3*radius/4+self.fontSize), (cx-radius/4, cy-3*radius/4), (cx-radius/4+self.fontSize, cy-3*radius/4-3*self.fontSize/4)), ((cx-3*radius/4, cy-3*radius/4-self.fontSize), (cx-3*radius/4+self.fontSize, cy-3*radius/4), (cx-3*radius/4+2*self.fontSize, cy-3*radius/4+5*self.fontSize/4)))
@@ -220,7 +221,7 @@ class SquareChart:
 
             d,m,s = util.decToDeg(lon)
 
-            sign = d/chart.Chart.SIGN_DEG
+            sign = int(d//chart.Chart.SIGN_DEG)
             pos = d%chart.Chart.SIGN_DEG
 
             txt = (str(pos)).rjust(2)+self.deg_symbol
@@ -256,9 +257,9 @@ class SquareChart:
                 else:
                     pl = common.common.fortune
                 # wpl,hpl = draw.textsize('F', self.fntMorinusSmall)
-                w, h = get_size(self.fntMorinusSmall, 'F')
+                wpl, hpl = get_size(self.fntMorinusSmall, 'F')
                 # wpl2,hpl2 = draw.textsize(pl, self.fntMorinusSmall)
-                w, h = get_size(self.fntMorinusSmall, pl)
+                wpl2, hpl2 = get_size(self.fntMorinusSmall, pl)
 
                 clrpl = (0,0,0)
                 if not self.bw:
@@ -279,9 +280,9 @@ class SquareChart:
                 draw.text((x, y+lhoffs[i]), pl, fill=clrpl, font=self.fntMorinusSmall)
 
                 # wr,hr = draw.textsize('R', self.fntTextSmaller)
-                w, h = get_size(self.fntTextSmaller, 'R')
+                wr, hr = get_size(self.fntTextSmaller, 'R')
                 # wsp,hsp = draw.textsize(' ', self.fntTextSmall)
-                w, h = get_size(self.fntTextSmall, ' ')
+                wsp, hsp = get_size(self.fntTextSmall, ' ')
                 if idxpl < planets.Planets.PLANETS_NUM:
                     speed = self.chart.planets.planets[idxpl].data[planets.Planet.SPLON]
                     if speed <= 0.0:
@@ -290,17 +291,17 @@ class SquareChart:
                             t = 'S'
                         draw.text((x+wpl2, y+lhoffs[i]+self.fontSize/2), t, fill=clrpl, font=self.fntTextSmaller)
 
-                sign = d/chart.Chart.SIGN_DEG
+                sign = int(d//chart.Chart.SIGN_DEG)
                 pos = d%chart.Chart.SIGN_DEG
 
                 txtdeg = (str(pos)).zfill(2)+self.deg_symbol
                 txtmin = (str(m)).zfill(2)+"'"
                 # wdeg,hdeg = draw.textsize(txtdeg, self.fntTextSmall)
-                w, h = get_size(self.fntTextSmall, txtdeg)
+                wdeg, hdeg = get_size(self.fntTextSmall, txtdeg)
                 # wsg,hsg = draw.textsize(self.signs[sign], self.fntMorinusSmall)
-                w, h = get_size(self.fntMorinusSmall, self.signs[sign])
+                wsg, hsg = get_size(self.fntMorinusSmall, self.signs[sign])
                 # wmin,hmin = draw.textsize(txtmin, self.fntTextSmaller)
-                w, h = get_size(self.fntTextSmaller, txtmin)
+                wmin, hmin = get_size(self.fntTextSmaller, txtmin)
                 draw.text((x+wpl+wr+wsp, y+lhoffs[i]), txtdeg, fill=clrpl, font=self.fntTextSmall)
                 draw.text((x+wpl+wr+wsp+wdeg, y+lhoffs[i]), self.signs[sign], fill=clrpl, font=self.fntMorinusSmall)
                 draw.text((x+wpl+wr+wsp+wdeg+wsp+wsg, y+lhoffs[i]), txtmin, fill=clrpl, font=self.fntTextSmaller)
@@ -362,8 +363,3 @@ class SquareChart:
             mixed.reverse()
 
         return tuple(inhouse), tuple(mixed)
-        
-
-
-
-

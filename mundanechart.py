@@ -40,7 +40,8 @@ class MundaneChart:
         self.bdc = wx.BufferedDC(None, self.buffer)
         self.chartsize = min(self.w, self.h)
         self.maxradius = self.chartsize/2
-        self.center = wx.Point(self.w/2, self.h/2)
+        #self.center = wx.Point(self.w/2, self.h/2)
+        self.center = wx.Point(int(self.w//2), int(self.h//2))
 
         self.arrowlen = 0.04
         self.deg01510len = 0.01
@@ -138,13 +139,13 @@ class MundaneChart:
 
         self.smallsymbolSize = 2*self.symbolSize/3
 
-        self.fntMorinus = ImageFont.truetype(common.common.symbols, self.symbolSize)
-        self.fntSmallMorinus = ImageFont.truetype(common.common.symbols, self.smallsymbolSize)
-        self.fntAspects = ImageFont.truetype(common.common.symbols, self.symbolSize/2)
-        self.fntText = ImageFont.truetype(common.common.abc, self.symbolSize/2)
-        self.fntSmallText = ImageFont.truetype(common.common.abc, self.symbolSize/4)
-        self.fntBigText = ImageFont.truetype(common.common.abc, self.symbolSize)
-        self.fntMorinus2 = ImageFont.truetype(common.common.symbols, self.symbolSize/4*3)
+        self.fntMorinus = ImageFont.truetype(common.common.symbols, max(1, self.symbolSize))
+        self.fntSmallMorinus = ImageFont.truetype(common.common.symbols, max(1, self.smallsymbolSize))
+        self.fntAspects = ImageFont.truetype(common.common.symbols, max(1, self.symbolSize/2))
+        self.fntText = ImageFont.truetype(common.common.abc, max(1, self.symbolSize/2))
+        self.fntSmallText = ImageFont.truetype(common.common.abc, max(1, self.symbolSize/4))
+        self.fntBigText = ImageFont.truetype(common.common.abc, max(1, self.symbolSize))
+        self.fntMorinus2 = ImageFont.truetype(common.common.symbols, max(1, self.symbolSize/4*3))
         self.deg_symbol = u'\u00b0'
 
 
@@ -227,6 +228,7 @@ class MundaneChart:
         self.bdc.SetBrush(wx.Brush(bkgclr)) 
 
         (cx, cy) = self.center.Get()
+        cx, cy = int(cx), int(cy)
 
         #r30 circle
         if self.chart2 != None:
@@ -242,12 +244,12 @@ class MundaneChart:
 
             pen = wx.Pen(clr, w)
             self.bdc.SetPen(pen)
-            self.bdc.DrawCircle(cx, cy, self.r30)
+            self.bdc.DrawCircle(cx, cy, int(self.r30))
 
             #Outer 10, 5, 1-circle
             pen = wx.Pen(clr, 1)
             self.bdc.SetPen(pen)
-            self.bdc.DrawCircle(cx, cy, self.rOuter10)
+            self.bdc.DrawCircle(cx, cy, int(self.rOuter10))
 
         #r10 Circle
         clr = self.options.clrframe
@@ -255,7 +257,7 @@ class MundaneChart:
             clr = (0,0,0)
         pen = wx.Pen(clr, 1)
         self.bdc.SetPen(pen)
-        self.bdc.DrawCircle(cx, cy, self.r10)
+        self.bdc.DrawCircle(cx, cy, int(self.r10))
 
         #r0 Circle
         clr = self.options.clrframe
@@ -270,7 +272,7 @@ class MundaneChart:
 
         pen = wx.Pen(clr, w)
         self.bdc.SetPen(pen)
-        self.bdc.DrawCircle(cx, cy, self.rInner)
+        self.bdc.DrawCircle(cx, cy, int(self.rInner))
 
         #rAsp Circle
         clr = self.options.clrframe
@@ -278,7 +280,7 @@ class MundaneChart:
             clr = (0,0,0)
         pen = wx.Pen(clr, 1)
         self.bdc.SetPen(pen)
-        self.bdc.DrawCircle(cx, cy, self.rAsp)
+        self.bdc.DrawCircle(cx, cy, int(self.rAsp))
 
         #rHouse Circle
 #       if self.options.houses:
@@ -302,7 +304,7 @@ class MundaneChart:
 
         pen = wx.Pen(clr, w)
         self.bdc.SetPen(pen)
-        self.bdc.DrawCircle(cx, cy, self.rBase)
+        self.bdc.DrawCircle(cx, cy, int(self.rBase))
 
         asclon = self.chart.houses.ascmc[houses.Houses.ASC]
 
@@ -379,8 +381,8 @@ class MundaneChart:
 
         offs = math.pi-MundaneChart.DEG30/2
         for i in range (1, houses.Houses.HOUSE_NUM+1):
-            x = cx+math.cos(offs)*rHousenames
-            y = cy+math.sin(offs)*rHousenames
+            x = int(cx+math.cos(offs)*rHousenames)
+            y = int(cy+math.sin(offs)*rHousenames)
             self.draw.text((x-self.houseSize/2, y-self.houseSize/2), common.common.Housenames[i-1], font=self.fntBigText, fill=clr)
             offs -= MundaneChart.DEG30
 
@@ -395,10 +397,10 @@ class MundaneChart:
 
         offs = math.pi
         for i in range (1, houses.Houses.HOUSE_NUM+1):
-            x1 = cx+math.cos(offs)*r1
-            y1 = cy+math.sin(offs)*r1
-            x2 = cx+math.cos(offs)*r2
-            y2 = cy+math.sin(offs)*r2
+            x1 = int(cx+math.cos(offs)*r1)
+            y1 = int(cy+math.sin(offs)*r1)
+            x2 = int(cx+math.cos(offs)*r2)
+            y2 = int(cy+math.sin(offs)*r2)
             self.bdc.DrawLine(x1, y1, x2, y2)
             offs -= MundaneChart.DEG30
 
@@ -433,10 +435,10 @@ class MundaneChart:
 
         offs = math.pi
         for i in range(4):
-            x1 = cx+math.cos(offs)*r1
-            y1 = cy+math.sin(offs)*r1
-            x2 = cx+math.cos(offs)*r2
-            y2 = cy+math.sin(offs)*r2
+            x1 = int(cx+math.cos(offs)*r1)
+            y1 = int(cy+math.sin(offs)*r1)
+            x2 = int(cx+math.cos(offs)*r2)
+            y2 = int(cy+math.sin(offs)*r2)
             self.bdc.DrawLine(x1, y1, x2, y2)
             offs -= 3*MundaneChart.DEG30
 
@@ -448,12 +450,12 @@ class MundaneChart:
         (cx, cy) = self.center.Get()
         offs = math.pi/360.0 
 
-        xl = cx+math.cos(ang+offs)*r2
-        yl = cy+math.sin(ang+offs)*r2
-        xr = cx+math.cos(ang-offs)*r2
-        yr = cy+math.sin(ang-offs)*r2
-        xm = cx+math.cos(ang)*rArrow
-        ym = cy+math.sin(ang)*rArrow
+        xl = int(cx+math.cos(ang+offs)*r2)
+        yl = int(cy+math.sin(ang+offs)*r2)
+        xr = int(cx+math.cos(ang-offs)*r2)
+        yr = int(cy+math.sin(ang-offs)*r2)
+        xm = int(cx+math.cos(ang)*rArrow)
+        ym = int(cy+math.sin(ang)*rArrow)
 
         li = ((xl, yl, xr, yr), (xr, yr, xm, ym), (xm, ym, xl, yl))
         self.bdc.DrawLineList(li)
@@ -518,8 +520,8 @@ class MundaneChart:
                 elif self.chart.options.primarydir == primdirs.PrimDirs.CAMPANIAN:
                     xmp = chrt.fortune.speculum2.speculum[regiospec.RegiomontanianSpeculum.CMP]
 
-            x = cx+math.cos(math.pi+math.radians(-xmp-pshift[i]))*rPlanet
-            y = cy+math.sin(math.pi+math.radians(-xmp-pshift[i]))*rPlanet
+            x = int(cx+math.cos(math.pi+math.radians(-xmp-pshift[i]))*rPlanet)
+            y = int(cy+math.sin(math.pi+math.radians(-xmp-pshift[i]))*rPlanet)
             
             clr = (0,0,0)
             if not self.bw:
@@ -550,8 +552,8 @@ class MundaneChart:
                     if chrt.planets.planets[i].data[planets.Planet.SPLON] < 0.0:
                         t = 'R'
 
-                    x = cx+math.cos(math.pi+math.radians(-xmp-pshift[i]))*rRetr 
-                    y = cy+math.sin(math.pi+math.radians(-xmp-pshift[i]))*rRetr
+                    x = int(cx+math.cos(math.pi+math.radians(-xmp-pshift[i]))*rRetr)
+                    y = int(cy+math.sin(math.pi+math.radians(-xmp-pshift[i]))*rRetr)
 
                     self.draw.text((x-self.symbolSize/8, y-self.symbolSize/8), t, fill=clr, font=self.fntSmallText)
 
@@ -563,11 +565,11 @@ class MundaneChart:
 #                   d, m = util.roundDeg(d%chart.Chart.SIGN_DEG, m, s)
                 
                     # wdeg, hdeg = self.draw.textsize(str(d), self.fntText)
-                    w, h = get_size(self.fntText, str(d))
+                    wdeg, hdeg = get_size(self.fntText, str(d))
                     # wmin, hmin = self.draw.textsize((str(m).zfill(2)), self.fntSmallText)
-                    w, h = get_size(self.fntSmallText, (str(m).zfill(2)))
-                    x = cx+math.cos(math.pi+math.radians(-xmp-pshift[i]))*self.rPos
-                    y = cy+math.sin(math.pi+math.radians(-xmp-pshift[i]))*self.rPos 
+                    wmin, hmin = get_size(self.fntSmallText, (str(m).zfill(2)))
+                    x = int(cx+math.cos(math.pi+math.radians(-xmp-pshift[i]))*self.rPos)
+                    y = int(cy+math.sin(math.pi+math.radians(-xmp-pshift[i]))*self.rPos)
                     xdeg = x-wdeg/2
                     ydeg = y-hdeg/2
                     self.draw.text((xdeg, ydeg), str(d), fill=clrpos, font=self.fntText)
@@ -578,10 +580,10 @@ class MundaneChart:
         (cx, cy) = self.center.Get()
         i = math.pi+math.radians(shift)
         while i>-math.pi+math.radians(shift):
-            x1 = cx+math.cos(i)*r1
-            y1 = cy+math.sin(i)*r1
-            x2 = cx+math.cos(i)*r2
-            y2 = cy+math.sin(i)*r2
+            x1 = int(cx+math.cos(i)*r1)
+            y1 = int(cy+math.sin(i)*r1)
+            x2 = int(cx+math.cos(i)*r2)
+            y2 = int(cy+math.sin(i)*r2)
 
             self.bdc.DrawLine(x1, y1, x2, y2)
             i -= deg
@@ -624,10 +626,10 @@ class MundaneChart:
             elif self.chart.options.primarydir == primdirs.PrimDirs.CAMPANIAN:
                 xmp = frtn.speculum2.speculum[regiospec.RegiomontanianSpeculum.CMP]
 
-        x1 = cx+math.cos(math.pi+math.radians(-xmp))*r1
-        y1 = cy+math.sin(math.pi+math.radians(-xmp))*r1
-        x2 = cx+math.cos(math.pi+math.radians(-xmp-pshift[planet]))*r2
-        y2 = cy+math.sin(math.pi+math.radians(-xmp-pshift[planet]))*r2
+        x1 = int(cx+math.cos(math.pi+math.radians(-xmp))*r1)
+        y1 = int(cy+math.sin(math.pi+math.radians(-xmp))*r1)
+        x2 = int(cx+math.cos(math.pi+math.radians(-xmp-pshift[planet]))*r2)
+        y2 = int(cy+math.sin(math.pi+math.radians(-xmp-pshift[planet]))*r2)
         self.bdc.DrawLine(x1, y1, x2, y2)
 
 
@@ -737,31 +739,35 @@ class MundaneChart:
         (cx, cy) = self.center.Get()
         shifted = False
 
-        x1 = cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-order[p1]-pshift[mixed[p1]]))*rPlanet
-        y1 = cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-order[p1]-pshift[mixed[p1]]))*rPlanet
-        x2 = cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-order[p2]-pshift[mixed[p2]]))*rPlanet
-        y2 = cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-order[p2]-pshift[mixed[p2]]))*rPlanet
+        x1 = int(cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-order[p1]-pshift[mixed[p1]]))*rPlanet)
+        y1 = int(cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-order[p1]-pshift[mixed[p1]]))*rPlanet)
+        x2 = int(cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-order[p2]-pshift[mixed[p2]]))*rPlanet)
+        y2 = int(cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-order[p2]-pshift[mixed[p2]]))*rPlanet)
 
         w1, h1 = 0.0, 0.0
         if mixed[p1] < planets.Planets.PLANETS_NUM:
-            w1, h1 = self.fntMorinus.getsize(common.common.Planets[mixed[p1]])
+            #w1, h1 = self.fntMorinus.getsize(common.common.Planets[mixed[p1]])
+            w1, h1 = get_size(self.fntMorinus, common.common.Planets[mixed[p1]])
         else:
-            w1, h1 = self.fntMorinus.getsize(common.common.fortune)
+            #w1, h1 = self.fntMorinus.getsize(common.common.fortune)
+            w1, h1 = get_size(self.fntMorinus, common.common.fortune)
         w2, h2 = 0.0, 0.0
         if mixed[p2] < planets.Planets.PLANETS_NUM:
-            w2, h2 = self.fntMorinus.getsize(common.common.Planets[mixed[p2]])
+            #w2, h2 = self.fntMorinus.getsize(common.common.Planets[mixed[p2]])
+            w2, h2 = get_size(self.fntMorinus, common.common.Planets[mixed[p2]])
         else:
-            w2, h2 = self.fntMorinus.getsize(common.common.fortune)
+            #w2, h2 = self.fntMorinus.getsize(common.common.fortune)
+            w2, h2 = get_size(self.fntMorinus, common.common.fortune)
 
         while (self.overlap(x1, y1, w1, h1, x2, y2, w2, h2)):
             if not forward:
                 pshift[mixed[p1]] -= 0.1
             pshift[mixed[p2]] += 0.1
 
-            x1 = cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-order[p1]-pshift[mixed[p1]]))*rPlanet
-            y1 = cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-order[p1]-pshift[mixed[p1]]))*rPlanet
-            x2 = cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-order[p2]-pshift[mixed[p2]]))*rPlanet
-            y2 = cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-order[p2]-pshift[mixed[p2]]))*rPlanet
+            x1 = int(cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-order[p1]-pshift[mixed[p1]]))*rPlanet)
+            y1 = int(cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-order[p1]-pshift[mixed[p1]]))*rPlanet)
+            x2 = int(cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-order[p2]-pshift[mixed[p2]]))*rPlanet)
+            y2 = int(cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-order[p2]-pshift[mixed[p2]]))*rPlanet)
 
             if not shifted:
                 shifted = True

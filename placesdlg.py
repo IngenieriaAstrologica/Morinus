@@ -156,7 +156,7 @@ class PlaceListCtrl(wx.ListCtrl):
     def save(self):
         if self.changed:
             pdb = placedb.PlaceDB()
-    
+ 
             for i in range(self.GetItemCount()):
                 pdb.add(self.getColumnText(i, PlaceListCtrl.PLACE), self.getColumnText(i, PlaceListCtrl.LON), self.getColumnText(i, PlaceListCtrl.LAT), self.getColumnText(i, PlaceListCtrl.ZONE), self.getColumnText(i, PlaceListCtrl.ALT))
 

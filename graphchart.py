@@ -1040,10 +1040,10 @@ class GraphChart:
             lon1 = self.chart.planets.planets[i].data[planets.Planet.LONG]
             showasp = self.isShowAsp(asp.typ, lon1, lon2)
             if showasp:
-                x1 = cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-self.chart.planets.planets[i].data[planets.Planet.LONG]))*self.rAsp
-                y1 = cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-self.chart.planets.planets[i].data[planets.Planet.LONG]))*self.rAsp
-                x2 = cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-self.chart.fortune.fortune[fortune.Fortune.LON]))*self.rAsp
-                y2 = cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-self.chart.fortune.fortune[fortune.Fortune.LON]))*self.rAsp
+                x1 = int(cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-self.chart.planets.planets[i].data[planets.Planet.LONG]))*self.rAsp)
+                y1 = int(cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-self.chart.planets.planets[i].data[planets.Planet.LONG]))*self.rAsp)
+                x2 = int(cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-self.chart.fortune.fortune[fortune.Fortune.LON]))*self.rAsp)
+                y2 = int(cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-self.chart.fortune.fortune[fortune.Fortune.LON]))*self.rAsp)
 
                 clr = (0,0,0)
                 if not self.bw:
@@ -1329,10 +1329,10 @@ class GraphChart:
             if self.options.ayanamsha != 0:
                 ayanoffs = self.chart.ayanamsha
 
-            x1 = cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-ayanoffs-lon))*r1
-            y1 = cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-ayanoffs-lon))*r1
-            x2 = cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-ayanoffs-lon-pshift[i]))*r2
-            y2 = cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-ayanoffs-lon-pshift[i]))*r2
+            x1 = int(cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-ayanoffs-lon))*r1)
+            y1 = int(cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-ayanoffs-lon))*r1)
+            x2 = int(cx+math.cos(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-ayanoffs-lon-pshift[i]))*r2)
+            y2 = int(cy+math.sin(math.pi+math.radians(self.chart.houses.ascmc[houses.Houses.ASC]-ayanoffs-lon-pshift[i]))*r2)
             self.bdc.DrawLine(x1, y1, x2, y2)
 
 
@@ -1869,23 +1869,31 @@ class GraphChart:
 
         w1, h1 = 0.0, 0.0
         if mixed[p1] < planets.Planets.PLANETS_NUM:
-            w1, h1 = self.fntMorinus.getsize(common.common.Planets[mixed[p1]])
+            #w1, h1 = self.fntMorinus.getsize(common.common.Planets[mixed[p1]])
+            w1, h1 = get_size(self.fntMorinus, common.common.Planets[mixed[p1]])
         elif mixed[p1] == planets.Planets.PLANETS_NUM:
-            w1, h1 = self.fntMorinus.getsize(common.common.fortune)
+            #w1, h1 = self.fntMorinus.getsize(common.common.fortune)
+            w1, h1 = get_size(self.fntMorinus, common.common.fortune)
         elif mixed[p1] == planets.Planets.PLANETS_NUM+1:
-            w1, h1 = self.fntAntisText.getsize(mtexts.txts['StripAsc'])
+            #w1, h1 = self.fntAntisText.getsize(mtexts.txts['StripAsc'])
+            w1, h1 = get_size(self.fntAntisText, mtexts.txts['StripAsc'])
         elif mixed[p1] == planets.Planets.PLANETS_NUM+2:
-            w1, h1 = self.fntAntisText.getsize(mtexts.txts['StripMC'])
+            #w1, h1 = self.fntAntisText.getsize(mtexts.txts['StripMC'])
+            w1, h1 = get_size(self.fntAntisText, mtexts.txts['StripMC'])
 
         w2, h2 = 0.0, 0.0
         if mixed[p2] < planets.Planets.PLANETS_NUM:
-            w2, h2 = self.fntMorinus.getsize(common.common.Planets[mixed[p2]])
+            #w2, h2 = self.fntMorinus.getsize(common.common.Planets[mixed[p2]])
+            w2, h2 = get_size(self.fntMorinus, common.common.Planets[mixed[p2]])
         elif mixed[p2] == planets.Planets.PLANETS_NUM:
-            w2, h2 = self.fntMorinus.getsize(common.common.fortune)
+            #w2, h2 = self.fntMorinus.getsize(common.common.fortune)
+            w2, h2 = get_size(self.fntMorinus, common.common.fortune)
         elif mixed[p2] == planets.Planets.PLANETS_NUM+1:
-            w2, h2 = self.fntAntisText.getsize(mtexts.txts['StripAsc'])
+            #w2, h2 = self.fntAntisText.getsize(mtexts.txts['StripAsc'])
+            w2, h2 = get_size(self.fntAntisText, mtexts.txts['StripAsc'])
         elif mixed[p2] == planets.Planets.PLANETS_NUM+2:
-            w2, h2 = self.fntAntisText.getsize(mtexts.txts['StripMC'])
+            #w2, h2 = self.fntAntisText.getsize(mtexts.txts['StripMC'])
+            w2, h2 = get_size(self.fntAntisText, mtexts.txts['StripMC'])
 
         while (self.overlap(x1, y1, w1, h1, x2, y2, w2, h2)):
             if not forward:
