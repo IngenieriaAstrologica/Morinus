@@ -115,7 +115,8 @@ class OrbisDlg(wx.Dialog):
         sexactsizer.Add(gsizer, 0, wx.ALIGN_LEFT|wx.LEFT|wx.TOP, 5)
 
         vsizer.Add(sexactsizer, 0, wx.GROW|wx.TOP, 0)
-        mhsizer.Add(vsizer, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.LEFT, 0)
+        #mhsizer.Add(vsizer, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.LEFT, 0)
+        mhsizer.Add(vsizer, 0, wx.GROW|wx.LEFT, 0)
 
         #Aspects
         self.saspects =wx.StaticBox(self, label=mtexts.txts['Aspects'])
@@ -201,7 +202,8 @@ class OrbisDlg(wx.Dialog):
         sfixstarssizer.Add(btnFixStars, 0, wx.ALIGN_CENTER|wx.ALL, 5)
         vsizer.Add(sfixstarssizer, 0, wx.GROW|wx.TOP, 0)
 
-        mhsizer.Add(vsizer, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.LEFT, 5)
+        #mhsizer.Add(vsizer, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.LEFT, 5)
+        mhsizer.Add(vsizer, 0, wx.GROW|wx.LEFT, 5)
 
         btnsizer = wx.StdDialogButtonSizer()
 
@@ -213,8 +215,10 @@ class OrbisDlg(wx.Dialog):
         btnsizer.AddButton(btn)
         btnsizer.Realize()
 
-        mvsizer.Add(mhsizer, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5)
-        mvsizer.Add(btnsizer, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 10)
+        #mvsizer.Add(mhsizer, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5)
+        mvsizer.Add(mhsizer, 0, wx.GROW|wx.ALL, 5)
+        #mvsizer.Add(btnsizer, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 10)
+        mvsizer.Add(btnsizer, 0, wx.GROW|wx.ALL, 10)
 
         self.SetSizer(mvsizer)
         mvsizer.Fit(self)
@@ -384,7 +388,7 @@ class OrbisDlg(wx.Dialog):
             options.exact = float(self.exact.GetValue())
             changed = True
 
-        for k in self.fixstars.iterkeys():
+        for k in self.fixstars.keys():
             if self.fixstars[k] != options.fixstars[k]:
                 options.fixstars[k] = self.fixstars[k]
                 changed = True

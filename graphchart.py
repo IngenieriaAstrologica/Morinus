@@ -1082,7 +1082,8 @@ class GraphChart:
 
         #ayanamsha
         if self.options.ayanamsha != 0:
-            w, h = self.fntBigText.getsize(self.hsystem[self.options.hsys])
+            #w, h = self.fntBigText.getsize(self.hsystem[self.options.hsys])
+            w, h = get_size(self.fntBigText, self.hsystem[self.options.hsys])
             y2 = y-h*1.2
             self.draw.text((x,y2), self.ayans[self.options.ayanamsha], fill=clr, font=self.fntBigText)
 
