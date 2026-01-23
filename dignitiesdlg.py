@@ -61,7 +61,8 @@ class DignitiesDlg(wx.Dialog):
 		self.plutorb = wx.RadioButton(self, self.ID_Pluto, mtexts.txts['Pluto'])
 		splanetssizer.Add(self.plutorb, 0, wx.ALIGN_LEFT|wx.ALL, 2)
 
-		mhsizer.Add(splanetssizer, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.LEFT, 5)
+		#mhsizer.Add(splanetssizer, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.LEFT, 5)
+		mhsizer.Add(splanetssizer, 0, wx.GROW|wx.LEFT, 5)
 
 		#Domicile
 		sdomicile =wx.StaticBox(self, label='')
@@ -82,9 +83,11 @@ class DignitiesDlg(wx.Dialog):
 			self.arsigns.append(ckb)
 			ssignssizer.Add(ckb, 0, wx.ALIGN_LEFT|wx.ALL, 2)
 
-		mhsizer.Add(ssignssizer, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.LEFT, 5)
+		#mhsizer.Add(ssignssizer, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.LEFT, 5)
+		mhsizer.Add(ssignssizer, 0, wx.GROW|wx.LEFT, 5)
 
-		mvsizer.Add(mhsizer, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5)
+		#mvsizer.Add(mhsizer, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 5)
+		mvsizer.Add(mhsizer, 0, wx.GROW|wx.ALL, 5)
 
 		btnsizer = wx.StdDialogButtonSizer()
 
@@ -96,7 +99,8 @@ class DignitiesDlg(wx.Dialog):
 		btnsizer.AddButton(btn)
 		btnsizer.Realize()
 
-		mvsizer.Add(btnsizer, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 10)
+		#mvsizer.Add(btnsizer, 0, wx.GROW|wx.ALIGN_CENTER_HORIZONTAL|wx.ALL, 10)
+		mvsizer.Add(btnsizer, 0, wx.GROW|wx.ALL, 10)
 
 		self.SetSizer(mvsizer)
 		mvsizer.Fit(self)

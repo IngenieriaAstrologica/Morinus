@@ -57,7 +57,7 @@ class FixStars:
             for i in range(1, cnt+1):
                 ret, name, dat, serr = astrology.swe_fixstar_ut(str(i), self.jd, 0)
                 d, m, s = util.decToDeg(dat[0])
-                sign = d/chart.Chart.SIGN_DEG
+                sign = int(d//chart.Chart.SIGN_DEG)
                 lon = d%chart.Chart.SIGN_DEG
                 lontxt = str(lon)+FixStars.signtxts[sign]+' '+(str(m)).zfill(2)+"' "+(str(s)).zfill(2)+'"'
                 d, m, s = util.decToDeg(dat[1])
@@ -105,6 +105,8 @@ class FixStarListCtrl(wx.ListCtrl, limchecklistctrlmixin.LimCheckListCtrlMixin):
         wx.ListCtrl.__init__(self, parent, ID, pos, size, style)
         limchecklistctrlmixin.LimCheckListCtrlMixin.__init__(self, FixStarListCtrl.MAX_SEL_NUM)
 
+        self.EnableCheckBoxes(True) # Javier added
+
         self.parent = parent
         self.fixstardata = {}
         self.ephepath = ephepath
@@ -123,9 +125,11 @@ class FixStarListCtrl(wx.ListCtrl, limchecklistctrlmixin.LimCheckListCtrlMixin):
         self.Populate()
 
         nset = set()
-        items = self.fixstardata.iteritems()
+        #items = self.fixstardata.iteritems()
+        items = self.fixstardata.items()
         for k, v in items:
-            for nomname in names.iterkeys():
+            #for nomname in names.iterkeys():
+            for nomname in names.keys():
                 if v[1] == nomname and nomname not in nset:
                     if len(nset) >= FixStarListCtrl.MAX_SEL_NUM:
                         break
@@ -150,7 +154,8 @@ class FixStarListCtrl(wx.ListCtrl, limchecklistctrlmixin.LimCheckListCtrlMixin):
             cnt += 1
             # Javier changed deprecated InsertStringItem to InsertItem instead
             #index = self.InsertStringItem(sys.maxint, data[0])
-            index = self.InsertItem(sys.maxint, data[0])
+            #index = self.InsertItem(sys.maxint, data[0])
+            index = self.InsertItem(sys.maxsize, data[0])
             # Javier changed deprecated SetStringItem to SetItem instead
             #self.SetStringItem(index, FixStarListCtrl.NUM, str(cnt)+'.')
             #self.SetStringItem(index, FixStarListCtrl.NAME, data[0])

@@ -48,7 +48,8 @@ class PlaceListCtrl(wx.ListCtrl):
         for key, data in items:
             # Javier changed deprecated InsertStringItem to InsertItem instead
             #index = self.InsertStringItem(sys.maxint, data[0])
-            index = self.InsertItem(sys.maxint, data[0])
+            #index = self.InsertItem(sys.maxint, data[0])
+            index = self.InsertItem(sys.maxsize, data[0])
             # Javier changed deprecated SetStringItem to SetItem instead
             #self.SetStringItem(index, PlaceListCtrl.PLACE, data[0])
             #self.SetStringItem(index, PlaceListCtrl.LON, data[1])
