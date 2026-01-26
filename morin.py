@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import wx
+import wx.adv
 import os
 import pickle
 # ###########################################
@@ -2754,7 +2755,8 @@ class MFrame(wx.Frame):
         if wx.Platform == '__WXMSW__' and not self.splash:
             self.handleStatusBar(True)
 
-        info = wx.AboutDialogInfo()
+        #info = wx.AboutDialogInfo()
+        info = wx.adv.AboutDialogInfo()
         info.Name = mtexts.txts['Morinus']
 # ###########################################
 # Elias -  V 8.0.0
@@ -2766,7 +2768,8 @@ class MFrame(wx.Frame):
         info.Developers = ['Elías D. Molins (Spain); http://www.proyectoship.com/ (programming and astrology)\nRoberto Luporini (Italy); roberto.luporini@tiscali.it (programming and Astrological astronomy)\nRobert Nagy (Hungary); robert.pluto@gmail.com (programming and astrology)\nRaquel Ibáñez Sanchez; raquelibanezs@gmail.com (spanish translation)\nJaime Chica Londoño(Colombia); aulavirtual@astrochart.org (spanish translation)\nPhilippe Epaud(France); philipeau@free.fr (french translation)\nMargherita Fiorello (Italy); margherita.fiorello@gmail.com (astrology, italian translation)\nMartin Gansten (Sweden); http://www.martingansten.com/ (astrology)\nPetr Radek (Czech Rep.); petr_radek@raz-dva.cz (astrology)\nEndre Csaba Simon (Finland); secsaba@gmail.com (programming and astrology)\nDenis Steinhoff (Israel); denis@steindan.com (astrology, russian translation)\nVáclav Jan Spirhanzl (Czech Rep.); vjs.morinus@gmail.com (MacOS version)']
         info.License = mtexts.licensetxt
 
-        wx.AboutBox(info)
+        #wx.AboutBox(info)
+        wx.adv.AboutBox(info)
 
 
     def onCampus(self, event):
