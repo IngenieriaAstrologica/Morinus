@@ -48,14 +48,15 @@ class FirdariaDlg(wx.Dialog):
 
         firdariasizer.Add(vsizer, 0, wx.ALIGN_LEFT|wx.ALL, 5)
 
-        mvsizer.Add(firdariasizer, 0, wx.GROW|wx.ALIGN_CENTER|wx.LEFT|wx.RIGHT|wx.BOTTOM, 5)
+        #mvsizer.Add(firdariasizer, 0, wx.GROW|wx.ALIGN_CENTER|wx.LEFT|wx.RIGHT|wx.BOTTOM, 5)
+        mvsizer.Add(firdariasizer, 0, wx.GROW|wx.LEFT|wx.RIGHT|wx.BOTTOM, 5)
 
         btnsizer = wx.StdDialogButtonSizer()
 
         if wx.Platform != '__WXMSW__':
             btn = wx.ContextHelpButton(self)
             btnsizer.AddButton(btn)
-        
+ 
         btnOk = wx.Button(self, wx.ID_OK, mtexts.txts['Ok'])
         btnsizer.AddButton(btnOk)
         btnOk.SetHelpText(mtexts.txts['HelpOk'])

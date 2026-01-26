@@ -75,9 +75,9 @@ class GraphEphemWnd(wx.Window):
         self.txtSymbolSize = min(self.signSize, self.monthSize)/3
         self.signSymbolSize = self.txtSymbolSize
 
-        self.fntPlanets = ImageFont.truetype(common.common.symbols, self.planetSymbolSize)
-        self.fntSigns = ImageFont.truetype(common.common.symbols, self.signSymbolSize)
-        self.fntTxt = ImageFont.truetype(common.common.abc, self.txtSymbolSize)
+        self.fntPlanets = ImageFont.truetype(common.common.symbols, max(1, self.planetSymbolSize))
+        self.fntSigns = ImageFont.truetype(common.common.symbols, max(1, self.signSymbolSize))
+        self.fntTxt = ImageFont.truetype(common.common.abc, max(1, self.txtSymbolSize))
 
         tableclr = (0,0,0)
         txtclr = (0,0,0)
@@ -104,41 +104,41 @@ class GraphEphemWnd(wx.Window):
 
         pen = wx.Pen(tableclr, w)
         self.bdc.SetPen(pen)
-        x1 = 2*self.BORDER+self.signSymbolSize+self.spaceSize
-        y1 = self.BORDER
-        x2 = x1
-        y2 = self.h-self.BORDER
+        x1 = int(2*self.BORDER+self.signSymbolSize+self.spaceSize)
+        y1 = int(self.BORDER)
+        x2 = int(x1)
+        y2 = int(self.h-self.BORDER)
         self.bdc.DrawLine(x1, y1, x2, y2)
 
-        x1 = self.BORDER
-        y1 = self.h-4*self.BORDER
-        x2 = self.w-self.BORDER
-        y2 = self.h-4*self.BORDER
+        x1 = int(self.BORDER)
+        y1 = int(self.h-4*self.BORDER)
+        x2 = int(self.w-self.BORDER)
+        y2 = int(self.h-4*self.BORDER)
         self.bdc.DrawLine(x1, y1, x2, y2)
 
         pen = wx.Pen(tableclr, 1, wx.USER_DASH)
         pen.SetDashes([6, 3])
 
         self.bdc.SetPen(pen)
-        y1 = self.h-4*self.BORDER
+        y1 = int(self.h-4*self.BORDER)
         for i in range(chart.Chart.SIGN_NUM+1):
-            y1 -= self.signSize
-        x1 = 2*self.BORDER+self.signSymbolSize+self.spaceSize
+            y1 -= int(self.signSize)
+        x1 = int(2*self.BORDER+self.signSymbolSize+self.spaceSize)
 #       y1 = self.BORDER
-        x2 = x1
-        y2 = self.h-4*self.BORDER
+        x2 = int(x1)
+        y2 = int(self.h-4*self.BORDER)
         for i in range(13):
-            x1 += self.monthSize
-            x2 += self.monthSize
+            x1 += int(self.monthSize)
+            x2 += int(self.monthSize)
             self.bdc.DrawLine(x1, y1, x2, y2)
 
-        x1 = 2*self.BORDER+self.signSymbolSize+self.spaceSize
-        y1 = self.h-4*self.BORDER
+        x1 = int(2*self.BORDER+self.signSymbolSize+self.spaceSize)
+        y1 = int(self.h-4*self.BORDER)
 #       x2 = self.w-self.BORDER
-        y2 = self.h-4*self.BORDER
+        y2 = int(self.h-4*self.BORDER)
         for i in range(chart.Chart.SIGN_NUM+1):
-            y1 -= self.signSize
-            y2 -= self.signSize
+            y1 -= int(self.signSize)
+            y2 -= int(self.signSize)
             self.bdc.DrawLine(x1, y1, x2, y2)
 
         plsnum = 7
@@ -173,8 +173,8 @@ class GraphEphemWnd(wx.Window):
             if pl != 1: #Moon excepted
                 prevx = prevy = 0.0
                 for i in range(posnum):
-                    x = xOrig+i*scale365
-                    y = yOrig-self.posArr[j][i]*scale360
+                    x = int(xOrig+i*scale365)
+                    y = int(yOrig-self.posArr[j][i]*scale360)
 
                     if i == 0:
                         plpixelpos.append(y)
@@ -221,18 +221,18 @@ class GraphEphemWnd(wx.Window):
             bshiftbottom = self.arrange(plsbottom, plbottompixelpos, xOrig, xOrig2)
 
         #lines of planets
-        x1 = 2*self.BORDER+self.signSymbolSize+self.spaceSize+self.monthSize-3*self.spaceSize
-        x2 = 2*self.BORDER+self.signSymbolSize+self.spaceSize+self.monthSize
+        x1 = int(2*self.BORDER+self.signSymbolSize+self.spaceSize+self.monthSize-3*self.spaceSize)
+        x2 = int(2*self.BORDER+self.signSymbolSize+self.spaceSize+self.monthSize)
         j = 0
         for pl in range(plsnum):
             if pl != 1: #Moon excepted
-                y = plpixelpos[j]
+                y = int(plpixelpos[j])
 
                 if not self.bw:
                     plsclr = self.options.clrindividual[pl]
                 pen = wx.Pen(plsclr, 1)
                 self.bdc.SetPen(pen)
-                self.bdc.DrawLine(x1, y+bshift[j], x2, y)
+                self.bdc.DrawLine(x1, int(y+bshift[j]), x2, y)
 
                 j += 1
 
@@ -256,11 +256,11 @@ class GraphEphemWnd(wx.Window):
 
         #bottom
         if len(plsbottom) != 0:
-            y1 = yOrig+3*self.spaceSize
-            y2 = yOrig
+            y1 = int(yOrig+3*self.spaceSize)
+            y2 = int(yOrig)
             plsbottomnum = len(plsbottom)
             for pl in range(plsbottomnum):
-                x = plbottompixelpos[pl]
+                x = int(plbottompixelpos[pl])
 
                 if not self.bw:
                     plsclr = self.options.clrindividual[plsbottomids[pl]]
@@ -268,7 +268,7 @@ class GraphEphemWnd(wx.Window):
                 self.bdc.SetPen(pen)
 
                 if len(plsbottom) > 1:
-                    self.bdc.DrawLine(x+bshiftbottom[pl], y1, x, y2)
+                    self.bdc.DrawLine(int(x+bshiftbottom[pl]), y1, x, y2)
                 else:
                     self.bdc.DrawLine(x, y1, x, y2)
 
@@ -457,8 +457,10 @@ class GraphEphemWnd(wx.Window):
 
             #check the other bodies
             for i in range(num-1):
-                w1, h1 = self.fntPlanets.getsize(pls[i])
-                w2, h2 = self.fntPlanets.getsize(pls[i+1])
+                #w1, h1 = self.fntPlanets.getsize(pls[i])
+                w1, h1 = get_size(self.fntPlanets, pls[i])
+                #w2, h2 = self.fntPlanets.getsize(pls[i+1])
+                w2, h2 = get_size(self.fntPlanets, pls[i+1])
 
                 x1 = order[i]+bshift[mixed[i]]
                 x2 = order[i+1]+bshift[mixed[i+1]]
@@ -508,8 +510,10 @@ class GraphEphemWnd(wx.Window):
         x1 = order[b1]+bshift[mixed[b1]]
         x2 = order[b2]+bshift[mixed[b2]]
 
-        w1, h1 = self.fntPlanets.getsize(pls[mixed[b1]])
-        w2, h2 = self.fntPlanets.getsize(pls[mixed[b2]])
+        #w1, h1 = self.fntPlanets.getsize(pls[mixed[b1]])
+        w1, h1 = get_size(self.fntPlanets, pls[mixed[b1]])
+        #w2, h2 = self.fntPlanets.getsize(pls[mixed[b2]])
+        w2, h2 = get_size(self.fntPlanets, pls[mixed[b2]])
 
         while (self.overlap(x1, w1, x2, w2)):
             if not forward:
