@@ -283,7 +283,8 @@ txtsesp = {'DiscardCurrHor':u'UD. desea descartar este Horóscopo?', 'FileError'
 licensetxtesp = 'Morinus, Astrology program\n\
 Copyright (C) 2008-2012 Robert Nagy (robert.pluto@gmail.com)\n\
 Version 7.X.X - 2013 - editada por Roberto Luporini\n\
-Version 8.X.X - 2013 - editada por Elías D. Molins\n\n\
+Version 8.X.X - 2013 - editada por Elías D. Molins\n\
+Version Python 3 - 2026 - editada por Javier JIPE\n\n\
 This program is free software: you can redistribute it and/or modify\n\
 it under the terms of the GNU General Public License as published by\n\
 the Free Software Foundation, either version 3 of the License, or\n\
