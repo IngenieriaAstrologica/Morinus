@@ -1,0 +1,399 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<TITLE>Morinus</TITLE>
+<STYLE TYPE="text/css">
+</STYLE>
+</HEAD>
+<BODY bgcolor="#F4F4F4" text="#000000" link="#0000FF" vlink="#FF0000" alink="#F0F0F0">
+<IMG SRC='header.jpg' align='middle'>
+<H1>Morinus Special Edition</H1>
+<BR>
+<H2>Páginas web</H2>
+<H5>Versión Python 2</H5>
+<UL>
+<LI>https://sourceforge.net/p/morinus/</LI>
+<LI>https://www.campus-astrologia.es</LI>
+</UL>
+<H5>Versión Python 3</H5>
+<UL>
+<LI>https://github.com/IngenieriaAstrologica/Morinus.git</LI>
+</UL>
+
+<P>
+Morinus es un programa de astrología de fácil uso bajo licencia GPLv3. Usa las efemérides suizas porque son las más precisas (5000aC - 5000dC). 
+Se ejecuta en todos los Sistemas Operativos donde Python y wxPython estén disponibles (Linux, Windows, MacOS).</P>
+
+<H2>Características</H2>
+<UL>
+<LI>Calcula el horóscopo con gran precisión entre 5000aC-5000dC
+<LI>Base de datos de la localidad
+<LI>Posiciones (Speculum)
+<LI>Encuentra la fecha de las posiciones planetarias
+<LI>Efemérides gráficas (Tropical o Sideral)
+<LI>Varios datos (Fecha Sideral, Oblicuidad de la eclíptica, etc.)
+<LI>12 Sistemas de Casas
+<LI>Muestra las cartas de diversas maneras (Temas)
+<LI>Sinastría
+<LI>Aspectos
+<LI>Aspectos tradicionales seleccionables
+<LI>Puntos medios
+<LI>Hora del amanecer y del atardecer
+<LI>Almutens (según los Árabes e Ibn Ezra (Puntos, Carta, Tópicos))
+<LI>Colores personalizados o según las dignidades
+<LI>Velocidades
+<LI>Estrellas fijas seleccionables (máx. 200 de 1118)
+<LI>Antiscia
+<LI>Paralelos zodiacales
+<LI>Disposición de 30 grados (Horaria)
+<LI>Parte de la Fortuna (varios tipos)
+<LI>Partes arábigas
+<LI>Orbe diurna/nocturna
+<LI>Syzigia (Lunación prenatal) (en la tabla de otros datos)
+<LI>Parte de la Fortuna mundana (en la tabla de posiciones mundanas)
+<LI>Horas planetarias
+<LI>Posiciones topocéntricas
+<LI>Ayanamsha
+<LI>Carta cuadrada (medieval)
+<LI>Profecciones (zodiacal, mundana; Gregoriana, GMT)
+<LI>Guardar como bitmap (blanco y negro o a color)
+<LI>Tránsitos (fecha, mes)
+<LI>Revoluciones
+<LI>Revoluciones solares corregidas según la precesión y nutación si el ayanamsa está seleccionado
+<LI>Tránsitos del Sol
+<LI>Direcciones secundarias (Hora solar aparente, tiempo medio)
+<LI>Elecciones
+<LI>Mostrar selección en la carta de Estrellas fijas, Antiscia, Parte de la Fortuna, Términos y Decanatos
+<LI>Direcciones primarias (mundana, zodiacal)
+<UL>
+<LI>Placidus (semiarco) (o Ptolomeo)
+<LI>Placidus (bajo el polo) (sólo zodiacal, con o sin latitud)
+<LI>Regiomontanus
+<LI>Campanus
+</UL>
+<LI>Sólo zodiacal: Términos, Estrellas fijas, syzigia (direcciones primarias)
+<LI>Paralelos zodiacales (direcciones primarias)
+<LI>Posiciones topocéntricas (direcciones primarias)
+<LI>Movimiento secundario de la Luna (direcciones primarias)
+<LI>Punto geográfico del usuario (direcciones primarias)
+<LI>Punto geográfico del usuario 2 (direcciones primarias)
+<LI>Speculum del punto geográfico del usuario o usuario 2 (direcciones primarias)
+<LI>Claves primarias (estática, dinámica)
+<LI>Carta de direcciones primarias
+<LI>Selección de una fecha con precisión de segundos (direcciones primarias)
+<LI>La conversión de direcciones primarias también se puede calcular por el Sol regresivo en caso de verdadero Arco Solar
+<LI>Direcciones primarias en revoluciones solar y lunar
+<LI>Disponible en inglés, húngaro, italiano, francés, ruso y español
+</UL>
+
+<P>En las opciones de menú puedes ajustar:</P>
+<UL>
+<LI>Apariencia
+<LI>Símbolos
+<LI>Dignidades
+<LI>Dignidades menores (Triplicidades, Términos, Decanatos)
+<LI>Almutens
+<LI>Ayanamsha
+<LI>Colores
+<LI>Sistemas de Casas
+<LI>Nodos
+<LI>Orbes
+<LI>Direcciones primarias
+<LI>Claves primarias
+<LI>Direcciones primarias en la carta
+<LI>Parte de la Fortuna
+<LI>Partes arábigas (editor)
+<LI>Syzigia
+<LI>Estrellas fijas
+<LI>Idiomas
+</UL>
+
+<P>Los horóscopos y las opciones se pueden guardar y cargar. Puedes abrir una ventana del menú haciendo clic derecho en cualquiera de las ventanas, excepto para la ventana del radix porque tiene su propia barra de menú. Las direcciones primarias también se pueden guardar en un archivo de texto.</P>
+<BR>
+
+<img src="tables.png" alt="popup menu (tables)">
+<img src="tablepd.png" alt="popup menu (pd tables)">
+<img src="charts.png" alt="popup menu (charts)">
+
+
+<H2>Direcciones Primarias</H2>
+<P>
+Sólo se calcularán las opciones permitidas (ítems, radiobuttons, casillas). (Ejemplo: Si sólo quieres ver los términos: selecciona "Zodiacal"-radiobutton y luego selecciona sólo los términos en la columna Promitores, clica OK y luego F12).
+Las cúspides de las casas intermedias se calcularán según el sistema de direcciones primarias seleccionado. (Ejemplo: Regiomontanus-cúspides de casas en el caso de direcciones primarias Regiomontanus).
+Actualmente las direcciones primarias de las cúspides de las casas intermedias son las mismas en el caso de Placidus (bajo el polo) y Placidus (semiarco).
+Selecciona direcciones primarias Regiomontanus o Campanus en el diálogo Opciones/Direcciones Primarias para tener un speculum Regiomontanus en la tabla de posiciones.
+Los términos seleccionados en el diálogo Opciones/Términos es usado en las direcciones primarias. 
+Placidus (bajo el polo) sólo es una aproximación a Placidus (semiarco). 
+Las direcciones primarias al Asc. y al MC son las mismas en todos los sistemas (Placidus, Regiomontanus, etc.). 
+En las direcciones primarias mundanas, los aspectos no se calculan en la eclíptica, sino en las casas.
+Sólo los medios puntos, las direcciones aspectuales mundanas diferentes de la conjunción y la oposición, y las direcciones a las cúspides de las casas son diferentes en el caso de las direcciones primarias de Regiomontanus y Campanus.
+El programa no puede calcular la corrección de los aspectos J.B. Morin (direcciones primarias Regio).
+Bianchini asignó diferentes latitudes (calculadas de la latitud del promitor) a los aspectos (conjunción: latitud del promitor, sextil: latitud del promitor/2, cuadratura: 0, trígono: -latitud del promitor/2, oposición: -latitud del promitor) y siempre usó la latitud del significador.
+Si "Topocéntrico" está seleccionado en el diálogo de Apariencia I, entonces las posiciones topocéntricas serán usadas en las direcciones primarias. 
+Si "Movimiento secundario" está seleccionado, entonces las direcciones primarias de la Luna se ajustarán como corresponde (hora real de la Luna).
+Si "Usuario" está seleccionado, entonces el punto definido por las coordenadas de la eclíptica irá dirigido a los significadores seleccionados. Por ejemplo, en el caso de Capricornio 16º25'46'': 286 debería ser introducido en el campo de los grados de la longitud. "Usuario" se mostrará en las listas de direcciones primarias.
+Si "Usuario2" está seleccionado, entonces los promitores seleccionados estarán dirigidos al punto definido por las coordenadas de la eclíptica. Por ejemplo, en el caso de Capricornio 16º25'46'': 286 debería ser introducido en el campo de los grados de la longitud. "Usuario2" se mostrará en las listas de direcciones primarias.
+Si sólo está seleccionado el usuario en el diálogo de las direcciones primarias, entonces su speculum se mostrará en Usuario-Speculum.
+Si sólo está seleccionado el usuario2 en el diálogo de las direcciones primarias, entonces su speculum se mostrará en Usuario-Speculum.
+Si ambos usuarios están seleccionados en el diálogo de las direcciones primarias, entonces el speculum del usuario se mostrará en Usuario-Speculum.
+La ayanamsha sólo modifica los términos en las direcciones primarias, no en los parámetros de usuario. 
+El Asc. y el MC son preferentes al Desc. y el IC. Esto significa que si "Luna --> Desc." no se muestra, entonces intenta seleccionar el aspecto de oposición y la opción zodiacal apropiada: "oposición Luna --> Asc." debería mostrarse. 
+Los Puntos medios mundanos son los Makransky llamados adquiridos en paralelos, el zodiacal con la latitud de medios puntos son calculados según el algorritmo de Ruediger Plantiko.
+Las tres últimas columnas (Apariencia II) en el caso de las direcciones primarias de Placidus, pertenecen a Placidus (bajo el polo).
+</P>
+
+<H2>Direcciones Primarias en la carta (Zodiacal)</H2>
+<P>
+<B>Observaciones preliminares astronómicas</B><BR>
+Hablando de las direcciones primarias zodiacales en la carta y los ingresos (tránsitos en los primeros), de acuerdo con algunos e-mails generosos que me envió Martin Gansten, tengo entendido que no hay ningún método verdadero proviniente de los antiguos maestros para copiarlos. Sólo consejos. Y que yo sepa, sólo en los últimos tiempos, gracias a procedimientos informáticos, los estudiantes tuvieron la posibilidad de tratar con ellos. Bajo el punto de vista astronómico, en el espacio temporal las direcciones primarias expresan sus efectos (400 minutos después del nacimiento para cubrir 100 años en el tiempo real), los cambios en las posiciones planetarias celestiales (es decir, en los signos) no son apreciables: cerca de 25' por el Sol y los planetas interiores, muy inferior a los cuerpos celestes exteriores. Sólo la Luna es capaz de moverse en el zodíaco hasta unos 4°. Por lo tanto, las posiciones zodiacales elaboradas por los planetas en estas cartas están calculadas gracias a ciertos simbólicos o pseudo-criterios astronómicos. Disponible en sus opciones, Morinus ofrece tres métodos diferentes: el primero es el más común en uso, el segundo coincide con el primero excepto por las posiciones planetarias de partida, el tercero es un método completamente nuevo. Para evitar confusión en la terminología (los mismos adjetivos podrían ser utilizados para las cartas y para los planetas usados) en las opciones están etiquetados como "Celestial" en vez de "Zodiacal". Lo que sigue es el punto de vista técnico del escritor y hacerlo implica necesariamente la opinión de otras personas.
+</P>
+
+<P>
+<B>Primera opción (de los planetas)</B><BR>
+M. Gansten me citó el principio básico de las direcciones primarias formulado por Ptolomeo: "Para un lugar es similar y la misma posición en la misma dirección con referencia tanto al horizonte como al meridiano". Así, moviendo la esfera celeste, Asc. y MC se mueven como usualmente en el zodíaco. Los planetas se mantienen en sus posiciones nativas mundanas "a las acciones de la misma relación proporcional al horizonte y al meridiano que tuvieron en el nacimiento". En su lugar, y gracias a las fórmulas trigonométricas que obligan los parámetros OA/OD a la longitud celestial, su posición se calculca en las cartas de direcciones primarias. Esta es la primera forma de satisfacer las indicaciones de Ptolomeo, pero ser esta proyección eclíptica "denominado mundo" tiene una desventaja. Por razones "simples" geométricas, trigonométricas y astronómicas, las fórmulas involucradas son válidas para los puntos que se encuentran sólo sobre la eclíptica, es decir, sin latitud, con la consecuencia de que para los pequeños arcos de direcciones, los planetas saltan de repente de sus posiciones nativas a las demás bastante alejadas, produciendo una técnica no compatible con el Radix.
+</P>
+
+<P>
+<B>Segunda opción (de los pies de la eclíptica)</B><BR>
+Tenemos una segunda posibilidad de satisfacer Ptolomeo. Manteniendo el mismo método anterior, las proyecciones planetarias zodiacales nativas se pueden utilizar como punto de partida. En tal forma la técnica es compatible con el Radix. Desde el nacimiento, los planetas se mueven suavemente desde sus posiciones nativas en el zodíaco sin saltos debido a la latitud.<BR>
+Las dos variantes anteriores deben ser aceptadas como son, como técnicas simbólicas dictadas por los deseos de la tradición. Cualquier esfuerzo para enmarcarlas en un contexto astronómico es un sin sentido y condenado al fracaso. Hemos visto, por ejemplo, que la primera es discontinua en el Radix. En el otro extremo el segundo no respeta el principio astronómico básico para el que dos objetos celestes reales, con latitud, después de una rotación ecuatorial de la esfera celeste ve sus pies de la eclíptica variar su distancia mutua zodiacal. <BR>
+Bajo un punto de vista conceptual astronómico, un problema adicional se une a los dos métodos anteriores. Recordemos que para los dos, fluyendo en el tiempo, las posiciones planetarias en el zodíaco dependen de su fuerza e inmutable posición en el espacio local. Esta aplicación, necesaria para respetar la tradición, puede generar confusión a los ojos astronómicos porque las posiciones zodiacales "son lo que son", sin tener en cuenta el punto geográfico de observación. En otras palabras, lo que ocurre con los dos métodos anteriores es que para dos horóscopos emitidos al mismo tiempo por dos puntos diferentes de la Tierra, las posiciones de las direcciones primarias en la carta no coinciden. Es como si dos personas nacidas en el mismo instante, una en Roma y otra en Nueva York, tuvieran el Sol en diferentes posiciones: la primera a los 15° de Aries, la segunda a los 17° de Aries (por supuesto no consideramos aquí las consecuencias insignificantes de paralaje).
+</P>
+
+<P>
+<B>Tercera opción (completamente pseudo-astronómica)</B><BR>
+Por lo tanto, para satisfacer un escenario astronómico más plausible, surgió una tercera opción. A partir de las verdaderas posiciones planetarias ecuatoriales, detectamos las pseudo-zodiacales direcciones primarias (toda la eclíptica, "congelada" en la posición que tenía al nacer) y gracias a una transformación del sistema de coordenadas verdaderas (de ecuatorial a eclíptica) calculamos las posiciones zodiacales. Por supuesto, al hacerlo, las posiciones zodiacales de los planetas ya no están relacionadas a las posiciones locales y mundanas. Es interesante anotar un detalle inusual: el eje de intersección entre dicho pseudozodíaco y el plano ecuatorial, gira sobre la última en el tiempo, con la consecuencia de que los puntos de Aries-Libra no coinciden más con los puntos equinocciales.
+</P>
+
+<P>
+<B>Diferencias entre los tres métodos</B><BR>
+En comparación con la primera, la segunda técnica generalmente no presenta diferencias apreciables, sino para aquellos cuerpos celestes que tienen una alta inclinación de la órbita (Mercurio, con una inclinación orbital = 7°, y Plutón, con una inclinación orbital = 17°). La tercera técnica comienza a partir de las posiciones Radix con un arco de direcciones = 0 y mueve los planetas más o menos en la cantidad de uno o unos pocos grados por año. Por lo tanto, las diferencias con los dos métodos anteriores aumentan hasta varios grados incrementando el arco direccional. Gracias a las dobles cartas, direcciones primarias y Radix, y la posibilidad de abrir Morinus en varias instancias, el estudiante será capaz de comparar fácilmente los tres métodos, apreciar sus diferencias y observar sus límites y beneficios.
+</P>
+
+<P>
+<B>Movimiento secundario</B><BR>
+La *astronómica* (no matemática) opción para el segundo movimiento está disponible. Era posible limitar esta opción sólo para la Luna, pero hemos preferido extender sus efectos a todos los planetas. Un segundo movimiento astronómico significa que las verdaderas posiciones astronómicas geocéntricas están calculadas, sin ningún compromiso. El movimiento secundario no participa de los dos primeros métodos: por esta razón, esta opción sólo está activa durante el tercer método pseudo-astronómico.
+</P>
+
+<P>
+<B>Domificación</B><BR>
+Del mismo modo que las cartas de profecciones, gracias a criterios de cálculo orientados hacia una base astronómica global, para los tres métodos la posición de las cúspides no se limita a los cuatro puntos cardinales, pero está disponible para todos ellos (domificación completa, idéntica para los tres métodos). Los estudiantes están acostumbrados a trabajar sólo con el ASC, MC, DES e IC, pueden descuidar las otras cúspides. En estas cartas las posiciones en las casas tienen el problema común relacionado con la latitud. Este defecto está en todas partes en los gráficos astrológicos planos, es inevitable y debido al contexto de la esfera celeste tridimensional. Se informa al usuario de que hacer cartas de direcciones primarias con el tercer método, a veces, cambiando el arco de dirección, sin problemas y con continuidad, las posiciones en las casas pueden cambiar. La aceptación de las premisas pseudo-astronómicas es completamente natural. Ten en cuenta que estas posiciones terrestres no deben ser entendidas como posiciones mundanas relacionadas con el movimiento diurno de las direcciones primarias de las que proceden: alteran poco más de un período de 100 años simbólicos, mientras que las mundanas verdaderas cambian amplia y rápidamente en los 400 minutos después del nacimiento.
+</P>
+
+<P>
+<B>Guía del Usuario</B><BR>
+Opciones de menú:<BR>
+<UL>
+<LI>Opciones\PDs in chart\Celestial\-Elige uno de los tres métodos disponibles
+</UL>
+Tablas de menú:<BR>
+Tablas\Direcciones Primarias\-Recuerda las direcciones primarias presentadas como siempre, de acuerdo a sus ajustes
+Una vez que las direcciones primarias presentadas se muestran, haz clic derecho en una fila. Tenemos tres posibilidades:<BR>
+<UL>
+<LI>Carta de Direcciones primarias: celestial (aceptado de una única fila de direcciones primarias zodiacales)
+<LI>Carta de Direcciones primarias: terrestrial (aceptado de una única fila de direcciones primarias mundanas)
+<LI>Ingresos (aceptado de una fila de direcciones primarias zodiacales y válido sólo por la celestial: tránsitos por la fecha seleccionada sobre el radix y las direcciones primarias)
+</UL>
+La carta elegida se mostrará en la misma fecha en la fila de direcciones primarias donde el usuario ha clicado, pero un diálogo del menú paso a paso permite seleccionar diferente fecha/arco/tipo de dirección (directa o conversa). Ten cuidado al hacer clic en el botón "Mostrar". Al hacer clic en "Aceptar", el diálogo de opciones se cerrará. Sólo para las cartas de direcciones primarias (no para los ingresos), además de otro clic derecho del ratón en la ventana permite mostrar un gráfico único, gráfico de comparación, speculum y carta cuadrada.
+</P>
+
+<P>
+[Roberto]
+</P>
+
+
+<H2>Direcciones primarias en la carta (Mundana)</H2>
+<P>
+<B>Observaciones preliminares astronómicas</B><BR>
+Generalmente las direcciones primarias se presentan en forma de tabla. Cuando el promitor y el significador, o sus aspectos, están en la misma posición mundana (con una gran cantidad de variantes, con o sin latitud) las técnicas actuales dan el relativo arco de dirección y, de acuerdo con la clave analógica, la fecha alcanzada. La pregunta es: ¿es posible, en ese momento, ver el contexto mundano astronómico completo? En otras palabras: ¿es posible diseñar una carta, por supuesto en modo gráfico, con el conjunto completo de los planetas en movimiento diario, visto como promitores, en comparación con el conjunto del radix de los planetas considerados como significadores, manteniendo entre ellos las proporciones geométricas? La respuesta es positiva. Por lo tanto, después de las direcciones primarias zodiacales en la carta, las mundanas han sido añadidas. Estas cartas no muestran los signos zodiacales, muestran el "espacio local", es decir, las casas astrológicas. El sistema de referencia se basa en las dos principales líneas del punto natal geográfico: ASC-DES y MC-IC. El sistema de referencia en sí está normalizado de manera que tiene los dos ejes en posición ortogonal y todas las doce secciones 30° de ancho. La colocación planetaria está acorde a las posiciones mundanas, a diferencia de las posiciones que tienen los planetas en las casas en las cartas zodiacales comunes. Según el tipo de direcciones primarias seleccionado (menú Opciones\Direcciones Primarias) las posiciones mundanas podrían calcularse de acuerdo con cinco posibilidades diferentes: Placidus (semiarco), Placidus (bajo el polo), Regiomontanus, Campanus y Topocéntrico, pero preferimos limitar la elección al tipo de direcciones primarias en tablas que Morinus ofrece en este momento. Notar la pura completa naturaleza astronómica de estas cartas, las mismas verdaderas propiedades astronómicas que tienen las cartas zodiacales estándar (véase la nota sobre el speculum más abajo). De acuerdo con la terminología utilizada para las cartas zodiacales (etiquetadas "Celestial"), estas cartas se denominan "Terrestrial". Por supuesto se diseñan empezando "por los planetas ", con su latitud, y mostrando de forma gráfica las direcciones primarias mundanas tradicionales. Ten en cuenta que la doble opción disponible para la "Celestial " (de los planetas o de los pies de la eclíptica) aquí no es posible, ya que el cuadro de las direcciones primarias zodiacales tradicionales no permite una representación general correlacionada con una visión sintética (pseudo-astronómica).
+</P>
+<P>
+<B>Opción para el movimiento secundario</B><BR>
+Esta opción afecta a las cartas de manera global. De esta manera las cartas no son perfectamente compatibles con las tablas de direcciones primarias pero, marcando el movimiento lunar secundario en el menú "Opciones\Direcciones Primarias", las diferencias van a ser muy insignificantes. Bajo (aproximadamente) 25' con los máximos arcos (100°) para el Sol y los planetas inferiores. Para los planetas superiores la diferencia es más pequeña. El cálculo terrestre sin movimiento secundario estaría totalmente de acuerdo con la tabla de direcciones primarias si el movimiento lunar secundario en el menú "Opciones\Direcciones Primarias" no es elegido. Permanece una ligera pregunta: ¿son estas cartas una buena aproximación de las direcciones primarias mundanas tradicionales o viceversa? La respuesta para el lector :-)
+</P>
+<P>
+<B>Domificación</B><BR>
+En las cartas terrestres dobles (radix y direcciones primarias), bajo el punto de vista astronómico sólo la domificación del radix tiene un significado. La razón es que los ejes ASC-DES y MC-IC son constantes en el espacio local. Son el sistema de referencia y no pueden girar respecto a... sí mismos. En la tabla de direcciones primarias, su uso como promitores es posible aplicando las fórmulas matemáticas utilizadas para cualquier otro objeto celeste que se encuentre en la esfera celeste. El movimiento de los puntos cardinales en el papel de promitores es un truco matemático: preferimos evitar esta característica no astronómica.
+</P>
+<P>
+<B>Guía del Usuario</B><BR>
+Opciones del menú:<BR>
+<UL>
+<LI>Opciones\PDs in chart\Terrestrial\-Elige si con movimiento secundario o no
+</UL>
+Menú de tablas:<BR>
+Tablas\Direcciones Primarias\-Recuerda la tabla de direcciones primarias como normalmente, de acuerdo con sus opciones. Una vez que la tabla de direcciones primarias se muestra, haz clic en el botón derecho del ratón en una fila y sigue las instrucciones dadas anteriormente por la carta de direcciones primarias zodiacales.<BR>
+</P>
+<P>
+[Roberto]
+</P>
+
+<H2>Nota en el Speculum</H2>
+<P>
+Para cada tipo de carta, por lo general tenemos un speculum asociado. Para las cartas estándar zodiacales (radix) cada parámetro en el speculum es un parámetro astronómico real. Para otras cartas el speculum puede mostrar parámetros ficticios. En nuestra opinión, esto no autoriza a considerar una técnica mejor que otras según el contenido del speculum porque, partiendo de un contexto astronómico, la astrología basa sus análisis apelando a las leyes de la analogía y el simbolismo. De todos modos, en resumen, por cada carta tenemos:<BR>
+Radix: Speculum astronómico verdadero<BR>
+Tránsitos: Speculum astronómico verdadero<BR>
+Revoluciones: Speculum astronómico verdadero<BR>
+Direcciones secundarias: Speculum astronómico verdadero<BR>
+Elecciones: Speculum astronómico verdadero<BR>
+Profecciones zodiacales: Speculum ficticio. Sólo se mueve la longitud. No hay cambios de otros parámetros.<BR>
+Profecciones Placidus: Speculum ficticio. Los parámetros mundanos se prescriben. Longitud calculada.<BR>
+Mundana: Speculum astronómico verdadero<BR>
+Direcciones primarias terrestres en la carta con movimiento secundario: Speculum astronómico verdadero<BR>
+Direcciones primarias terrestres en la carta sin movimiento secundario: Speculum ficticio. Los parámetros mundanos casi tienen los valores astronómicos.<BR>
+Direcciones primarias celestes en la carta (Ptolomeo): Speculum ficticio. Los parámetros mundanos se prescriben. Longitud calculada.<BR>
+Direcciones primarias celestes en la carta (pseudo-astronomía): Speculum ficticio. Sólo las coordenadas ecuatoriales tienen valores astronómicos.<BR>
+</P>
+<P>
+[Roberto]
+</P>
+
+
+<H2>Almutens</H2>
+<P>
+Actualmente los almutens están calculados según los árabes e Ibn Ezra.
+Hay tres tipos de almutens:
+<UL>
+<LI>Puntos (por ejemplo de los planetas o las partes arábigas)
+<LI>Carta
+<LI>Tópicos
+</UL>
+</P>
+<P>
+Los tres Almutens están calculados según las dignidades esenciales en Opciones/Almutens/Carta y las dignidades accidentales también se tienen en cuenta en el caso del Almuten de la carta.
+El Almuten de la carta se calcula de acuerdo a la fuerza de los planetas en los cinco lugares del hyleg (Sol, Luna, Asc., Fortuna, Syzigia). "Dignidad total" viene de calcular la cantidad de los números en una columna (por ejemplo, 3+2 significa dos dignidades porque la dignidad es la regencia y esto significa dos regencias (una por triplicidad y otra por término)).
+Muchos astrólogos utilizan solamente las dignidades esenciales en su Almuten de los cálculos de la carta. El programa no puede decirte qué planeta es el Almuten de la carta porque puede haber un planeta que sólo tenga la segunda puntuación más alta, pero que aspecte el ascendente con un aspecto partil, entonces este planeta debería ser elegido como almuten de la carta.
+Las dignidades accidentales pueden ser fácilmente excluidas de los cálculos del Almuten de la carta desmarcando "Usar".
+Cualquier opción se puede establecer a cero y no se calculará. Por lo que yo sé, Ibn Ezra utilizaba las dignidades accidentales (a excepción de los gobernantes Día/Hora). Fases-solares: Posiciones orientales únicamente en caso de Marte, Júpiter y Saturno: a 18-30 grados del Sol [Bajo], 30-40 [medio], 40-80 [Fuerte], 80-100 [medio] , 100-120 [Bajo]). Robert Zoller utiliza las puntuaciones regentes (día/hora).
+Acerca de las dignidades esenciales: si se selecciona un único regente entonces sólo un planeta obtiene la puntuación de la triplicidad, en caso de nacimiento diurno la primera triplicidad regente será ese planeta, y en el caso de una carta nocturna será el segundo. El orbe día/noche en el editor de Partes Arábigas se tendrá en cuenta si el "1 regente" y "Usar orbe día/noche" están seleccionados.
+</P>
+<P>
+Ejemplo de Almuten tópico por Schoener, (Almuten de sustancia):
+<UL>
+<LI>Cúspide de la segunda casa
+<LI>Signo regente de la cúspide de la segunda casa
+<LI>Planetas en la segunda casa
+<LI>Parte de la Fortuna
+<LI>Signo regente de la Parte de la Fortuna
+<LI>Parte de la Sustancia
+<LI>Signo regente de la Parte de la Sustancia
+<LI>Júpiter como significador general
+</UL>
+</P>
+<P>
+Puedes crear este (o más) almutens tópicos en el editor Opciones/Almutens/Tópicos. A partir de estas longitudes calculadas se creará una tabla en Tablas/Almutens/Tópicos.
+Los Almutens tópicos ya existentes no se pueden modificar. Cuando seleccionas un Almuten tópico en el desplegable, luego se mostrará su nombre y filas en el editor. Puedes modificar el editor (nombre y filas (Agregar Fila, Remover Fila, Remover Todo)) no afectará al Almuten tópico ya añadido. El nuevo Almuten tópico se añadirá al desplegable al hacer clic en "Agregar".
+Sólo los siete planetas se utilizan en los cálculos del almuten.
+</P>
+
+<H2>Profecciones</H2>
+<P>
+Después de las direcciones primarias, la astrología tradicional recomendaba las Profecciones.
+Hay diferentes tipos de Profecciones: anual, mensual y diaria, las dos últimas en diferentes variantes. Su presentación habitual es en tablas. La más importante es la anual, disponible en Morinus en tablas y cartas. El programa permite elegir entre Profecciones placidianas zodiacal y mundana. En el primer caso, las posiciones planetarias están relacionadas únicamente con la eclíptica, es decir en los signos; en el segundo caso, las posiciones eclípticas están vinculadas con el horizonte local.
+Las Profecciones tradicionales anuales en el Zodíaco mueven las posiciones del Radix en la cantidad de un signo por año.
+Las "profecciones zodiacales anuales" seleccionables en el menú "Opciones\Profecciones" son idénticas.
+Las Profecciones anuales placidianas fueron reconstruidas en la teoría de Giusseppe Bezza (Escuela Cielo e Terra, de Italia).
+El ASC se mueve en el sentido del reloj en el cielo en la suma de una casa Placidus por año. Todos los cálculos se realizan, para cada objeto astronómico, de acuerdo con sus parámetros pseudo-astronómicos.
+Generalmente las cúspides menores no están incluidas en el análisis. Gracias a una rotación oblicua de la esfera celeste, Morinus es capaz de diseñar la domificación completa.
+Por supuesto las Profecciones placidianas no son posibles para las regiones polares.
+Para todos es posible calcular el movimiento continuo de las profecciones, haciendo así más fácil el análisis astrológico. Para una comprensión total de la técnica proponemos trabajar con cartas dobles, ajustando la fecha de inicio y la hora con los valores nativos. Luego incrementa el tiempo de profección con intervalos de un año, hasta llegar a los doce años, cuando el ciclo termina y uno nuevo comienza. Cambiando la hora, se ve la posición del ascendente natal en relación a las casas exteriores de la profección.
+Las Profecciones mensuales sólo están disponibles en tabla. Después de que las anuales se hayan mostrado (menú "Tablas\Profecciones"), un clic izquierdo en la *celda de la edad* permite recordarlas con dos posibilidades: 12 o 13 pasos.
+</P>
+<P>
+[Roberto]
+</P>
+
+
+<H2>Observaciones generales</H2>
+<P>
+Siempre se puede obtener ayuda haciendo clic en los botones de ayuda de la ventana y luego sobre un elemento (texto, cuadro de edición ).
+Los símbolos astrológicos se encuentran en Morinus.ttf. Contiene los símbolos (fuentes TrueType) y se pueden editar por ejemplo con Fontforge (Linux) o Fontographer (Windows). wxPython no puede manejar ttfs, por esto necesitamos usar PIL.
+El archivo /Res/placedb.dat contiene la base de datos y los archivos en el directorio Opt/ contienen las opciones guardadas.
+El programa carga el archivo /Res/Morinus.jpg. Puede ser cualquier imagen, por tanto se puede cambiar: Cambiar el nombre de uno de sus Jpg a Morinus.jpg y sobrescribir el original.
+El .hor, placedb.dat y los archivos de opciones son archivos corrientes. Por ejemplo, se pueden enviar como archivos adjuntos de correo electrónico.
+</P>
+<P>
+El archivo de fixstars.cat no es idéntico al de Astrodienst , debido a que las estrellas fijas duplicadas se eliminan de él (el nombre de cuenta de nomenclatura).
+Una línea en el fixstars.cat se ve así:
+</P>
+<P>
+<CODE>
+Vega         ,alLyr,ICRS,18,36,56.3364,38,47,01.291,1.3402,28.747,-13.9,0.12893,  0.03, 38, 3238
+</CODE>
+</P>
+<P>
+Si Vega es el nombre tradicional, alLyr es el nombre de la nomenclatura. Una gran cantidad de estrellas fijas no tienen nombre tradicional.
+El nombre proviene de la nomenclatura de la letra griega y la constelación: Alfa Lyra.
+El programa utiliza el nombre de la nomenclatura. El archivo fixstars.cat puede ser editado: se puede cambiar el orden de las líneas o cambiar el nombre tradicional.
+Por ejemplo, si quieres ver Vega en la parte superior del diálogo "estrellas fijas", es suficiente mover (no copiar) la línea a la parte superior del archivo.
+</P>
+<P>
+Anteriormente el software añadía o restaba la zona horaria desde/hasta GMT, según si el lugar estaba al este o al oeste de Greenwich.
+Esto no era cierto si el lugar estaba al oeste de Greenwich, pero fue en el GMT +1 (+1:00) zona horaria (España, Francia occidental y algunas partes de África).
+Esta es la razón por la que  GMT+/GMT- fue añadida a la zona. Ahora tiene que ser determinado por el usuario.
+</P>
+<P>
+Búsqueda online: (Horóscopo/ Nuevo (o fecha)/lugar del diálogo) Morinus utiliza la base de datos en línea GeoNames. Existe un deslizador que controla el tamaño de la lista online. Cuanto más grande sea el valor, más lenta será la adquisición de datos. En caso de que sólo haya un resultado (por ejemplo, una ciudad) la fecha inmediatamente se escribirá en los campos sin aparecer en la lista.
+</P>
+<P>
+Los aspectos tradicionales son: conjunción, sextil, cuadratura, trígono y oposición. No cruzan los signos (por ejemplo, 29º Aries y 1º Tauro no es una conjunción, 29º Sagitario y 1º Tauro no es un trígono debido a que los signos no están en los mismos elementos). Aspectos partiles están en el mismo grado (ej.15º 59' de Capricornio y 16º 1' de Tauro no es un trígono partil (exacto). El "exacto" en el menú de orbes será ignorado (si la casilla de verificación tradicional se selecciona).
+</P>
+<P>
+Si la opción topocéntrico se selecciona, entonces las posiciones topocéntricas se mostrarán y se utilizarán en todas partes (tablas, gráficos (radix, revoluciones, etc.), direcciones primarias).
+</P>
+<P>
+Parte de la Fortuna mundana en las direcciones primarias mundanas placidianas: RA (lof) = OA (Asc) + RA (Luna), OA (Sol) decl (lof) = declinación de la Luna.
+</P>
+<P>
+La tabla de posiciones mundanas muestra las posiciones mundanas de los planetas (en las casas). Por ejemplo, Saturno es 12.26, esto significa que está en la casa 12 y en el 26 % de la casa calculado a partir del comienzo de la casa.
+</P>
+<P>
+Las partes arábigas se calculan de la siguiente manera: Parte = A + (B-C). Si "diurno" se selecciona, entonces significa que la fórmula dada es válida sólo para gráficos diurnos y debe ser revertida en el caso de las nocturnas: Parte = A + (C-B). Esto se mostrará en la tabla de partes arábigas. El Ascendente se puede ajustar: por ejemplo, si es HC6 entonces el Asc será HC6, la segunda cúspide de casa será el Descendente, etc. "!" significa el Señor de algo: por ejemplo, HC6! significa que es el señor de la cúspide de la casa 6. Sólo los siete planetas se tienen en cuenta. Morinus distingue entre la noche y el día. Se puede incluir el orbe para esto. El crepúsculo civil, por ejemplo, donde todavía es posible leer un periódico fuera, incluso si el Sol ya está "debajo de la Tierra" tiene un alcance de hasta 6 grados por debajo del DC. Nadie diría que era "de noche". Lo mismo con el amanecer.
+</P>
+<P>
+Sólo letras, números, guiones y espacios se tienen en cuenta en el campo de búsqueda del diálogo Opciones/Estrellas Fijas.
+</P>
+<P>
+En caso de una syzigia de Luna Llena, puede seleccionar en el diálogo "Apariencia" qué posición quiere usar.
+</P>
+<P>
+El color Peregrino se utiliza para varias cosas: signo paralelo en direcciones primarias, Punto de la Fortuna (si los colores son acordes a las dignidades), tránsitos exactos.
+</P>
+<P>
+Buscar una fecha: Las posiciones geocéntricas y las longitudes tropicales (0 a 360 grados) son requeridas. Actualmente las listas se amoldan para Londres (Asc/MC próximamente). 5000aC - 5000dC se buscará si el programa encuentra las efemérides suizas, de lo contrario será 3000aC - 3000dC.
+Se inicia la búsqueda desde 1/1/1 (1 de enero del año 1) si aC no está marcado, -1/1/1 si está marcado y encuentra un máximo de un gráfico por día. 
+Utiliza (minutos, segundos, retirados): si no está marcado, entonces no sé contará: por ejemplo, teniendo en cuenta que las posiciones planetarias son 239d 7m 49s. Por ejemplo, 239 0m 0s o, por ejemplo 239 37m 34s también se encontrarán ya que el programa verificará solamente el grado.
+Si "retrógrado" no está marcado, entonces el planeta se encontrará de acuerdo con su longitud, no importa si es retrógrado o no. 
+Aproximación: El minuto determinado se añadirá y se restará de las longitudes planetarias dadas.
+Por ejemplo, la longitud de un planeta es 239d 27m 49s y los minutos de aproximación son 20, entonces se buscará un rango (239d 7m 49s - 239d 47m 49s). 
+La longitud del planeta se buscará en este rango. Este rango se calculará para cada planeta.
+En el caso de la carta de J.B. Morin, la longitud de Marte es 98º7'28''. Si la aproximación es de 30 y se utiliza, a continuación puedes restar o sumar, por ejemplo 20 minutos desde/hasta la longitud de Marte. Por supuesto, las longitudes de los otros planetas también pueden ser cambiadas de esta manera porque este rango se comprueba para cada planeta. 
+Esto es útil en el caso de los gráficos creados a partir de efemérides antiguas cuando las posiciones no son tan exactas.
+Al pulsar el botón Cancelar no se borrará la carta ya encontrada. Debido a problemas con wxpython, presionando el botón "Mostrar" se cierra el diálogo "FindTime".
+</P>
+<P>
+En caso de problema, cierre el software y elimine la opción de archivos en el directorio Opt y a continuación, reinicie el programa.
+</P>
+<P>
+En el caso de los netbooks la resolución vertical es sólo de 600. Actualmente, sólo el diálogo de Direcciones primarias es más grande pero si marca la casilla de verificación en la apariencia, entonces un diálogo PD simple (más corto) se visualizará. Los botones Seleccionar/Suprimir selección, el botón Ambos, Campanian-PD, el botón Estrellas Fijas y la casilla de verificación de puntos medios no se mostrará. Si se han seleccionado ambos antes de comprobar el netbook, entonces el programa seleccionará el primer ajuste PD(mundano). Si estaba seleccionado Campanian, antes de comprobar el netbook, entonces el programa seleccionará el primer sistema PD (Placidus (semiarco)).
+</P>
+<P>
+Los elementos del menú Opciones (guardado automático, guardar y volver a cargar), son para manejar las opciones.
+Si se selecciona Guardado automático luego el programa guardará inmediatamente las opciones de configuración después de que los cambie. Si no selecciona Guardado automático y ha cambiado las opciones de configuración a continuación, tienes que guardarlos en cualquier momento haciendo clic en Guardar (si no se guarda la configuración antes de cerrar el programa no se guardarán).
+Las opciones modificadas se guardarán en los archivos de opciones en el directorio Opt/.
+Puedes descartar todos los cambios y configuraciones guardadas haciendo clic en actualizar (Por ejemplo, cambiar el color del marco del radix del horóscopo a rojo, pulsa Aceptar y lo verás de color rojo, luego pulsa actualizar) .
+</P>
+<P>
+Selecciona el idioma deseado y pulsa Aceptar en el diálogo de Idiomas y guarda las opciones. Reinicia el programa. Actualizar o eliminar la opción de archivos restaura todo (reinicia el programa para obtener el idioma por defecto).
+</P>
+<P>
+Morinus no tiene instalador. Por lo general, los programas tienen instaladores de Windows: cuando el usuario hace clic en el archivo EXE el instalador se inicia y pide al usuario dónde copiar el programa (por ejemplo, C:/Archivos de programa...) y crea un icono en el escritorio. Estos programas cuentan con desinstaladores también. La fecha (la ruta (por ejemplo, C:/Archivos de programa...)) se escribe en el registro de Windows durante la instalación. 
+Morinus no ha sido instalado en tu sistema (sistema operativo, o winchester!?). Después de descargar el archivo MorinusWinEng.zip y descomprimirlo, habrá un directorio creado llamado MorinusWinEng. Al hacer clic en el archivo Morinus.exe, se inicia el programa, así que no hay un instalador. Eliminar el directorio MorinusWinEng es como desinstalar. Por supuesto, también puedes crear un enlace a Morinus.exe y copiarlo en el escritorio, por lo que tendrás un icono de Morinus allí. 
+Por lo tanto, en Windows recomiendo usar la unidad D:\ por ejemplo, D:\MorinusWinEng o D:\Astrología\MorinusWinEng.
+</P>
+<P>
+Resolución mínima recomendada de la pantalla: 1024*768.
+</P>
+
+</BODY>
+</HTML>

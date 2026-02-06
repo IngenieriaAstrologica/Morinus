@@ -1,0 +1,102 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<TITLE>Morinus</TITLE>
+<STYLE TYPE="text/css">
+body{
+	color:black;
+	font-size:15px;
+	width:650px;
+	background-color:#EFEFEF;
+}
+h1{
+	font-size:27px;
+	font-weight:bold;
+	font-family:sans-serif;
+}
+h2{
+	margin-top:30px;
+	font-size:23px;
+	font-weight:bold;
+	font-family:sans-serif;
+}
+p{
+	text-align:justify;
+}
+a{
+	color:#2C80DF;
+	text-decoration:none;
+	font-weight:bold;
+}
+a:hover{
+	text-decoration:underline;
+}
+ul{
+	float:left;
+	margin:10px 0 10px 0;
+}
+li{
+	margin-bottom:10px;
+}
+</STYLE>
+</HEAD>
+<BODY >
+<div style='width:650px;float:left;'>
+<p align="center"><img src="header.jpg" title="Morinus Py3"/></p>
+
+
+
+<h1>Morinus Python 3</h1>
+<p align="justify">¡Hola amigos! Me complace presentaros esta Edición de Morinus para Python 3. Os recomiendo <b>que leáis al completo esta breve página</b> en la que están resumidas las Novedades de esta versión, como los detalles de esta configuración específica respecto a la versión anterior de <b>Elías D. Molins</b> (v8.0) y <b>Roberto Luporini</b> (v7.3).</p>
+<p align="justify">He dedicado algunas horas a adaptar Morinus a Python 3 y una versión más actualizada de wxPython, y aún me queda mucho por hacer. Recientemente he comenzado a modificar Morinus. </p>
+<p>¡Espero que lo disfrutéis!</p>
+<p>Javier JIPE</p>
+
+
+<br><br>
+<h2>Novedades: Nuevas funcionalidades</h2>
+<p align="justify">A continuación, los cambios y nuevas funciones que <b>Elías D. Molins</b> realizó sobre la versión v8.0:</p>
+<p>
+<strong>ESTRELLAS FIJAS</strong>
+<ul>
+<li><p align="justify">He elevado el número máximo de estrellas fijas a tener en cuenta de 40 a 200. Pueden seleccionarse en el menú <i>Opciones->Estrellas Fijas</i>.</p></li>
+<li><p align="justify">He desarrollado la funcionalidad <b>Aspectos a Estrellas Fijas</b>. En la tabla del menú <i>Tablas->Asp. Estrellas Fijas</i>, podréis ver todos los aspectos de cúspides, planetas y demás significadores a las estrellas. Debajo de cada Aspecto, está indicado el orbe en fracción decimal.</p></li>
+<li><p align="justify">Están seleccionadas por defecto las <b>Estrellas Fijas de Vivian Robson</b>. Su libro está descatalogado, pero disponible para descarga desde <a href='http://www.campus-astrologia.es/las-estrellas-fijas-y-las-constelaciones/' title='Estrellas fijas y las Constelaciones, Vivian Robson'>este enlace del Campus.</a> ;)</p></li>
+<li><p align="justify">Las estrellas en las que sólo figuraba la nomenclatura en el archivo <i>fixstars.cat</i>, han sido bautizadas con el nombre que asigna Vivian Robson para mayor comodidad.</p></li>
+<li><p align="justify">En general las Estrellas Fijas tienen un orbe por defecto de 1.5&deg;, excepto las más destacadas, de importante magnitud o los conjuntos de estrellas (p.ej. Sirio, Spica, Pléyades,etc.), a las cuales <b>he asignado el orbe</b> con el que trabaja el compañero y astrólogo investigador <a href='http://carloscarneado.blogspot.com.es/'>Carlos Carneado</a>; éste es el orbe que utilizo en mis cálculos, pues tiene sentido que a menor magnitud de una estrella, esta tenga mayor orbe.</p></li>
+</ul></p>
+<p align="center"><img src="fixstars.gif" style="margin:20px 0 20px 0;float:left;"/></p>
+
+<p><strong>DODECATEMORIAS</strong></p>
+
+<p><ul>
+<li><p align="justify">He importado de la versión Tradicional de Morinus el Mapa de Dodecatemorias. Ahora puede seleccionarse desde <i>Opciones->Apariencia</i> activando <i>Dodecatemorias</i>. Esta opción dibujará en el mapa las dodecatemorias de los significadores y ejes importantes.</p></li>
+<li><p align="justify">Aunque no concibo porqué no ha caído ningún otro desarrollador antes que yo, he añadido una funcionalidad que considero evidente pero que ningún otro programa tiene: <b>El cálculo exacto automatizado de dodecatemorias</b>. En <i>Tablas->Dodecatemorias</i> se muestra una tabla con el grado, minuto y segundo exacto de una dodecatemoria. Aunque muchos compañeros astrólogos no tienen ni idea de cómo usar esto, esta funcionalidad es útil para determinar los aspectos de las dodecatemorias a significadores natales y estrellas fijas; desvelando a nivel predictivo lo más oculto de la carta.</p></li>
+</ul></p>
+<p align="center"><img src="dodecatemorion.gif" align="middle"/></p>
+
+<p><strong>CONFIGURACIÓN</strong></p>
+<ul>
+<li><p align="justify">He fijado la configuración de las Direcciones Primarias. Esta configuración utiliza por defecto Naibod y el sistema de casas Plácidus (semiarco); por supuesto, todo ello pudiéndose reconfigurar en <i>Opciones->Claves Primarias</i> y <i>Opciones->Direcciones Primarias</i>.</p></li>
+<li><p align="justify">Hemos añadido en el menú <i>Edición Especial</i> enlaces directos a la Campus, para que con comodidad podáis comprobar los nuevos libros y artículos que subimos cada semana.</p></li>
+<li><p align="justify">Si no os gusta la nueva fuente planetaria y preferíis la anterior, podéis ir al directorio <i>Res/</i> y usar la anterior cambiando el nombre de <i>Morinus-old.ttf</i> a <i>Morinus.ttf</i>.</p></li>
+</ul>
+
+<p align="justify">Y hasta aquí todos los cambios notables. Os deseo que realmente disfrutéis del programa. ¡Un fuerte abrazo!</p>
+<p>Elías D. Molins</p>
+<p>Javier JIPE</p>
+<br><br>
+<h2>Licencia: Sobre el Software Libre</h2>
+<p>Videos recomendados:</p>
+<ul>
+<li><a href='http://www.youtube.com/watch?v=FvLJ2JotttM'>Software Libre</a></li>
+<li><a href='https://youtu.be/WFls2mSRlr0'>"El software libre" de Las TIC en un CLIC</a></li>
+</ul>
+<p align="justify">El software libre es la denominación del software que respeta la libertad de todos los usuarios que adquirieron el producto y, por tanto, una vez obtenido el mismo <b>puede ser usado, copiado, estudiado, modificado, y redistribuido libremente</b> de varias formas. Según la Free Software Foundation, el software libre se refiere a la libertad de los usuarios para ejecutar, copiar, distribuir, y estudiar el mismo, e incluso modificar el software y distribuirlo modificado.</p>
+
+<p align="justify">Para más información puedes visitar la mayor fuente de conocimiento libre, la Wikipedia: <a href='http://es.wikipedia.org/wiki/Software_libre'>Software Libre</a> </p>
+
+
+</div>
+</BODY>
+</HTML>
