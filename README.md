@@ -1,11 +1,11 @@
 # 🌌 Morinus Special Edition for Python 3
 > Un software de astrología profesional de código abierto, ahora actualizado para el ecosistema moderno de Python 3 y wxPython 4 (Phoenix).
 
-![Morinus Python 3](https://github.com/IngenieriaAstrologica/Morinus/blob/main/Res/Morinus.jpg)
+![Morinus Python 3](Res/Morinus.jpg)
 
 [GitHub repo](https://github.com/IngenieriaAstrologica/Morinus)
 
-[License](https://github.com/IngenieriaAstrologica/Morinus/blob/main/LICENSE.txt)
+[License](LICENSE.txt)
 
 ---
 
