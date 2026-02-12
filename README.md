@@ -5,6 +5,8 @@
 
 [GitHub repo](https://github.com/IngenieriaAstrologica/Morinus)
 
+[Google Search](https://github.com/IngenieriaAstrologica/Morinus/blob/main/google5f952f81835b8070.html)
+
 [License](https://github.com/IngenieriaAstrologica/Morinus/blob/main/LICENSE.txt)
 
 ---
