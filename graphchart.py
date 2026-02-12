@@ -418,6 +418,7 @@ class GraphChart:
         self.bdc.SetBrush(wx.Brush(bkgclr))
 
         (cx, cy) = self.center.Get()
+        (cx, cy) = int(cx), int(cy)
 
         #rOuterMax and rOuterHouse (for outer housenames)
         if self.chart2 != None and self.options.houses:
@@ -426,8 +427,8 @@ class GraphChart:
                 clr = (0,0,0)
             pen = wx.Pen(clr, 1)
             self.bdc.SetPen(pen)
-            self.bdc.DrawCircle(cx, cy, self.rOuterMax)
-            self.bdc.DrawCircle(cx, cy, self.rOuterHouse)
+            self.bdc.DrawCircle(cx, cy, int(self.rOuterMax))
+            self.bdc.DrawCircle(cx, cy, int(self.rOuterHouse))
 
         #r30 circle
         if self.chart2 != None or (self.planetaryday and self.options.showfixstars != options.Options.NONE): #If planetaryday is True => radix chart
