@@ -11,3 +11,5 @@ build/
 # Personal horoscope files (user data, must never be committed)
 Hors/
 *.hor
+# Internal dev notes (local only, not for publication)
+docs/DESARROLLO.md
