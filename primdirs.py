@@ -156,6 +156,8 @@ class PrimDirs:
 
 		self.pds = []
 
+		self._sunposcache = {} # (y, m, d) -> (lon, ra) of the Sun at 0h, per PD run
+
 		self.ramc = self.chart.houses.ascmc2[houses.Houses.MC][houses.Houses.RA]
 		self.raic = self.ramc+180.0
 		if self.raic >= 360.0:
@@ -1537,8 +1539,67 @@ class PrimDirs:
 #		return util.convDate(self.chart.time.year, self.chart.time.month, self.chart.time.day)+ti, ti
 
 
+	# Max. daily motion of the Sun in longitude or RA (deg). Measured
+	# <= 1.02 (lon) and <= 1.12 (RA) over 1850-2030; 1.15 is a safe bound.
+	MAXSUNDAY = 1.15
+
+	def calFlag(self):
+		calflag = astrology.SE_GREG_CAL
+		if self.chart.time.cal == chart.Time.JULIAN:
+			calflag = astrology.SE_JUL_CAL
+		return calflag
+
+	def sunDayPos(self, y, m, d):
+		# Cached Sun (longitude, RA) at 0h: the same values
+		# planets.Planet() gives, without rebuilding it every time
+		key = (y, m, d)
+		pos = self._sunposcache.get(key)
+		if pos is None:
+			jd = astrology.swe_julday(y, m, d, 0.0, self.calFlag())
+			rflag, data, serr = astrology.swe_calc_ut(jd, astrology.SE_SUN, astrology.SEFLG_SWIEPH)
+			rflag, dataeq, serr = astrology.swe_calc_ut(jd, astrology.SE_SUN, astrology.SEFLG_SWIEPH+astrology.SEFLG_EQUATORIAL)
+			pos = (data[planets.Planet.LONG], dataeq[planets.Planet.RAEQU])
+			self._sunposcache[key] = pos
+		return pos
+
+	def transitFlags(self):
+		# Same flags Transits().day would use (it refines the crossing)
+		flags = astrology.SEFLG_SPEED+astrology.SEFLG_SWIEPH
+		if self.chart.options.topocentric:
+			flags += astrology.SEFLG_TOPOCTR
+		return flags
+
+	def sunLon(self, jd):
+		rflag, data, serr = astrology.swe_calc_ut(jd, astrology.SE_SUN, self.transitFlags())
+		return data[planets.Planet.LONG]
+
+	def sunUnwrap(self, raw, ref):
+		# Continuous position: raw + whole turns, chosen closest to ref.
+		# Exact whenever the true position is within 180deg of ref.
+		return raw+360.0*round((ref-raw)/360.0)
+
+	def sunCrossing(self, jd_lo, jd_hi, trlon):
+		# Bisection on the (always increasing) Sun longitude between two
+		# consecutive midnights known to bracket the target longitude.
+		# Positions are unwrapped against the target, so 0/360 wraps
+		# need no hacks. Uses the same flags Transits().day would use.
+		for i in range(20):
+			jd_mid = (jd_lo+jd_hi)*0.5
+			pos = self.sunUnwrap(self.sunLon(jd_mid), trlon)
+			if pos < trlon:
+				jd_lo = jd_mid
+			else:
+				jd_hi = jd_mid
+		return (jd_lo+jd_hi)*0.5
+
+	def jumpDays(self, y, m, d, ndays):
+		# Exact calendar jump of ndays (>= 0) via julian day arithmetic
+		jd = astrology.swe_julday(y, m, d, 0.0, self.calFlag())+float(ndays)
+		y, m, d, tmid = astrology.swe_revjul(jd, self.calFlag())
+		return y, m, d
+
+
 	def calcTrueSolarArc(self, arc):
-		LIM = 120.0 #arbitrary value
 		y = self.chart.time.year
 		m = self.chart.time.month
 		d = self.chart.time.day
@@ -1546,51 +1607,49 @@ class PrimDirs:
 		h, mi, s = util.decToDeg(self.chart.time.time)
 		tt = 0.0
 
-		#Add arc to Suns's pos (long or ra)
-		prSunPos = self.chart.planets.planets[astrology.SE_SUN].dataEqu[planets.Planet.RAEQU]
-		if self.options.pdkeyd == PrimDirs.TRUESOLARECLIPTICALARC:
-			prSunPos = self.chart.planets.planets[astrology.SE_SUN].data[planets.Planet.LONG]
+		ecliptical = self.options.pdkeyd == PrimDirs.TRUESOLARECLIPTICALARC
 
-		prSunPosEnd = prSunPos+arc
-		transition = False #Pisces-Aries
-		if prSunPosEnd >= 360.0:
-			transition = True
+		#Sun's pos (long or ra) in a continuous frame (no 0/360 wraps)
+		sun0 = self.chart.planets.planets[astrology.SE_SUN].dataEqu[planets.Planet.RAEQU]
+		if ecliptical:
+			sun0 = self.chart.planets.planets[astrology.SE_SUN].data[planets.Planet.LONG]
+
+		target = sun0+arc
+
+		#Coarse jump: the Sun never moves faster than MAXSUNDAY deg/day,
+		#so jumping int(arc/MAXSUNDAY)-1 days always undershoots
+		jump = int(arc/PrimDirs.MAXSUNDAY)-1
+		if jump > 0:
+			y, m, d = self.jumpDays(y, m, d, jump)
+
+		lon, ra = self.sunDayPos(y, m, d)
+		raw = lon if ecliptical else ra
+		#Unwrap against the expected position (mean motion); exact because
+		#the jump error is always far below 180deg
+		prSunPos = self.sunUnwrap(raw, sun0+jump*0.986 if jump > 0 else sun0)
 
 #		Find day in ephemeris
-		while (prSunPos <= prSunPosEnd):
+		while (prSunPos <= target):
 			y, m, d = util.incrDay(y, m, d)
-			ti = chart.Time(y, m, d, 0, 0, 0, False, self.chart.time.cal, chart.Time.GREENWICH, True, 0, 0, False, self.chart.place, False)
-			sun = planets.Planet(ti.jd, astrology.SE_SUN, astrology.SEFLG_SWIEPH)
-			
-			pos = sun.dataEqu[planets.Planet.RAEQU]
-			if self.options.pdkeyd == PrimDirs.TRUESOLARECLIPTICALARC:
-				pos = sun.data[planets.Planet.LONG]
-
-			if transition and pos < LIM:
-				pos += 360.0
-			prSunPos = pos
+			lon, ra = self.sunDayPos(y, m, d)
+			raw = lon if ecliptical else ra
+			prSunPos = self.sunUnwrap(raw, prSunPos)
 
 			if self.abort.abort:
 				return 0.0
 
-		if (prSunPos != prSunPosEnd):
-			y, m, d = util.decrDay(y, m, d)
-
-			if transition:
-				prSunPosEnd -= 360.0
-
-			trlon = 0.0
-			if self.options.pdkeyd == PrimDirs.TRUESOLARECLIPTICALARC:
-				trlon = prSunPosEnd
-			else:
-				#to Longitude...
-				trlon = util.ra2ecl(prSunPosEnd, self.chart.obl[0])
-
-			trans = transits.Transits()
-			trans.day(y, m, d, self.chart, astrology.SE_SUN, trlon)
-
-			if len(trans.transits) > 0:
-				tt = trans.transits[0].time
+		if (prSunPos != target):
+			#Exact second by bisection between the previous midnight and
+			#this one (they bracket the target); replaces Transits().day.
+			#Like Transits, the refinement is done on the Sun longitude.
+			#RA targets are periodic: normalize before converting (ra2ecl
+			#only handles [0, 360)).
+			trlon = target
+			if not ecliptical:
+				trlon = util.ra2ecl(target % 360.0, self.chart.obl[0])
+			jd_hi = astrology.swe_julday(y, m, d, 0.0, self.calFlag())
+			jd_cross = self.sunCrossing(jd_hi-1.0, jd_hi, trlon)
+			y, m, d, tt = astrology.swe_revjul(jd_cross, self.calFlag())
 		else:
 			#the time is midnight
 			tt = 0.0
@@ -1611,7 +1670,6 @@ class PrimDirs:
 
 
 	def calcTrueSolarArcRegressive(self, arc):
-		LIM = 120.0 #arbitrary value
 		y = self.chart.time.year
 		m = self.chart.time.month
 		d = self.chart.time.day
@@ -1619,50 +1677,53 @@ class PrimDirs:
 		h, mi, s = util.decToDeg(self.chart.time.time)
 		tt = 0.0
 
-		#Subtract arc from Suns's pos (long or ra)
-		prSunPos = self.chart.planets.planets[astrology.SE_SUN].dataEqu[planets.Planet.RAEQU]
-		if self.options.pdkeyd == PrimDirs.TRUESOLARECLIPTICALARC:
-			prSunPos = self.chart.planets.planets[astrology.SE_SUN].data[planets.Planet.LONG]
+		ecliptical = self.options.pdkeyd == PrimDirs.TRUESOLARECLIPTICALARC
 
-		prSunPosEnd = prSunPos-arc
-		transition = False #Pisces-Aries
-		if prSunPosEnd < 0.0:
-			prSunPos += 360.0
-			prSunPosEnd += 360.0
-			transition = True
+		#Sun's pos (long or ra) in a continuous frame (no 0/360 wraps)
+		sun0 = self.chart.planets.planets[astrology.SE_SUN].dataEqu[planets.Planet.RAEQU]
+		if ecliptical:
+			sun0 = self.chart.planets.planets[astrology.SE_SUN].data[planets.Planet.LONG]
+
+		target = sun0-arc
+
+		#Coarse jump back: the Sun never moves faster than MAXSUNDAY
+		#deg/day, so jumping int(arc/MAXSUNDAY)-1 days always undershoots
+		jump = int(arc/PrimDirs.MAXSUNDAY)-1
+		if jump > 0:
+			calflag = astrology.SE_GREG_CAL
+			if self.chart.time.cal == chart.Time.JULIAN:
+				calflag = astrology.SE_JUL_CAL
+			jd = astrology.swe_julday(y, m, d, 0.0, calflag)-float(jump)
+			y, m, d, tmid = astrology.swe_revjul(jd, calflag)
+
+		lon, ra = self.sunDayPos(y, m, d)
+		raw = lon if ecliptical else ra
+		#Unwrap against the expected position (mean motion); exact because
+		#the jump error is always far below 180deg
+		prSunPos = self.sunUnwrap(raw, sun0-jump*0.986 if jump > 0 else sun0)
 
 #		Find day in ephemeris
-		while (prSunPos >= prSunPosEnd):
+		while (prSunPos >= target):
 			y, m, d = util.decrDay(y, m, d)
-			ti = chart.Time(y, m, d, 0, 0, 0, False, self.chart.time.cal, chart.Time.GREENWICH, True, 0, 0, False, self.chart.place, False)
-			sun = planets.Planet(ti.jd, astrology.SE_SUN, astrology.SEFLG_SWIEPH)
-			
-			pos = sun.dataEqu[planets.Planet.RAEQU]
-			if self.options.pdkeyd == PrimDirs.TRUESOLARECLIPTICALARC:
-				pos = sun.data[planets.Planet.LONG]
-			if transition and pos < LIM:
-				pos += 360.0
-			prSunPos = pos
+			lon, ra = self.sunDayPos(y, m, d)
+			raw = lon if ecliptical else ra
+			prSunPos = self.sunUnwrap(raw, prSunPos)
 
 			if self.abort.abort:
 				return 0.0
 
-		if (prSunPos != prSunPosEnd):
-			if transition:
-				prSunPosEnd -= 360.0
-
-			trlon = 0.0
-			if self.options.pdkeyd == PrimDirs.TRUESOLARECLIPTICALARC:
-				trlon = prSunPosEnd
-			else:
-				#to Longitude...
-				trlon = util.ra2ecl(prSunPosEnd, self.chart.obl[0])
-
-			trans = transits.Transits()
-			trans.day(y, m, d, self.chart, astrology.SE_SUN, trlon)
-
-			if len(trans.transits) > 0:
-				tt = trans.transits[0].time
+		if (prSunPos != target):
+			#Exact second by bisection between this midnight and the next
+			#one (they bracket the target); replaces Transits().day.
+			#Like Transits, the refinement is done on the Sun longitude.
+			#RA targets are periodic: normalize before converting (ra2ecl
+			#only handles [0, 360)).
+			trlon = target
+			if not ecliptical:
+				trlon = util.ra2ecl(target % 360.0, self.chart.obl[0])
+			jd_lo = astrology.swe_julday(y, m, d, 0.0, self.calFlag())
+			jd_cross = self.sunCrossing(jd_lo, jd_lo+1.0, trlon)
+			y, m, d, tt = astrology.swe_revjul(jd_cross, self.calFlag())
 		else:
 			#the time is midnight
 			tt = 0.0
