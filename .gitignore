@@ -2,3 +2,9 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*~
+*.bckp
+tags
+dist/
+build/
+*.AppImage
