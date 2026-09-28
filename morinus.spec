@@ -5,7 +5,11 @@ a = Analysis(
     ['morinus.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    # Runtime data: the app chdir()s to the exe dir and uses relative
+    # paths (Res/, SWEP/Ephem/). Hors/ (user charts) and Opts/ (user
+    # config) are intentionally NOT bundled: Opts/ falls back to
+    # defaults and Hors/ contains personal data.
+    datas=[('Res', 'Res'), ('SWEP/Ephem', 'SWEP/Ephem')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
