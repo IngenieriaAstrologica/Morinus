@@ -4,9 +4,9 @@
 [![Python 3](https://img.shields.io/badge/Python-3.11%2B-green.svg)](https://www.python.org/)
 [![wxPython](https://img.shields.io/badge/GUI-wxPython%204.x-orange.svg)](https://wxpython.org/)
 
-**Morinus SE** es un programa libre de **astrología tradicional** basado en Morinus de Robert Nagy, con efemérides suizas de alta precisión (Swiss Ephemeris). Calcula cartas natales, **direcciones primarias** (Placidus, Regiomontanus, Campanus), **profecciones / atacires**, **firdaria**, revoluciones solares y lunares, tránsitos, direcciones secundarias, sinastría, estrellas fijas, partes arábigas, antiscia y dodecatemoria. Disponible en **6 idiomas** (español, inglés, húngaro, italiano, francés y ruso).
+**Morinus SE** es un programa libre de **astrología tradicional** basado en Morinus de Robert Nagy y en la [Special Edition de Elías D. Molins](https://www.campus-astrologia.es/morinus-special-edition) (Campus Astrología), con efemérides suizas de alta precisión (Swiss Ephemeris). Calcula cartas natales, **direcciones primarias** (Placidus, Regiomontanus, Campanus), **profecciones / atacires**, **firdaria**, revoluciones solares y lunares, tránsitos, direcciones secundarias, sinastría, estrellas fijas, partes arábigas, antiscia y dodecatemoria. Disponible en **6 idiomas** (español, inglés, húngaro, italiano, francés y ruso).
 
-**Morinus SE** is a free **traditional astrology** program based on Robert Nagy's Morinus, powered by high-precision Swiss Ephemeris. It computes natal charts, **primary directions** (Placidus, Regiomontanus, Campanus), **profections**, **firdaria**, solar and lunar returns, transits, secondary directions, synastry, fixed stars, arabic parts, antiscia and dodecatemoria. Available in **6 languages** (English, Spanish, Hungarian, Italian, French, Russian).
+**Morinus SE** is a free **traditional astrology** program based on Robert Nagy's Morinus and on [Elías D. Molins' Special Edition](https://www.campus-astrologia.es/morinus-special-edition) (Campus Astrología), powered by high-precision Swiss Ephemeris. It computes natal charts, **primary directions** (Placidus, Regiomontanus, Campanus), **profections**, **firdaria**, solar and lunar returns, transits, secondary directions, synastry, fixed stars, arabic parts, antiscia and dodecatemoria. Available in **6 languages** (English, Spanish, Hungarian, Italian, French, Russian).
 
 > Palabras clave / Keywords: astrología tradicional, traditional astrology, direcciones primarias, primary directions, profecciones, profections, atacires, firdaria, revolución solar, solar return, tránsitos, transits, sinastría, synastry, Swiss Ephemeris, software astrología libre, free astrology software, Morinus.
 
@@ -130,7 +130,13 @@ Morinus SE/
 
 > Nota de migración: las opciones guardadas con la versión solo-español (`Opts/languages.opt = 0`) ahora se interpretan como inglés. Selecciona Español una vez y reinicia.
 
-## Preguntas frecuentes / FAQ
+## Enlaces / Links
+
+- [Morinus Special Edition (Campus Astrología)](https://www.campus-astrologia.es/morinus-special-edition) — versión de Elías D. Molins de la que parte Morinus SE.
+- [¿Qué es el software libre? (vídeo, audio en español)](https://www.youtube.com/watch?v=FvLJ2JotttM) — la filosofía del software libre que ampara este programa (GPLv3).
+- [Swiss Ephemeris (AstroDienst)](https://www.astro.com/swisseph/) — efemérides de alta precisión usadas por Morinus SE.
+- [GeoNames](https://www.geonames.org/) — búsqueda de lugares integrada.
+- [Código fuente / Source code](https://github.com/IngenieriaAstrologica/Morinus) · [Descargas / Releases](https://github.com/IngenieriaAstrologica/Morinus/releases).
 
 **¿Morinus SE es gratis? / Is Morinus SE free?**
 Sí, es software libre bajo licencia GPLv3. Yes, it is free software under the GPLv3 license.
@@ -151,6 +157,7 @@ GNU General Public License v3 (GPLv3) — ver `LICENSE.txt`.
 ## Créditos / Credits
 
 - Robert Nagy — Morinus original.
-- Roberto Luporini (v7), Elías D. Molins (v8) — ediciones previas.
-- Campus Astrología — Edición Especial SE.
+- Roberto Luporini (v7) — edición previa.
+- [Elías D. Molins (v8)](https://www.campus-astrologia.es/morinus-special-edition) — Special Edition, base de la que parte SE.
+- [Campus Astrología](https://www.campus-astrologia.es/morinus-special-edition) — Edición Especial SE.
 - Javier JIPE — port a Python 3 / wxPython 4 y restauración multi-idioma.
