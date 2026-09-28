@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Morinus SE
+Comment=Free traditional astrology software / Software libre de astrología tradicional
+Exec=morinus
+Icon=morinus
+Type=Application
+Categories=Education;Science;
+StartupNotify=true
+Terminal=false
