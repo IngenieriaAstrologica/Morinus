@@ -8,3 +8,6 @@ tags
 dist/
 build/
 *.AppImage
+# Personal horoscope files (user data, must never be committed)
+Hors/
+*.hor
