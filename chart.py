@@ -345,7 +345,7 @@ class Chart:
 			self.parts = arabicparts.ArabicParts(self.options.arabicparts, self.houses.ascmc, self.planets, self.houses, self.houses.cusps, self.fortune, self.syzygy, self.options)
 			self.fixstars = fixstars.FixStars(self.time.jd, fsflag, self.options.fixstars, self.obl[0])
 			self.midpoints = midpoints.MidPoints(self.planets)
-			self.riseset = riseset.RiseSet(self.time.jd, self.time.cal, self.place.lon, self.place.lat, self.place.altitude, self.planets)
+			self.riseset = None # computed on demand by RiseSetFrame (risesetframe.py)
 			self.zodpars = zodpars.ZodPars(self.planets, self.obl[0])
 			self.antiscia = antiscia.Antiscia(self.planets.planets, self.houses.ascmc, self.fortune.fortune, self.obl[0], self.options.ayanamsha, self.ayanamsha)
 			self.antzodpars = antzodpars.AntZodPars(self.antiscia.plantiscia, self.antiscia.plcontraant, self.obl[0])

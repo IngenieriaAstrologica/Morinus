@@ -172,7 +172,68 @@ class Syzygy:
 		return newmoon, ready
 
 
+	# Max. rate of change of the Sun-Moon elongation, used only to undershoot
+	# coarse jumps (deg per day/minute/second). The exact hour/minute/second
+	# refinement below is unchanged, so results are identical.
+	MAXELONGDAY = 15.5
+	MAXELONGMIN = MAXELONGDAY/1440.0
+	MAXELONGSEC = MAXELONGDAY/86400.0
+
+	def elongLons(self, jd):
+		# Light-weight Sun/Moon longitudes for the search: the same values
+		# planets.Planet() would compute, without the speed/equatorial cost
+		rflag, sundata, serr = astrology.swe_calc_ut(jd, astrology.SE_SUN, astrology.SEFLG_SWIEPH)
+		rflag, moondata, serr = astrology.swe_calc_ut(jd, astrology.SE_MOON, astrology.SEFLG_SWIEPH)
+		return sundata[planets.Planet.LONG], moondata[planets.Planet.LONG]
+
+	def truncDiff(self, lonsun, lonmoon):
+		d, m, s = util.decToDeg(lonsun)
+		lonsun = d+m/60.0+s/3600.0
+		d, m, s = util.decToDeg(lonmoon)
+		lonmoon = d+m/60.0+s/3600.0
+		return lonmoon-lonsun
+
+	def coverBack(self, diff, newmoonorig):
+		# Elongation degrees to step back to reach the wanted phase boundary.
+		# Call with the raw (untruncated) elongation: truncation noise (up to
+		# 2 arcsec) would translate into seconds of sizing error.
+		if newmoonorig:
+			return diff % 360.0
+		return (diff-180.0) % 360.0
+
+	def startsPastFlip(self, tim, newmoonorig, delta):
+		# True if the loop below would return after a single step, i.e.
+		# start-1unit is already flipped or exact. Then no jump is done,
+		# mirroring the old path (this also rules out ~360deg covers that
+		# would overshoot by a full lunation).
+		lonsun, lonmoon = self.elongLons(tim.jd-delta)
+		nm, ready = self.isNewMoon(self.truncDiff(lonsun, lonmoon))
+		return nm != newmoonorig or ready
+
+	def jumpBack(self, tim, place, days = 0, mins = 0, secs = 0):
+		# Exact integer calendar stepping (no float round-trip), so the
+		# landing point lies on the same grid the loops below would visit
+		total = days*86400+mins*60+secs
+		h, m, s = util.decToDeg(tim.time)
+		y, mo, d = tim.year, tim.month, tim.day
+		sod = h*3600+m*60+s-total
+		backdays, sod = divmod(sod, 86400)
+		for i in range(-backdays):
+			y, mo, d = util.decrDay(y, mo, d)
+		if y < 1:
+			y = 1
+		h, m, s = sod//3600, (sod%3600)//60, sod%60
+		return chart.Time(y, mo, d, h, m, s, False, tim.cal, chart.Time.GREENWICH, True, 0, 0, False, place, False)
+
+
 	def getDateHour(self, tim, place, newmoonorig):
+		lonsun, lonmoon = self.elongLons(tim.jd)
+		diff0 = self.truncDiff(lonsun, lonmoon)
+		if not self.startsPastFlip(tim, newmoonorig, 1.0/24.0):
+			cover = self.coverBack(diff0, newmoonorig)
+			days = int(cover/self.MAXELONGDAY)-1 # stop 1 day short: truncation noise is only seconds
+			if days > 0:
+				tim = self.jumpBack(tim, place, days = days)
 		while True:
 			h, m, s = util.decToDeg(tim.time) 
 			y, mo, d = tim.year, tim.month, tim.day
@@ -187,17 +248,9 @@ class Syzygy:
 
 			tim = chart.Time(y, mo, d, h, m, s, False, tim.cal, chart.Time.GREENWICH, True, 0, 0, False, place, False)
 
-			sun = planets.Planet(tim.jd, astrology.SE_SUN, self.flags)
-			moon = planets.Planet(tim.jd, astrology.SE_MOON, self.flags)
-			lonsun = sun.data[planets.Planet.LONG]
-			lonmoon = moon.data[planets.Planet.LONG]
+			lonsun, lonmoon = self.elongLons(tim.jd)
+			diff = self.truncDiff(lonsun, lonmoon)
 
-			d, m, s = util.decToDeg(lonsun)
-			lonsun = d+m/60.0+s/3600.0
-			d, m, s = util.decToDeg(lonmoon)
-			lonmoon = d+m/60.0+s/3600.0
-
-			diff = lonmoon-lonsun
 			newmoon, ready = self.isNewMoon(diff)
 			if newmoon != newmoonorig or ready:
 				return True, tim, ready
@@ -215,6 +268,14 @@ class Syzygy:
 
 		tim = chart.Time(y, mo, d, h, m, s, False, tim.cal, chart.Time.GREENWICH, True, 0, 0, False, place, False)
 
+		lonsun, lonmoon = self.elongLons(tim.jd)
+		diff0 = self.truncDiff(lonsun, lonmoon)
+		if not self.startsPastFlip(tim, newmoonorig, 1.0/1440.0):
+			cover = self.coverBack(diff0, newmoonorig)
+			mins = int(cover/self.MAXELONGMIN)-2 # stop 2 min short
+			if mins > 0:
+				tim = self.jumpBack(tim, place, mins = mins)
+
 		while True:
 			h, m, s = util.decToDeg(tim.time) 
 			y, mo, d = tim.year, tim.month, tim.day
@@ -226,17 +287,9 @@ class Syzygy:
 
 			tim = chart.Time(y, mo, d, h, m, s, False, tim.cal, chart.Time.GREENWICH, True, 0, 0, False, place, False)
 
-			sun = planets.Planet(tim.jd, astrology.SE_SUN, self.flags)
-			moon = planets.Planet(tim.jd, astrology.SE_MOON, self.flags)
-			lonsun = sun.data[planets.Planet.LONG]
-			lonmoon = moon.data[planets.Planet.LONG]
+			lonsun, lonmoon = self.elongLons(tim.jd)
+			diff = self.truncDiff(lonsun, lonmoon)
 
-			d, m, s = util.decToDeg(lonsun)
-			lonsun = d+m/60.0+s/3600.0
-			d, m, s = util.decToDeg(lonmoon)
-			lonmoon = d+m/60.0+s/3600.0
-
-			diff = lonmoon-lonsun
 			newmoon, ready = self.isNewMoon(diff)
 			if newmoon != newmoonorig or ready:
 				return True, tim, ready
@@ -251,6 +304,14 @@ class Syzygy:
 
 		tim = chart.Time(y, mo, d, h, m, s, False, tim.cal, chart.Time.GREENWICH, True, 0, 0, False, place, False)
 
+		lonsun, lonmoon = self.elongLons(tim.jd)
+		diff0 = self.truncDiff(lonsun, lonmoon)
+		if not self.startsPastFlip(tim, newmoonorig, 1.0/86400.0):
+			cover = self.coverBack(diff0, newmoonorig)
+			secs = int(cover/self.MAXELONGSEC)-8 # stop 8 s short
+			if secs > 0:
+				tim = self.jumpBack(tim, place, secs = secs)
+
 		while True:
 			h, m, s = util.decToDeg(tim.time) 
 			y, mo, d = tim.year, tim.month, tim.day
@@ -262,17 +323,9 @@ class Syzygy:
 
 			tim = chart.Time(y, mo, d, h, m, s, False, tim.cal, chart.Time.GREENWICH, True, 0, 0, False, place, False)
 
-			sun = planets.Planet(tim.jd, astrology.SE_SUN, self.flags)
-			moon = planets.Planet(tim.jd, astrology.SE_MOON, self.flags)
-			lonsun = sun.data[planets.Planet.LONG]
-			lonmoon = moon.data[planets.Planet.LONG]
+			lonsun, lonmoon = self.elongLons(tim.jd)
+			diff = self.truncDiff(lonsun, lonmoon)
 
-			d, m, s = util.decToDeg(lonsun)
-			lonsun = d+m/60.0+s/3600.0
-			d, m, s = util.decToDeg(lonmoon)
-			lonmoon = d+m/60.0+s/3600.0
-
-			diff = lonmoon-lonsun
 			newmoon, ready = self.isNewMoon(diff)
 			if newmoon != newmoonorig or ready:
 				return True, tim, ready
