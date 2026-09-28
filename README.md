@@ -10,6 +10,16 @@
 
 > Palabras clave / Keywords: astrología tradicional, traditional astrology, direcciones primarias, primary directions, profecciones, profections, atacires, firdaria, revolución solar, solar return, tránsitos, transits, sinastría, synastry, Swiss Ephemeris, software astrología libre, free astrology software, Morinus.
 
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Morinus SE","applicationCategory":"UtilitiesApplication","applicationSubCategory":"Astrology Software","operatingSystem":["Linux","Windows"],"softwareVersion":"8.0.0-se","inLanguage":["es","en","hu","it","fr","ru"],"license":"https://www.gnu.org/licenses/gpl-3.0.html","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"downloadUrl":"https://github.com/IngenieriaAstrologica/Morinus/releases/tag/v8.0.0-se","description":"Programa libre de astrología tradicional con direcciones primarias, profecciones, firdaria, revoluciones solares y efemérides suizas. Free traditional astrology software with primary directions, profections, firdaria and Swiss Ephemeris."}
+</script>
+
+## Descarga / Download
+
+- **Linux (recomendado):** [Morinus_SE-8.0.0-x86_64.AppImage](https://github.com/IngenieriaAstrologica/Morinus/releases/download/v8.0.0-se/Morinus_SE-8.0.0-x86_64.AppImage) — sin instalación: `chmod +x *.AppImage && ./Morinus_SE-8.0.0-x86_64.AppImage`.
+- [Todas las versiones / All releases](https://github.com/IngenieriaAstrologica/Morinus/releases).
+- **Windows:** ejecutar desde el código fuente con Python 3.11+ (ver Instalación).
+
 ## Capturas / Screenshots
 
 ![Carta astral calculada con Morinus SE](Res/charts.png)
@@ -17,14 +27,33 @@
 
 ## Características / Features
 
-- Carta natal, horaria, electiva y mundana (Natal, horary, electional and mundane charts).
-- **Direcciones primarias** con métodos Placidus (semiarco y bajo el polo), Regiomontanus y Campanus, con claves Naibod, Cardan y Ptolomeo.
-- **Atacires / profecciones** anuales y mensuales del C-12, **firdaria** (Bonatti y Al-Biruni).
-- Revoluciones solares/lunares/planetarias, tránsitos exactos, direcciones secundarias directas y conversas.
-- Estrellas fijas, partes arábigas, antiscia y contraantiscia, paralelos zodiacales, puntos medios, horas planetarias.
-- Speculum tradicional, dignidades esenciales y accidentales, almutens de la carta y tópicos, sizigia y parte de la fortuna.
-- Búsqueda de lugares online (GeoNames) y base de datos de lugares integrada.
-- **6 idiomas conmutables**: English, Magyar, Italiano, Français, Русский, Español (edición SE en español por defecto).
+### Carta natal, horaria, electiva y mundana / Natal, horary, electional and mundane charts
+
+Cartas natales con domificación Placidus, Regiomontanus, Campanus y más sistemas, además de horaria, electiva y mundana.
+
+### Direcciones primarias / Primary directions
+
+**Direcciones primarias** con métodos Placidus (semiarco y bajo el polo), Regiomontanus y Campanus, con claves de Naibod, Cardan y Ptolomeo. Tablas de arcos y fechas exactas de perfección.
+
+### Atacires y profecciones / Profections
+
+**Atacires / profecciones** anuales y mensuales del C-12, con señor del año y análisis de períodos.
+
+### Firdaria / Firdaria
+
+**Firdaria** según Bonatti y Al-Biruni, diurnas y nocturnas, con subperíodos.
+
+### Revoluciones, tránsitos y direcciones secundarias / Returns, transits and secondary directions
+
+Revoluciones solares, lunares y planetarias; tránsitos exactos con orbes configurables; direcciones secundarias directas y conversas.
+
+### Técnicas clásicas / Classical techniques
+
+Estrellas fijas, partes arábigas, antiscia y contraantiscia, paralelos zodiacales, puntos medios, horas planetarias, speculum tradicional, dignidades esenciales y accidentales, almutens de la carta y tópicos, sizigia y parte de la fortuna.
+
+### Lugares e idiomas / Places and languages
+
+Búsqueda de lugares online (GeoNames) y base de datos integrada. **6 idiomas conmutables**: English, Magyar, Italiano, Français, Русский, Español (edición SE en español por defecto).
 
 ## Instalación / Installation
 
@@ -53,6 +82,9 @@ python setup.py build
 cp build/lib.*/sweastrology*.so ../../
 ```
 
+<details>
+<summary><strong>Para desarrolladores / For developers</strong>: ejecutable PyInstaller y estructura del proyecto</summary>
+
 ### Generar ejecutable / Build executable (PyInstaller)
 
 ```bash
@@ -61,6 +93,25 @@ pyinstaller morinus.spec
 ```
 
 El ejecutable queda en `dist/morinus/`. Si se agregan dependencias nuevas y el `.exe` falla al arrancar, añadirlas a `hiddenimports` en `morinus.spec`.
+
+### Estructura / Project layout
+
+```
+Morinus SE/
+  morinus.py          # Punto de entrada / entry point
+  morin.py            # Ventana principal (MFrame) / main window
+  mtexts.py           # Textos en 6 idiomas / i18n strings (ES por defecto)
+  mtexts.py-funciona  # Referencia original multi-idioma / upstream reference
+  options.py          # Opciones y persistencia en Opts/*.opt
+  langsdlg.py         # Diálogo de selección de idioma / language dialog
+  astrology.py        # Envoltorio de Swiss Ephemeris / ephemeris wrapper
+  SWEP/src/           # Fuente del módulo C sweastrology / C source
+  SWEP/Ephem/         # Datos de efemérides / ephemeris data
+  Res/                # Recursos, ayudas HTML e imágenes / resources
+  Opts/               # Opciones guardadas / saved options
+```
+
+</details>
 
 ## Idioma / Language
 
@@ -79,22 +130,19 @@ El ejecutable queda en `dist/morinus/`. Si se agregan dependencias nuevas y el `
 
 > Nota de migración: las opciones guardadas con la versión solo-español (`Opts/languages.opt = 0`) ahora se interpretan como inglés. Selecciona Español una vez y reinicia.
 
-## Estructura / Project layout
+## Preguntas frecuentes / FAQ
 
-```
-Morinus SE/
-  morinus.py          # Punto de entrada / entry point
-  morin.py            # Ventana principal (MFrame) / main window
-  mtexts.py           # Textos en 6 idiomas / i18n strings (ES por defecto)
-  mtexts.py-funciona  # Referencia original multi-idioma / upstream reference
-  options.py          # Opciones y persistencia en Opts/*.opt
-  langsdlg.py         # Diálogo de selección de idioma / language dialog
-  astrology.py        # Envoltorio de Swiss Ephemeris / ephemeris wrapper
-  SWEP/src/           # Fuente del módulo C sweastrology / C source
-  SWEP/Ephem/         # Datos de efemérides / ephemeris data
-  Res/                # Recursos, ayudas HTML e imágenes / resources
-  Opts/               # Opciones guardadas / saved options
-```
+**¿Morinus SE es gratis? / Is Morinus SE free?**
+Sí, es software libre bajo licencia GPLv3. Yes, it is free software under the GPLv3 license.
+
+**¿Qué programa calcula direcciones primarias gratis? / Which free program calculates primary directions?**
+Morinus SE calcula direcciones primarias Placidus, Regiomontanus y Campanus con efemérides suizas de alta precisión, sin coste.
+
+**¿Funciona en Windows? / Does it work on Windows?**
+Sí mediante Python 3.11+ y wxPython; la AppImage es para Linux de 64 bits. Yes, from source on Windows; the AppImage targets 64-bit Linux.
+
+**¿En qué idiomas está disponible? / Which languages are available?**
+Español (por defecto en SE), English, Magyar, Italiano, Français y Русский. Opciones → Lenguajes y reiniciar.
 
 ## Licencia / License
 

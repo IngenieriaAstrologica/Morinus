@@ -1,0 +1,8 @@
+lang: es
+title: "Morinus SE — Software libre de astrología tradicional | Free Traditional Astrology Software"
+description: "Morinus SE: programa libre de astrología tradicional con direcciones primarias, profecciones, firdaria y efemérides suizas. Descarga gratis para Linux y Windows, en 6 idiomas."
+url: "https://ingenieriaastrologica.github.io"
+baseurl: "/Morinus"
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
