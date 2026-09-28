@@ -10,10 +10,6 @@
 
 > Palabras clave / Keywords: astrología tradicional, traditional astrology, direcciones primarias, primary directions, profecciones, profections, atacires, firdaria, revolución solar, solar return, tránsitos, transits, sinastría, synastry, Swiss Ephemeris, software astrología libre, free astrology software, Morinus.
 
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Morinus SE","applicationCategory":"UtilitiesApplication","applicationSubCategory":"Astrology Software","operatingSystem":["Linux","Windows"],"softwareVersion":"8.0.0-se","inLanguage":["es","en","hu","it","fr","ru"],"license":"https://www.gnu.org/licenses/gpl-3.0.html","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"downloadUrl":"https://github.com/IngenieriaAstrologica/Morinus/releases/tag/v8.0.0-se","description":"Programa libre de astrología tradicional con direcciones primarias, profecciones, firdaria, revoluciones solares y efemérides suizas. Free traditional astrology software with primary directions, profections, firdaria and Swiss Ephemeris."}
-</script>
-
 ## Descarga / Download
 
 - **Linux (recomendado):** [Morinus_SE-8.0.0-x86_64.AppImage](https://github.com/IngenieriaAstrologica/Morinus/releases/download/v8.0.0-se/Morinus_SE-8.0.0-x86_64.AppImage) — sin instalación: `chmod +x *.AppImage && ./Morinus_SE-8.0.0-x86_64.AppImage`.
