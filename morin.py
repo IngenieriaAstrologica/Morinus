@@ -343,7 +343,7 @@ class MFrame(wx.Frame):
 # Roberto change V 7.2.0
         self.moptions.Append(self.ID_DefLocationOpt, mtexts.menutxts['OMDefLocationOpt'], mtexts.menutxts['OMDefLocationOptDoc'])
 # ###########################################
-        #self.moptions.Append(self.ID_Languages, mtexts.menutxts['OMLanguages'], mtexts.menutxts['OMLanguagesDoc'])
+        self.moptions.Append(self.ID_Languages, mtexts.menutxts['OMLanguages'], mtexts.menutxts['OMLanguagesDoc'])
         self.moptions.AppendSeparator()
         self.autosave = self.moptions.Append(self.ID_AutoSaveOpts, mtexts.menutxts['OMAutoSave'], mtexts.menutxts['OMAutoSaveDoc'], wx.ITEM_CHECK)
         self.moptions.Append(self.ID_SaveOpts, mtexts.menutxts['OMSave'], mtexts.menutxts['OMSaveDoc'])
@@ -2369,7 +2369,10 @@ class MFrame(wx.Frame):
         if wx.Platform == '__WXMSW__' and not self.splash:
             self.handleStatusBar(True)
 
-        dlg = langsdlg.LanguagesDlg(self, self.options.langid)
+        langid = self.options.langid
+        if langid < 0 or langid >= len(mtexts.langtexts):
+            langid = mtexts.DEF_LANGID
+        dlg = langsdlg.LanguagesDlg(self, langid)
         dlg.CenterOnParent()
 
         val = dlg.ShowModal()
@@ -2380,6 +2383,10 @@ class MFrame(wx.Frame):
                 if self.options.autosave:
                     if self.options.saveLanguages():
                         self.moptions.Enable(self.ID_SaveOpts, False)
+
+                dlgm = wx.MessageDialog(self, mtexts.txts['NeedRestart'], mtexts.txts['Message'], wx.OK|wx.ICON_INFORMATION)
+                dlgm.ShowModal()
+                dlgm.Destroy()
 
         dlg.Destroy()
 

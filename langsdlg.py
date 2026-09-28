@@ -6,11 +6,14 @@ class LanguagesDlg(wx.Dialog):
 	def __init__(self, parent, langid):
 		wx.Dialog.__init__(self, parent, -1, mtexts.txts['Languages'], pos=wx.DefaultPosition, size=wx.DefaultSize, style=wx.DEFAULT_DIALOG_STYLE)
 
+		if langid < 0 or langid >= len(mtexts.langtexts):
+			langid = mtexts.DEF_LANGID
+
 		#main vertical sizer
 		mvsizer = wx.BoxSizer(wx.VERTICAL)
 
-		self.langcb = wx.ComboBox(self, -1, mtexts.langtexts[0], size=(100, -1), choices=mtexts.langtexts, style=wx.CB_DROPDOWN|wx.CB_READONLY)
-		self.langcb.SetStringSelection(mtexts.langtexts[langid])
+		self.langcb = wx.ComboBox(self, -1, mtexts.getLangTxt(langid), size=(100, -1), choices=list(mtexts.langtexts), style=wx.CB_DROPDOWN|wx.CB_READONLY)
+		self.langcb.SetStringSelection(mtexts.getLangTxt(langid))
 		mvsizer.Add(self.langcb, 0, wx.GROW|wx.ALIGN_CENTER|wx.ALL, 20)
 
 		btnsizer = wx.StdDialogButtonSizer()

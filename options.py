@@ -383,7 +383,8 @@ class Options:
 		self.def_pdinchartterrsecmotion = self.pdinchartterrsecmotion = True
 
 		#Languages
-		self.def_langid = self.langid = 0
+		# 0..4: English/Magyar/Italiano/Francais/Russian, 5: Espanol (SE default)
+		self.def_langid = self.langid = mtexts.DEF_LANGID
 
 		self.autosave = False
 		self.def_autosave = self.autosave
@@ -970,6 +971,13 @@ class Options:
 			f = open(optfile, 'rb')		
 			self.langid = pickle.load(f)
 			f.close()
+			# Clamp legacy/corrupt values (SE used to store 0 for Spanish)
+			try:
+				self.langid = int(self.langid)
+			except (TypeError, ValueError):
+				self.langid = mtexts.DEF_LANGID
+			if self.langid < 0 or self.langid >= len(mtexts.langtexts):
+				self.langid = mtexts.DEF_LANGID
 		except IOError:
 			res = False
 
