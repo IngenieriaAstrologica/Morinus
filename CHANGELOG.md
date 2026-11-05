@@ -2,6 +2,8 @@
 
 ## [Sin publicar]
 
+## [8.0.1-se] — 2026-11-05
+
 ### Rendimiento
 - **Direcciones primarias con clave dinámica (arco solar verdadero):** una
   lista completa (1620–1980 direcciones) pasa de ~6 min a ~20 s. El cálculo
