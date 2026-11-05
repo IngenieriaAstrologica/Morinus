@@ -12,7 +12,7 @@
 
 ## Descarga / Download
 
-- **Linux (recomendado):** [Morinus_SE-8.0.0-x86_64.AppImage](https://github.com/IngenieriaAstrologica/Morinus/releases/download/v8.0.0-se/Morinus_SE-8.0.0-x86_64.AppImage) — sin instalación: `chmod +x *.AppImage && ./Morinus_SE-8.0.0-x86_64.AppImage`.
+- **Linux (recomendado):** [Morinus_SE-8.0.1-x86_64.AppImage](https://github.com/IngenieriaAstrologica/Morinus/releases/download/v8.0.1-se/Morinus_SE-8.0.1-x86_64.AppImage) — sin instalación: `chmod +x *.AppImage && ./Morinus_SE-8.0.1-x86_64.AppImage`.
 - [Todas las versiones / All releases](https://github.com/IngenieriaAstrologica/Morinus/releases).
 - **Windows:** ejecutar desde el código fuente con Python 3.11+ (ver Instalación).
 
