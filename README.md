@@ -111,9 +111,9 @@ Morinus SE/
 
 ## Idioma / Language
 
-**ES:** Opciones → Lenguajes (`Shift+J`), elige idioma, acepta y **reinicia Morinus** para que los menús se reconstruyan. El cambio se guarda automáticamente.
+**ES:** Opciones → Lenguajes (`Shift+J`), elige idioma, acepta y **reinicia Morinus** para que los menús se reconstruyan. El idioma se guarda siempre al aceptar, aunque el guardado automático de opciones esté desactivado.
 
-**EN:** Options → Languages, pick a language, accept and **restart Morinus** so menus are rebuilt. The choice is saved automatically.
+**EN:** Options → Languages, pick a language, accept and **restart Morinus** so menus are rebuilt. The language is always saved when you accept, even if automatic option saving is off.
 
 | id | Idioma / Language | Ayuda / Help file |
 |----|-------------------|-------------------|
@@ -124,9 +124,9 @@ Morinus SE/
 | 4 | Русский (Russian) | `helpEng.html` (fallback) |
 | 5 | Español — Spanish, **por defecto en SE** | `Res/helpEsp.html` |
 
-> Nota de migración: las opciones guardadas con la versión solo-español (`Opts/languages.opt = 0`) ahora se interpretan como inglés. Selecciona Español una vez y reinicia.
+> Nota de migración: las opciones guardadas con la versión solo-español (`Opts/languages.opt = 0`) ahora se interpretan como inglés. Para volver a español: Opciones → Lenguajes → Español, acepta y reinicia.
 
-> **AppImage:** como el AppImage es de solo lectura, las preferencias se guardan en `$XDG_CONFIG_HOME/morinus-se/Opts` (normalmente `~/.config/morinus-se/Opts`). En Windows: `%APPDATA%\MorinusSE\Opts`.
+> **Preferencias:** si la carpeta `Opts/` no se puede escribir (típico del AppImage, que se monta en solo lectura), Morinus guarda las preferencias en una carpeta de usuario: `~/.config/morinus-se/Opts` en Linux (o `$XDG_CONFIG_HOME/morinus-se/Opts`) y `%APPDATA%\MorinusSE\Opts` en Windows. Se rellena una sola vez con las opciones incluidas en el programa.
 
 ## Enlaces / Links
 

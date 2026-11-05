@@ -172,16 +172,19 @@ class Syzygy:
 		return newmoon, ready
 
 
-	# Max. rate of change of the Sun-Moon elongation, used only to undershoot
-	# coarse jumps (deg per day/minute/second). The exact hour/minute/second
-	# refinement below is unchanged, so results are identical.
+	# Upper bound of how fast the Moon-Sun elongation (angle between them)
+	# grows, in degrees per day/minute/second. The search below first jumps
+	# back by a number of days/minutes/seconds that is guaranteed to stop
+	# short of the target, then refines step by step as before, so the final
+	# result is the same as without the jump.
 	MAXELONGDAY = 15.5
 	MAXELONGMIN = MAXELONGDAY/1440.0
 	MAXELONGSEC = MAXELONGDAY/86400.0
 
 	def elongLons(self, jd):
-		# Light-weight Sun/Moon longitudes for the search: the same values
-		# planets.Planet() would compute, without the speed/equatorial cost
+		# Sun and Moon longitudes only. Same values as planets.Planet(), but
+		# without computing speed and equatorial coordinates, which the
+		# search does not need.
 		rflag, sundata, serr = astrology.swe_calc_ut(jd, astrology.SE_SUN, astrology.SEFLG_SWIEPH)
 		rflag, moondata, serr = astrology.swe_calc_ut(jd, astrology.SE_MOON, astrology.SEFLG_SWIEPH)
 		return sundata[planets.Planet.LONG], moondata[planets.Planet.LONG]
@@ -194,25 +197,26 @@ class Syzygy:
 		return lonmoon-lonsun
 
 	def coverBack(self, diff, newmoonorig):
-		# Elongation degrees to step back to reach the wanted phase boundary.
-		# Call with the raw (untruncated) elongation: truncation noise (up to
-		# 2 arcsec) would translate into seconds of sizing error.
+		# Degrees of elongation to go back to reach the wanted boundary (new
+		# or full moon). Pass the raw elongation, not the truncated one: the
+		# truncation error (up to 2 arcsec) would add seconds of error.
 		if newmoonorig:
 			return diff % 360.0
 		return (diff-180.0) % 360.0
 
 	def startsPastFlip(self, tim, newmoonorig, delta):
-		# True if the loop below would return after a single step, i.e.
-		# start-1unit is already flipped or exact. Then no jump is done,
-		# mirroring the old path (this also rules out ~360deg covers that
-		# would overshoot by a full lunation).
+		# True if the target is already within one step (delta) of the start,
+		# so the loop below would finish after one iteration. In that case
+		# no jump is made; this also avoids jumping back a whole lunation
+		# (~360 deg of elongation) and overshooting the target.
 		lonsun, lonmoon = self.elongLons(tim.jd-delta)
 		nm, ready = self.isNewMoon(self.truncDiff(lonsun, lonmoon))
 		return nm != newmoonorig or ready
 
 	def jumpBack(self, tim, place, days = 0, mins = 0, secs = 0):
-		# Exact integer calendar stepping (no float round-trip), so the
-		# landing point lies on the same grid the loops below would visit
+		# Go back days/mins/secs using integer calendar arithmetic (no float
+		# conversion), so the new start is a point the loops below would
+		# also have reached by stepping.
 		total = days*86400+mins*60+secs
 		h, m, s = util.decToDeg(tim.time)
 		y, mo, d = tim.year, tim.month, tim.day

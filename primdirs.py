@@ -1609,23 +1609,23 @@ class PrimDirs:
 
 		ecliptical = self.options.pdkeyd == PrimDirs.TRUESOLARECLIPTICALARC
 
-		#Sun's pos (long or ra) in a continuous frame (no 0/360 wraps)
+		# Sun's pos (long or ra) in a continuous frame (no 0/360 wraps)
 		sun0 = self.chart.planets.planets[astrology.SE_SUN].dataEqu[planets.Planet.RAEQU]
 		if ecliptical:
 			sun0 = self.chart.planets.planets[astrology.SE_SUN].data[planets.Planet.LONG]
 
 		target = sun0+arc
 
-		#Coarse jump: the Sun never moves faster than MAXSUNDAY deg/day,
-		#so jumping int(arc/MAXSUNDAY)-1 days always undershoots
+		# Coarse jump: the Sun never moves faster than MAXSUNDAY deg/day,
+		# so jumping int(arc/MAXSUNDAY)-1 days always undershoots
 		jump = int(arc/PrimDirs.MAXSUNDAY)-1
 		if jump > 0:
 			y, m, d = self.jumpDays(y, m, d, jump)
 
 		lon, ra = self.sunDayPos(y, m, d)
 		raw = lon if ecliptical else ra
-		#Unwrap against the expected position (mean motion); exact because
-		#the jump error is always far below 180deg
+		# Unwrap against the expected position (mean motion); exact because
+		# the jump error is always far below 180deg
 		prSunPos = self.sunUnwrap(raw, sun0+jump*0.986 if jump > 0 else sun0)
 
 #		Find day in ephemeris
@@ -1639,11 +1639,11 @@ class PrimDirs:
 				return 0.0
 
 		if (prSunPos != target):
-			#Exact second by bisection between the previous midnight and
-			#this one (they bracket the target); replaces Transits().day.
-			#Like Transits, the refinement is done on the Sun longitude.
-			#RA targets are periodic: normalize before converting (ra2ecl
-			#only handles [0, 360)).
+			# Exact second by bisection between the previous midnight and
+			# this one (they bracket the target); replaces Transits().day.
+			# Like Transits, the refinement is done on the Sun longitude.
+			# RA targets are periodic: normalize before converting (ra2ecl
+			# only handles [0, 360)).
 			trlon = target
 			if not ecliptical:
 				trlon = util.ra2ecl(target % 360.0, self.chart.obl[0])
@@ -1651,17 +1651,17 @@ class PrimDirs:
 			jd_cross = self.sunCrossing(jd_hi-1.0, jd_hi, trlon)
 			y, m, d, tt = astrology.swe_revjul(jd_cross, self.calFlag())
 		else:
-			#the time is midnight
+			# the time is midnight
 			tt = 0.0
 
-		#difference
+		# difference
 		d1 = datetime.datetime(self.chart.time.year, self.chart.time.month, self.chart.time.day, h, mi, s) #in GMT
 		th, tm, ts = util.decToDeg(tt)
 		d2 = datetime.datetime(y, m, d, th, tm, ts) #in GMT
 		diff = d2-d1
 		ddays = diff.days
 		dtime = diff.seconds/3600.0
-		#dtime to days
+		# dtime to days
 		dtimeindays = dtime/24.0
 
 		tt = ddays+dtimeindays
@@ -1679,15 +1679,15 @@ class PrimDirs:
 
 		ecliptical = self.options.pdkeyd == PrimDirs.TRUESOLARECLIPTICALARC
 
-		#Sun's pos (long or ra) in a continuous frame (no 0/360 wraps)
+		# Sun's pos (long or ra) in a continuous frame (no 0/360 wraps)
 		sun0 = self.chart.planets.planets[astrology.SE_SUN].dataEqu[planets.Planet.RAEQU]
 		if ecliptical:
 			sun0 = self.chart.planets.planets[astrology.SE_SUN].data[planets.Planet.LONG]
 
 		target = sun0-arc
 
-		#Coarse jump back: the Sun never moves faster than MAXSUNDAY
-		#deg/day, so jumping int(arc/MAXSUNDAY)-1 days always undershoots
+		# Coarse jump back: the Sun never moves faster than MAXSUNDAY
+		# deg/day, so jumping int(arc/MAXSUNDAY)-1 days always undershoots
 		jump = int(arc/PrimDirs.MAXSUNDAY)-1
 		if jump > 0:
 			calflag = astrology.SE_GREG_CAL
@@ -1698,8 +1698,8 @@ class PrimDirs:
 
 		lon, ra = self.sunDayPos(y, m, d)
 		raw = lon if ecliptical else ra
-		#Unwrap against the expected position (mean motion); exact because
-		#the jump error is always far below 180deg
+		# Unwrap against the expected position (mean motion); exact because
+		# the jump error is always far below 180deg
 		prSunPos = self.sunUnwrap(raw, sun0-jump*0.986 if jump > 0 else sun0)
 
 #		Find day in ephemeris
@@ -1713,11 +1713,11 @@ class PrimDirs:
 				return 0.0
 
 		if (prSunPos != target):
-			#Exact second by bisection between this midnight and the next
-			#one (they bracket the target); replaces Transits().day.
-			#Like Transits, the refinement is done on the Sun longitude.
-			#RA targets are periodic: normalize before converting (ra2ecl
-			#only handles [0, 360)).
+			# Exact second by bisection between this midnight and the next
+			# one (they bracket the target); replaces Transits().day.
+			# Like Transits, the refinement is done on the Sun longitude.
+			# RA targets are periodic: normalize before converting (ra2ecl
+			# only handles [0, 360)).
 			trlon = target
 			if not ecliptical:
 				trlon = util.ra2ecl(target % 360.0, self.chart.obl[0])
