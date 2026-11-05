@@ -26,6 +26,8 @@ ln -sfn _internal/SWEP "$APPDIR/usr/bin/SWEP"
 cp packaging/AppRun "$APPDIR/AppRun"
 chmod +x "$APPDIR/AppRun"
 cp packaging/morinus.desktop "$APPDIR/morinus.desktop"
+chmod 644 "$APPDIR/morinus.desktop"
+chmod a+rx "$APPDIR/AppRun"
 python3 -c "
 from PIL import Image
 im = Image.open('Res/MorinusSE.ico').convert('RGB').resize((128, 128))
@@ -33,6 +35,8 @@ im.save('$APPDIR/morinus.png')
 im.save('$APPDIR/.DirIcon', format='PNG')
 print('icon ok')
 "
+
+chmod -R a+rX "$APPDIR"
 
 echo "==> [3/5] appimagetool"
 TOOL="$OUTDIR/appimagetool-${ARCH}.AppImage"

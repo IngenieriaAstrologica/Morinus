@@ -1,10 +1,57 @@
 import os
+import sys
+import shutil
 import wx
 import pickle
 import copy
 import chart
 import primdirs
 import mtexts
+
+
+def _writableOptsDir():
+	# The AppImage is mounted read-only, so ./Opts cannot be written there.
+	# Keep using it when possible (normal installs, dev runs); otherwise fall
+	# back to a per-user directory, seeding it once with the bundled defaults.
+	legacy = 'Opts'
+	if os.path.isdir(legacy):
+		if os.access(legacy, os.W_OK):
+			return legacy
+	elif os.access('.', os.W_OK):
+		try:
+			os.makedirs(legacy, exist_ok=True)
+			return legacy
+		except OSError:
+			pass
+
+	if os.name == 'nt':
+		base = os.environ.get('APPDATA') or os.path.expanduser('~')
+		target = os.path.join(base, 'MorinusSE', 'Opts')
+	else:
+		base = os.environ.get('XDG_CONFIG_HOME') or os.path.join(os.path.expanduser('~'), '.config')
+		target = os.path.join(base, 'morinus-se', 'Opts')
+
+	try:
+		os.makedirs(target, exist_ok=True)
+	except OSError:
+		return legacy
+
+	try:
+		seed = os.path.isdir(legacy) and not os.listdir(target)
+	except OSError:
+		seed = False
+
+	if seed:
+		try:
+			for name in os.listdir(legacy):
+				src = os.path.join(legacy, name)
+				if os.path.isfile(src):
+					shutil.copy2(src, os.path.join(target, name))
+		except OSError:
+			pass
+
+	return target
+
 
 class Options:
 	NONE = 0
@@ -393,7 +440,7 @@ class Options:
 # Roberto change - V 7.2.0 / V 7.3.0
 		self.optionsfilestxt = ('appearance1.opt', 'appearance2.opt', 'symbols.opt', 'dignities.opt', 'triplicities.opt', 'terms.opt', 'decans.opt', 'almutenchart.opt', 'almutentopicalandparts.opt', 'ayanamsa.opt', 'colors.opt', 'housesystem.opt', 'nodes.opt', 'orbs.opt', 'primarydirs.opt', 'primarykeys.opt', 'fortune.opt', 'syzygy.opt', 'fixedstars.opt', 'profections.opt', 'firdaria.opt', 'deflocation.opt', 'pdsinchart.opt', 'languages.opt', 'autosave.opt')
 # ########################################
-		self.optsdirtxt = 'Opts'
+		self.optsdirtxt = _writableOptsDir()
 
 		self.appearance1opt = os.path.join(self.optsdirtxt, self.optionsfilestxt[0])
 		self.appearance2opt = os.path.join(self.optsdirtxt, self.optionsfilestxt[1])

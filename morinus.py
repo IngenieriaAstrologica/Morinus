@@ -35,7 +35,11 @@ import morin
 class Morinus(wx.App):
     def OnInit(self):
         try:
-            progPath = os.path.dirname(sys.argv[0])
+            if getattr(sys, 'frozen', False):
+                # PyInstaller onedir (incl. AppImage): recursos en _internal
+                progPath = getattr(sys, '_MEIPASS', os.path.dirname(sys.executable))
+            else:
+                progPath = os.path.dirname(os.path.abspath(sys.argv[0]))
             os.chdir(progPath)
         except:
             pass

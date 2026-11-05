@@ -2380,9 +2380,10 @@ class MFrame(wx.Frame):
             if dlg.check(self.options):
                 self.enableOptMenus(True)
 
-                if self.options.autosave:
-                    if self.options.saveLanguages():
-                        self.moptions.Enable(self.ID_SaveOpts, False)
+                # Choosing a language is an explicit action: persist it even
+                # when autosave is off, otherwise it is lost on restart.
+                if self.options.saveLanguages():
+                    self.moptions.Enable(self.ID_SaveOpts, False)
 
                 dlgm = wx.MessageDialog(self, mtexts.txts['NeedRestart'], mtexts.txts['Message'], wx.OK|wx.ICON_INFORMATION)
                 dlgm.ShowModal()

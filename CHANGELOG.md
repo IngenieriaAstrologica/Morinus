@@ -47,6 +47,16 @@
   (rango 0–5, con fallback a español).
 - `mtexts.setLang()`: ya no fuerza `langid = 0`; acepta cualquier id
   válido y tolera valores corruptos.
+- `morin.py`: el idioma elegido se guarda **siempre** al aceptar el
+  diálogo. Antes solo se persistía con «guardado automático» activado, así
+  que el cambio se perdía al cerrar y la app volvía al español.
+- `options.py`: si `Opts/` no es escribible (AppImage montado en solo
+  lectura), las opciones se guardan en un directorio de usuario
+  (`$XDG_CONFIG_HOME/morinus-se/Opts` o `%APPDATA%\MorinusSE\Opts`),
+  sembrado una vez con los `.opt` incluidos. Esto arregla la persistencia
+  del idioma y del resto de preferencias en el AppImage.
+- `packaging/build-appimage.sh`: permisos correctos del `.desktop` y del
+  `AppDir` (fallaba al empaquetar desde sistemas de archivos no POSIX).
 
 ### Migración
 - Las opciones guardadas con la versión solo-español

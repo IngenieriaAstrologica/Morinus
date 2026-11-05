@@ -111,9 +111,9 @@ Morinus SE/
 
 ## Idioma / Language
 
-**ES:** Opciones → Lenguajes (`Shift+J`), elige idioma, guarda y **reinicia Morinus** para que los menús se reconstruyan.
+**ES:** Opciones → Lenguajes (`Shift+J`), elige idioma, acepta y **reinicia Morinus** para que los menús se reconstruyan. El cambio se guarda automáticamente.
 
-**EN:** Options → Languages, pick a language, save and **restart Morinus** so menus are rebuilt.
+**EN:** Options → Languages, pick a language, accept and **restart Morinus** so menus are rebuilt. The choice is saved automatically.
 
 | id | Idioma / Language | Ayuda / Help file |
 |----|-------------------|-------------------|
@@ -125,6 +125,8 @@ Morinus SE/
 | 5 | Español — Spanish, **por defecto en SE** | `Res/helpEsp.html` |
 
 > Nota de migración: las opciones guardadas con la versión solo-español (`Opts/languages.opt = 0`) ahora se interpretan como inglés. Selecciona Español una vez y reinicia.
+
+> **AppImage:** como el AppImage es de solo lectura, las preferencias se guardan en `$XDG_CONFIG_HOME/morinus-se/Opts` (normalmente `~/.config/morinus-se/Opts`). En Windows: `%APPDATA%\MorinusSE\Opts`.
 
 ## Enlaces / Links
 
